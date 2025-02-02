@@ -1,0 +1,27 @@
+tr {
+  th,
+  td {
+    min-width: 200px;
+    & > div {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  td {
+    ::ng-deep .p-toggleswitch-slider {
+      position: relative;
+    }
+  }
+}
+::ng-deep
+  .p-datatable-hoverable
+  .p-datatable-tbody
+  > tr:not(.p-datatable-row-selected):hover {
+  background: var(--p-datatable-row-hover-background) !important;
+}
+::ng-deep .p-datatable.p-datatable-sm .p-datatable-header {
+  border: 0;
+}
+::ng-deep .p-datatable-thead {
+  box-shadow: 0px 0px 5px;
+}

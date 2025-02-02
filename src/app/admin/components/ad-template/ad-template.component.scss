@@ -1,0 +1,104 @@
+@import "../../../../../public/color";
+@import "../../../../../public/mixin";
+.full {
+  position: relative;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: minmax(10%, 14%) minmax(50%, 88%);
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  justify-content: start;
+  align-items: flex-start;
+  justify-items: flex-start;
+  @include forTablet {
+    grid-template-columns: 100%;
+  }
+  .header {
+    z-index: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    background: linear-gradient(100deg, $c2, $c1 33%, $c2);
+    padding: 0px 10px 10px 0px;
+    opacity: 0.8;
+
+    border-right: 10px solid $c5;
+    animation: forHeader1 5s forwards;
+    transition: width 0.5s ease;
+
+    h5 {
+      padding: 10px 20px;
+      color: $c5;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0;
+      margin-right: 10px;
+      letter-spacing: 0.15em;
+      opacity: 0;
+      animation: fadeIn 1s 3s forwards, typing 2.5s 3s steps(30, end);
+    }
+    small {
+      padding-left: 40px;
+      padding-bottom: 30px;
+      color: $c4;
+      font-weight: bold;
+      opacity: 0;
+      animation: jump 2s 4s forwards;
+    }
+  }
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #000;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes jump {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@keyframes forHeader1 {
+  0% {
+    transform: scaleX(0); /* Initial size */
+  }
+  25% {
+    transform: scaleX(8); /* Expand to fill the first row */
+  }
+  50% {
+    transform: scaleX(1); /* Shrink back to original size */
+  }
+  100% {
+    transform: scaleX(1); /* End state */
+  }
+}

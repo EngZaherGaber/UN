@@ -1,0 +1,175 @@
+<!-- <div> -->
+<p-table [value]="body.data" [paginator]="true" [rowHover]="true" [rows]="5" [rowsPerPageOptions]="[5,10,25,50,100]"
+    [scrollable]="true" stateStorage="session" [stateKey]="tableName" [alwaysShowPaginator]="dt.value.length > 0"
+    [exportFilename]="tableName" [lazy]="lazyLoading" [size]="'small'" stripedRows (onLazyLoad)="loadCarsLazy($event)"
+    [scrollHeight]="scrollHeight" (onRowExpand)="RowExpand.emit($event)" #dt sortMode="multiple"
+    [paginatorDropdownAppendTo]="'body'" [columns]="body.columns" [dataKey]="dataKey" columnResizeMode="expand"
+    [filterDelay]="0" [totalRecords]="totalRecords" [loading]="body.loading" [rowHover]="true" [responsive]="true"
+    [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true" [autoLayout]="true" [globalFilterFields]="['Name']"
+    [tableStyle]="{ 'min-width': '75rem' }">
+    <ng-template pTemplate="caption">
+        <p-toolbar>
+            <ng-template #start>
+                <ng-container *ngIf="captionButton && captionButton.length > 0">
+                    <ng-container *ngFor="let btn of captionButton">
+                        <p-button [severity]="btn.severity ?? 'primary'"
+                            *ngIf="btn && btn.permission && ((btn.showCommand && btn.showCommand(body.data) ) || (!btn.showCommand && true)) && btn.isShow"
+                            [pTooltip]="btn.tooltip" [icon]="btn.icon ?? ''"
+                            (click)="btn.command ? btn.command(body.data) : null" />
+                        <p-button [severity]="btn.severity ?? 'primary'"
+                            *ngIf="btn && !btn.permission &&((btn.showCommand && btn.showCommand(body.data) ) || (!btn.showCommand && true)) && btn.isShow"
+                            [pTooltip]="btn.tooltip" [icon]="btn.icon ?? ''"
+                            (click)="btn.command ? btn.command(body.data) : null" />
+
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+            <ng-template #end>
+                <p-button *ngIf="dt.value.length > 0" pTooltip="XLS" label="Export" severity="success"
+                    icon="pi pi-upload" (onClick)="dt.exportCSV()" />
+            </ng-template>
+        </p-toolbar>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr pFrozenRow>
+            <th pFrozenColumn pSticky="right" alignFrozen="right" [frozen]="true">
+                <div>
+                    <p-button icon="pi pi-filter" [rounded]="true" [text]="true" pTooltip="Use custom filters"
+                        (click)="filterdMode = !filterdMode" severity="success" />
+                    <p-button *ngIf="filterdMode" icon="pi pi-filter-slash" [rounded]="true" [text]="true"
+                        pTooltip="Clear filters" (click)="dt.clear();clearFilter()" severity="danger" />
+                </div>
+            </th>
+            <th pResizableColumn *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                <div>
+                    <small>{{col.header}}</small>
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </div>
+            </th>
+        </tr>
+        <tr *ngIf="filterdMode" pFrozenRow>
+            <th pFrozenColumn pSticky="right" alignFrozen="right" [frozen]="true">
+            </th>
+            <th *ngFor="let col of columns" pResizableColumn>
+                <div [ngSwitch]="col.HeaderType" [class]="'filter-div ' + col.HeaderType">
+                    <div *ngSwitchCase="'bool'">
+                        <p-columnFilter type="boolean" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'Toggle'">
+                        <p-columnFilter type="boolean" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'toggle'">
+                        <p-columnFilter type="boolean" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'DateTime'">
+                        <p-columnFilter type="date" [field]="col.field" [placeholder]="col.field"
+                            appendTo="body"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'DateTimeO'">
+                        <p-columnFilter type="date" [field]="col.field" [placeholder]="col.field"
+                            appendTo="body"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'float'">
+                        <p-columnFilter type="numeric" [maxFractionDigits]="2" [field]="col.field"
+                            [placeholder]="col.field"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'double'">
+                        <p-columnFilter type="numeric" [maxFractionDigits]="2" [field]="col.field"
+                            [placeholder]="col.field"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'int'">
+                        <p-columnFilter type="numeric" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'json'">
+
+                    </div>
+                    <div *ngSwitchDefault>
+                        <p-columnFilter type="text" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+
+                    </div>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody" let-columns="columns">
+        <tr>
+            <td [attr.colspan]="(columns?.length || 0) + 1">
+                <div>
+                    <div>
+                        <!-- <app-spinner></app-spinner> -->
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index let-expanded="expanded">
+        <tr *ngIf="dt.value.length > 0" [ngStyle]="changeColor(rowData)">
+            <td pSticky="right" pFrozenColumn [frozen]="true" alignFrozen="right">
+                <button type="button" pButton pRipple [pRowToggler]="rowData" *ngIf="expandedTable"
+                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                <ng-container *ngFor="let btn of rowData.buttons">
+                    <p-button [severity]="btn.severity ?? 'primary'" [rounded]="true" [text]="true"
+                        *ngIf="((btn.showCommand && btn.showCommand(rowData)) || btn.isShow) && btn.permission"
+                        [pTooltip]="btn.tooltip" [icon]="btn.icon ?? ''"
+                        (click)="btn.command(rowData,rowData.buttons,dt);hitAction.emit({key:btn.key,rowDataId:rowData.Id})" />
+
+                    <p-button [severity]="btn.severity ?? 'primary'" [rounded]="true" [text]="true"
+                        *ngIf="((btn.showCommand && btn.showCommand(rowData)) || btn.isShow) && !btn.permission"
+                        [pTooltip]="btn.tooltip" [icon]="btn.icon ?? ''"
+                        (click)="btn.command(rowData,rowData.buttons,dt);hitAction.emit({key:btn.key,rowDataId:rowData.Id})" />
+                </ng-container>
+            </td>
+            <td *ngFor="let col of columns">
+                <div *ngIf="col.HeaderType != 'DateTime' &&
+                         col.HeaderType != 'DateTimeO' &&
+                          col.HeaderType != 'Toggle' &&
+                          col.HeaderType != 'json' &&
+                          col.HeaderType !== 'float' &&
+                          col.HeaderType !== 'double' ">
+                    {{rowData[col.field]}}
+                </div>
+                <div *ngIf="col.HeaderType === 'DateTime' || col.HeaderType === 'DateTimeO' ">
+                    <div *ngIf="rowData[col.field] !== null">
+                        {{ rowData[col.field] | date: 'MM/dd/yyyy'}}
+                    </div>
+                    <div *ngIf="rowData[col.field] === null">
+                        {{ rowData[col.field] }}
+                    </div>
+                </div>
+                <div *ngIf="col.HeaderType === 'float' || col.HeaderType === 'double' ">
+                    <div *ngIf="rowData[col.field] !== null">
+                        {{ rowData[col.field] | number:'1.2-2'}}
+                    </div>
+                </div>
+                <div *ngIf="col.HeaderType == 'Toggle' ">
+
+                    <p-toggleswitch [pTooltip]="rowData[col.field] ? 'True': 'False'"
+                        *ngIf="hasToggleShow(col.field,rowData)" [(ngModel)]=" rowData[col.field]"
+                        [disabled]="hasToggledisable(col.field,rowData) ?? false"
+                        (onChange)="handleChange($event,col.field,rowData)"></p-toggleswitch>
+
+                    <div *ngIf="!hasToggleShow(col.field,rowData)">
+                        {{rowData[col.field]}}</div>
+                </div>
+                <div *ngIf="col.HeaderType === 'json'">
+                    <button pButton pRipple pTooltip="download JSON file" icon="pi pi-download"
+                        (click)="downloadJSON(rowData[col.field])"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData>
+        <ng-container *ngTemplateOutlet="rowExpansionContent; context: { item: rowData }">
+        </ng-container>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <th colspan="5">No Items found.</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <ng-content select="[footer]"></ng-content>
+    </ng-template>
+</p-table>
+<!-- </div> -->

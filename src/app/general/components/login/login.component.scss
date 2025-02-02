@@ -1,0 +1,157 @@
+@use "../../../../../public/_color.scss" as *;
+@use "../../../../../public/_mixin.scss" as *;
+.full {
+  background: linear-gradient(90deg, $c2, $c1);
+  background-size: 200% 100%;
+  height: 100%;
+  width: 100%;
+  padding: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .sub-full {
+    display: flex;
+    align-items: center;
+    .logo {
+      transform-style: preserve-3d;
+      position: relative;
+      background: linear-gradient(90deg, $c1 33%, $c2 66%);
+      width: 50%;
+      height: 80%;
+      background-position: 0% 0%;
+      background-size: 200% 100%;
+      box-shadow: 0px 5px 5px 5px $c5;
+      border-bottom-left-radius: 50px;
+      animation: wave 6s 2s infinite linear;
+      z-index: 2;
+      #logo {
+        width: 100%;
+        height: 100%;
+        animation: rotateImg 6s 2s linear infinite;
+      }
+    }
+    .container {
+      display: flex;
+      align-items: center;
+      position: relative;
+      box-shadow: 5px 5px 5px 5px $c2;
+      width: 50%;
+      height: 80%;
+      z-index: 1;
+      background-color: $c4;
+      border-top-right-radius: 50px;
+      transform: translateX(-100%);
+      opacity: 0;
+      animation: translateXc 3s 4s forwards;
+      .sub-container {
+        height: 50%;
+        width: 100%;
+      }
+    }
+  }
+  @include forTablet {
+    & {
+      justify-content: center;
+      padding: 10% 5%;
+      .sub-full {
+        flex-direction: column;
+        width: 100%;
+        .logo {
+          box-shadow: 0px -5px 5px 5px $c5;
+          border-bottom-left-radius: 0px;
+          border-top-left-radius: 50px;
+          width: 80%;
+          height: 50%;
+        }
+        .container {
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 50px;
+          width: 80%;
+          height: 50%;
+          transform: translateY(-100%);
+          opacity: 0;
+          animation: translateYc 3s 4s forwards;
+          .sub-container {
+            border-bottom-right-radius: 50px;
+            height: calc(100% - 80px);
+            padding-bottom: 50px;
+            ::ng-deep .p-card {
+              box-shadow: 0px 0px 0px 0px $c5;
+            }
+          }
+        }
+      }
+    }
+  }
+  @keyframes translateXc {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0%);
+    }
+  }
+  @keyframes translateYc {
+    0% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    25% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @keyframes wave {
+    0% {
+      background-position: 0% 0%;
+      transform: perspective(500px) rotateY(0deg);
+    }
+    25% {
+      transform: perspective(500px) rotateY(0);
+    }
+    50% {
+      background-position: 50% 50%;
+      transform: perspective(500px) rotateY(0deg);
+    }
+    75% {
+      transform: perspective(500px) rotateY(-0);
+    }
+    100% {
+      background-position: 0% 0%;
+      transform: perspective(500px) rotateY(0deg);
+    }
+  }
+  @keyframes rotateImg {
+    0% {
+      transform: perspective(500px) skewY(0deg);
+    }
+    50% {
+      transform: perspective(500px) skewY(5deg);
+    }
+    100% {
+      transform: perspective(500px) skewY(0deg);
+    }
+  }
+}
+@keyframes colorX {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 2000% 200%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

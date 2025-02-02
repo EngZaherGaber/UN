@@ -1,0 +1,10 @@
+@mixin form-theme-mode() {
+  @include inputTheme();
+}
+@mixin inputTheme() {
+  .p-inputwrapper,
+  .p-inputtext {
+    display: flex;
+    width: 100%;
+  }
+}

@@ -1,0 +1,82 @@
+@use "../public/mixin" as *;
+
+$big: 1200px;
+$tablet: 992px;
+$mobile: 768px;
+$small-mobile: 576px;
+
+@font-face {
+  font-family: "MyOutfit"; /* Give your font a name */
+  src: url("Outfit.ttf") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin responsive-font-sizes(
+  $f-mobile: 14px,
+  $f-tablet: 16px,
+  $f-desktop: 18px,
+  $f-large-desktop: 20px
+) {
+  font-size: $f-mobile !important;
+
+  @media screen and (min-width: $mobile) {
+    font-size: $f-tablet !important;
+  }
+
+  @media screen and (min-width: $tablet) {
+    font-size: $f-desktop !important;
+  }
+
+  @media screen and (min-width: $big) {
+    font-size: $f-large-desktop !important;
+  }
+}
+@mixin responsive-headings {
+  // Heading sizes
+  h1 {
+    @include responsive-font-sizes(26px, 34px, 38px, 44px);
+  }
+
+  h2 {
+    @include responsive-font-sizes(24px, 32px, 36px, 42px);
+  }
+
+  h3 {
+    @include responsive-font-sizes(20px, 28px, 32px, 38px);
+  }
+
+  h4 {
+    @include responsive-font-sizes(18px, 24px, 28px, 30px);
+  }
+
+  h5 {
+    @include responsive-font-sizes(16px, 22px, 26px, 28px);
+  }
+
+  h6 {
+    @include responsive-font-sizes(14px, 20px, 24px, 26px);
+  }
+
+  // Block elements with one set of font sizes
+  div,
+  p {
+    @include responsive-font-sizes(16px, 18px, 20px, 22px);
+  }
+
+  span,
+  strong,
+  em,
+  blockquote,
+  i,
+  li,
+  th,
+  td,
+  td > div,
+  td > div > div,
+  label,
+  input,
+  a {
+    @include responsive-font-sizes(14px, 15px, 16px, 18px);
+  }
+}

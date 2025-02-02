@@ -1,0 +1,14 @@
+@use "../../../../../public/color" as *;
+.full-nav {
+  padding: 2%;
+  ::ng-deep .p-panelmenu-panel {
+    background-color: transparent;
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+  }
+}

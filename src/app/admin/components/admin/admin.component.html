@@ -1,0 +1,25 @@
+<div class="full">
+    <div class="title">
+        <div class="above-nav">
+            <p-button size="small" (click)="toggle = !toggle" [rounded]="true" icon="pi pi-align-justify
+            " />
+            <a [routerLink]="['/admin']">
+                <h1>IC&I</h1>
+            </a>
+        </div>
+        <div>
+
+            <p-button size="small" (click)="menu.toggle($event)" [rounded]="true" icon="pi pi-user
+            " />
+            <p-menu [style]="{'position': 'absolute'}" #menu [model]="items" [popup]="true" />
+        </div>
+    </div>
+    <div class=" sub-full">
+        <div class="nav" [ngClass]="{'visible': toggle,'hide': !toggle}">
+            <admin-nav></admin-nav>
+        </div>
+        <div class=" routlet-div">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
