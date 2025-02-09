@@ -3,6 +3,7 @@ import { DynmaicFormComponent } from '../dynmaic-form/dynmaic-form.component';
 import { InputDynamic } from '../../interfaces/input-dynamic';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [DynmaicFormComponent, CommonModule],
@@ -10,7 +11,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  disableSaveButton: boolean = true;
   objs: { [key: string]: InputDynamic[] } = {
     general: [
       {
@@ -35,8 +35,13 @@ export class LoginComponent {
       },
     ],
   };
-  constructor(private authSrv: AuthService) { }
+  constructor(private authSrv: AuthService, private router: Router) {
+    authSrv.sessionDataClear();
+  }
   submit(event: any) {
-    this.authSrv.login(event.general).subscribe(res => { });
+    this.authSrv.login(event.general).subscribe(res => {
+      this.authSrv.sessionDataSave({ token: res.data })
+      this.router.navigate(['admin'])
+    });
   }
 }

@@ -16,7 +16,17 @@ export class AuthService {
     private http: HttpClient
   ) { }
   login(body: LoginUser): Observable<any> {
-    
     return this.http.post(environment.api + 'UserManagmentontroller/Login', body);
+  }
+  sessionDataSave(data: { [key: string]: string }) {
+    Object.keys(data).forEach(key => {
+      localStorage.setItem(key, data[key]);
+    })
+  }
+  sessionDataClear() {
+    localStorage.clear();
+  }
+  sessionDataRemove(item: string) {
+    localStorage.removeItem(item);
   }
 }

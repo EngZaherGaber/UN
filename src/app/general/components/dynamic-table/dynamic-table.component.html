@@ -7,7 +7,7 @@
     [filterDelay]="0" [totalRecords]="totalRecords" [loading]="body.loading" [rowHover]="true" [responsive]="true"
     [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true" [autoLayout]="true" [globalFilterFields]="['Name']"
-    [tableStyle]="{ 'min-width': '75rem' }">
+    [tableStyle]="{ 'min-width': '100%' }">
     <ng-template pTemplate="caption">
         <p-toolbar>
             <ng-template #start>
@@ -35,8 +35,8 @@
         <tr pFrozenRow>
             <th pFrozenColumn pSticky="right" alignFrozen="right" [frozen]="true">
                 <div>
-                    <p-button icon="pi pi-filter" [rounded]="true" [text]="true" pTooltip="Use custom filters"
-                        (click)="filterdMode = !filterdMode" severity="success" />
+                    <p-button *ngIf="body.data.length > 0" icon="pi pi-filter" [rounded]="true" [text]="true"
+                        pTooltip="Use custom filters" (click)="filterdMode = !filterdMode" severity="success" />
                     <p-button *ngIf="filterdMode" icon="pi pi-filter-slash" [rounded]="true" [text]="true"
                         pTooltip="Clear filters" (click)="dt.clear();clearFilter()" severity="danger" />
                 </div>

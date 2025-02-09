@@ -189,20 +189,7 @@ export class DynamicTableComponent {
       this.filterdMode = false;
     }
   }
-  exportExcel() {
-    let arr = this.table?.filteredValue ?? this.table?.value;
-    arr = arr?.map((x: any) => {
-      let z: { [key: string]: any } = {};
-      this.body.columns.forEach((col: any) => {
-        if (col.header) {
-          const header = col.header;
-          z[header] = x[col.field];
-        }
-      });
-      return z;
-    });
-    this.exExcl.exportExcel(arr ?? [], this.title + new Date().toDateString());
-  }
+  
   handleChange(e: any, field: string, rowData: any) {
     const actionEl = this.columnsEvent.find(
       (x) => x.field.toLowerCase() === field.toLowerCase()

@@ -8,7 +8,7 @@ import { ToastService } from './toast.service';
   providedIn: 'root',
 })
 export class DyTableService {
-  constructor(private notiSrv: ToastService) {}
+  constructor(private notiSrv: ToastService) { }
   getInstObs(
     instObs$: Observable<any>,
     notAllowed: string[],
@@ -56,14 +56,12 @@ export class DyTableService {
           return of(null);
         }
       }),
-      catchError((err) => {
-        this.notiSrv.showError('There Are Some Thing Wrong', 'Error');
-        return of({
-          loading: false,
-          data: [],
-          columns: [],
-        });
+      catchError(error => of({
+        loading: false,
+        data: [],
+        columns: [],
       })
+      )
     );
     return instObs$;
   }
@@ -87,14 +85,12 @@ export class DyTableService {
           });
         }
       }),
-      catchError((err) => {
-        this.notiSrv.showError('There Are Some Thing Wrong', 'Error');
-        return of({
-          loading: false,
-          data: [],
-          columns: [],
-        });
+      catchError(error => of({
+        loading: false,
+        data: [],
+        columns: [],
       })
+      )
     );
     return instObs$;
   }
@@ -133,10 +129,10 @@ export class DyTableService {
             ]).map((col) => {
               col = ToggleColumn.includes(col.field)
                 ? (col = {
-                    HeaderType: 'Toggle',
-                    field: col.field,
-                    header: col.header,
-                  })
+                  HeaderType: 'Toggle',
+                  field: col.field,
+                  header: col.header,
+                })
                 : col;
               return col;
             });
@@ -168,14 +164,12 @@ export class DyTableService {
           });
         }
       }),
-      catchError((err) => {
-        this.notiSrv.showError('There Are Some Thing Wrong', 'Error');
-        return of({
-          loading: false,
-          data: [],
-          columns: [],
-        });
+      catchError(error => of({
+        loading: false,
+        data: [],
+        columns: [],
       })
+      )
     );
     return instObs$;
   }
@@ -208,10 +202,10 @@ export class DyTableService {
             ]).map((col) => {
               col = ToggleColumn.includes(col.field)
                 ? (col = {
-                    HeaderType: 'Toggle',
-                    field: col.field,
-                    header: col.header,
-                  })
+                  HeaderType: 'Toggle',
+                  field: col.field,
+                  header: col.header,
+                })
                 : col;
               return col;
             });
@@ -229,10 +223,10 @@ export class DyTableService {
                   .filter((type) => type.dataType === 'DateTime')
                   .forEach(
                     (type) =>
-                      (item[type.dynamic ? type.dynamic : type.attribute] =
-                        new Date(
-                          item[type.dynamic ? type.dynamic : type.attribute]
-                        ))
+                    (item[type.dynamic ? type.dynamic : type.attribute] =
+                      new Date(
+                        item[type.dynamic ? type.dynamic : type.attribute]
+                      ))
                   );
                 return item;
               }),
@@ -254,14 +248,12 @@ export class DyTableService {
           });
         }
       }),
-      catchError((err) => {
-        this.notiSrv.showError('There Are Some Thing Wrong', 'Error');
-        return of({
-          loading: false,
-          data: [],
-          columns: [],
-        });
+      catchError(error => of({
+        loading: false,
+        data: [],
+        columns: [],
       })
+      )
     );
     return instObsList$;
   }

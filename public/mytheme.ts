@@ -422,7 +422,7 @@ export const MyPreset = definePreset(Material, {
           400: '#35a0ca',
           500: '#93bdd8', // use for color of button
           600: '#0575a1',
-          700: '#f3f3f4be',
+          700: '#0c0b3bc0',//details of toast
           800: '#034c68',
           900: '#02374c',
           950: '#02232f',

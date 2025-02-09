@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   defaultLanguage: 'en-US',
-  api: 'http://192.168.1.100:8077/',
+  api: 'http://192.168.1.100:8077/api/',
 };
 /*
  * For easier debugging in development mode, you can import the following file
