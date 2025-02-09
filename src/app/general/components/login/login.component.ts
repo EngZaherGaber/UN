@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { DynmaicFormComponent } from '../dynmaic-form/dynmaic-form.component';
 import { InputDynamic } from '../../interfaces/input-dynamic';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
@@ -16,29 +14,29 @@ export class LoginComponent {
   objs: { [key: string]: InputDynamic[] } = {
     general: [
       {
-        key: 'username',
+        key: 'userName',
         label: 'Username',
         value: null,
         dataType: 'string',
         options: [],
         visible: true,
-        command: (value, element, form) => {},
+        command: (value, element, form) => { },
         required: true,
       },
       {
-        key: 'hashPassword',
+        key: 'password',
         label: 'Password',
         value: null,
         dataType: 'password',
         options: [],
         visible: true,
-        command: (value, element, form) => {},
+        command: (value, element, form) => { },
         required: true,
       },
     ],
   };
-  constructor(private authSrv: AuthService) {}
+  constructor(private authSrv: AuthService) { }
   submit(event: any) {
-    this.authSrv.login(event.general);
+    this.authSrv.login(event.general).subscribe(res => { });
   }
 }

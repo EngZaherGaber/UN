@@ -5,7 +5,8 @@ import { routes } from './app.routes';
 import { MyPreset } from '../../public/mytheme';
 import { MessageService } from 'primeng/api';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { HttpClient, HttpHandler, provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { generalInterceptor } from './general/interceptor/general.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     provideHttpClient(),
     provideAnimations(),
+    provideHttpClient(withInterceptors([generalInterceptor]))
   ],
 };

@@ -5,10 +5,7 @@
 export const environment = {
   production: false,
   defaultLanguage: 'en-US',
-  supportedLanguages: ['vi-VN', 'en-US', 'ja-JP'],
-  api: 'http://192.168.1.50:9099',
-  WFapi: 'http://192.168.1.50:9085',
-  isDark: true,
+  api: 'http://192.168.1.100:8077/',
 };
 /*
  * For easier debugging in development mode, you can import the following file
