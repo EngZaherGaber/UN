@@ -11,6 +11,7 @@ import { InputDynamic } from '../../interfaces/input-dynamic';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'dynamic-input',
@@ -27,6 +28,7 @@ import { PasswordModule } from 'primeng/password';
     FloatLabelModule,
     InputTextModule,
     PasswordModule,
+    SelectModule
   ],
   templateUrl: './dynamic-input.component.html',
   styleUrl: './dynamic-input.component.scss',
@@ -44,7 +46,7 @@ export class DynamicInputComponent {
   @ViewChild('drop') drop: Dropdown | null = null;
   items: any[] = [];
   autoCompleteValue: any;
-  constructor() {}
+  constructor() { }
   ngOnInit(): void {
     if (this.FEcontrol.value === null && this.FEcontrol.value !== 0) {
       if (this.object.dataType.toLowerCase() === 'autocomplete') {

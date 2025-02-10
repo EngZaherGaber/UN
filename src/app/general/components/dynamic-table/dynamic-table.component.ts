@@ -137,7 +137,6 @@ export class DynamicTableComponent {
         });
       this.totalRecords = this.lazyLoading ? body.count : body.data.length;
       this.body = body;
-      console.log(this.body.data);
     });
   }
   ngAfterViewInit() {

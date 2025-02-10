@@ -1,15 +1,12 @@
 <ng-container [ngSwitch]="object.dataType">
-    <p-floatlabel variant="on">
+    <p-floatlabel class="w-full md:w-56" variant="on">
         <ng-template ngSwitchCase="list">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
-            <p-dropdown optionDisabled="disable" [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'"
-                [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'" #drop
-                (onChange)="drop.resetFilter()" [id]="object.label" [appendTo]="'body'" [options]="object.options"
-                [formControl]="FEcontrol" [placeholder]="object.label" optionLabel="name"
-                [filter]="object.options.length > 4" optionValue="id"
-                [showClear]="object.required ? false : true"></p-dropdown>
+            <p-select optionDisabled="disable" #drop (onChange)="drop.resetFilter()" [id]="object.label"
+                [appendTo]="'body'" [options]="object.options" [formControl]="FEcontrol" optionLabel="name"
+                [filter]="object.options.length > 4" optionValue="id" [showClear]="true" [checkmark]="true"></p-select>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="List">
@@ -17,21 +14,19 @@
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
-            <p-dropdown optionDisabled="disable" [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'"
+            <p-select optionDisabled="disable" [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'"
                 [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'" #drop
                 (onChange)="drop.resetFilter()" (onFilter)="filterList($event)" [appendTo]="'body'" [id]="object.label"
                 [options]="object.options" [formControl]="FEcontrol" [filter]="object.options.length > 4"
-                [placeholder]="object.label" optionLabel="name" optionValue="id"
-                [showClear]="object.required ? false : true"></p-dropdown>
+                optionLabel="name" optionValue="id" [showClear]="true" [checkmark]="true"></p-select>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="int">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
-            <p-inputNumber [step]="1" [id]="object.label" [formControl]="FEcontrol" [placeholder]="object.label"
-                [min]="object.required ? 1 : null" [showButtons]="true"
-                (keydown)="preventSpace($event, FEcontrol.value)"></p-inputNumber>
+            <p-inputNumber [step]="1" [id]="object.label" [formControl]="FEcontrol" [min]="object.required ? 1 : null"
+                [showButtons]="true" (keydown)="preventSpace($event, FEcontrol.value)"></p-inputNumber>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="float">
@@ -39,8 +34,7 @@
                 object.label
                 }}</label>
             <p-inputNumber [minFractionDigits]="1" [step]="0.1" mode="decimal" [formControl]="FEcontrol"
-                [placeholder]="object.label" [id]="object.label" [showButtons]="true"
-                [min]="object.required ? 0.1 : null"></p-inputNumber>
+                [id]="object.label" [showButtons]="true" [min]="object.required ? 0.1 : null"></p-inputNumber>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="double">
@@ -48,8 +42,7 @@
                 object.label
                 }}</label>
             <p-inputNumber [minFractionDigits]="1" [step]="0.1" mode="decimal" [formControl]="FEcontrol"
-                [placeholder]="object.label" [id]="object.label" [showButtons]="true"
-                [min]="object.required ? 0.1 : null"></p-inputNumber>
+                [id]="object.label" [showButtons]="true" [min]="object.required ? 0.1 : null"></p-inputNumber>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="string">
@@ -60,7 +53,8 @@
                 }}</label>
         </ng-template>
         <ng-template ngSwitchCase="password">
-            <p-password [id]="object.label" size="large" [feedback]="false" [formControl]="FEcontrol" type="text" [toggleMask]="true" />
+            <p-password [id]="object.label" size="large" [feedback]="false" [formControl]="FEcontrol" type="text"
+                [toggleMask]="true" />
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
@@ -112,9 +106,8 @@
                 object.label
                 }}</label>
             <p-multiSelect [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'" [appendTo]="'body'"
-                [id]="object.label" [options]="object.options" [formControl]="FEcontrol" [placeholder]="object.label"
-                [selectionLimit]="object.Max" optionLabel="name" optionValue="id"
-                [showClear]="object.required ? false : true"></p-multiSelect>
+                [id]="object.label" [options]="object.options" [formControl]="FEcontrol" [selectionLimit]="object.Max"
+                optionLabel="name" optionValue="id" [showClear]="object.required ? false : true"></p-multiSelect>
         </ng-template>
     </p-floatlabel>
 </ng-container>

@@ -29,7 +29,13 @@ export class AdUserGeneralComponent {
       });
     }, rowData.userId)
   }
-  
+  editFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/user/edit/' + rowData.userId])
+  }
+  displayFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/user/display/' + rowData.userId])
+  }
+
   constructor(
     private msgSrv: ToastService,
     private tblSrv: DyTableService,
@@ -37,7 +43,7 @@ export class AdUserGeneralComponent {
     private usrSrv: UserService,
     private confirm: ConfirmService
   ) {
-    this.info = tblSrv.getStandardInfo(this.deleteFunc, undefined, undefined, this.addFunc)
+    this.info = tblSrv.getStandardInfo(this.deleteFunc, this.editFunc, this.displayFunc, this.addFunc)
   }
   ngOnInit(): void {
     this.info.get$ = this.tblSrv.getLibObs(

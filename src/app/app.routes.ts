@@ -8,6 +8,9 @@ import { UserAddComponent } from './admin/components/user/user-add/user-add.comp
 import { adminGuard } from './admin/guards/admin.guard';
 import { adminCanActiveGuard } from './admin/guards/admin-can-active.guard';
 import { AdNotFoundComponent } from './admin/components/ad-not-found/ad-not-found.component';
+import { UserEditComponent } from './admin/components/user/user-edit/user-edit.component';
+import { UserDisplayComponent } from './admin/components/user/user-display/user-display.component';
+import { AdHomeComponent } from './admin/components/ad-home/ad-home.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,9 +29,12 @@ export const routes: Routes = [
       {
         path: 'user', children: [
           { path: '', component: AdUserGeneralComponent, },
-          { path: 'add', component: UserAddComponent }
+          { path: 'add', component: UserAddComponent },
+          { path: 'edit/:id', component: UserEditComponent },
+          { path: 'display/:id', component: UserDisplayComponent },
         ]
       },
+      { path: '', component: AdHomeComponent },
       { path: '**', component: AdNotFoundComponent }],
   },
   {
