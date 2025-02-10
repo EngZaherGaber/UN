@@ -417,7 +417,7 @@ export const MyPreset = definePreset(Material, {
           0: '#ffffff',
           50: '#dae2ecbf',
           100: '#f3f3f4', // use for toolbar and card BG
-          200: '#0c0b3bc0',
+          200: '#93bdd8',//disable input
           300: '#0c0b3b', //use for switch BG
           400: '#35a0ca',
           500: '#93bdd8', // use for color of button
@@ -445,7 +445,7 @@ export const MyPreset = definePreset(Material, {
         },
         formField: {
           background: '#f3f3f4',
-          disabledBackground: '{surface.200}',
+          disabledBackground: '#b3b3b3',
           filledBackground: '{surface.50}',
           filledHoverBackground: '{surface.50}',
           filledFocusBackground: '{surface.50}',
@@ -454,12 +454,12 @@ export const MyPreset = definePreset(Material, {
           focusBorderColor: '{primary.color}',
           invalidBorderColor: '{red.400}',
           color: '#04457f',
-          disabledColor: '{surface.500}',
+          disabledColor: '{surface.950}',
           placeholderColor: '{surface.500}',
           invalidPlaceholderColor: '{red.600}',
-          floatLabelColor: '{surface.500}',
+          floatLabelColor: '{surface.950}',
           floatLabelFocusColor: '#04457f',
-          floatLabelActiveColor: '#f3f3f4',
+          floatLabelActiveColor: '{surface.950}',
           floatLabelInvalidColor: '{form.field.invalid.placeholder.color}',
           iconColor: '#04457f',
           shadow: '0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05)',

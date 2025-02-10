@@ -1,4 +1,6 @@
 .button-container {
+  display: flex;
+  justify-content: space-between;
   .right-buttons {
     display: flex;
     justify-content: flex-end;
@@ -6,5 +8,26 @@
   .left-buttons {
     display: flex;
     justify-content: flex-end;
+  }
+}
+.animation-fade {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInTop 0.7s ease-in-out forwards;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
+@keyframes fadeInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

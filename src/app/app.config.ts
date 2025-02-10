@@ -3,7 +3,7 @@ import { provideRouter, RouterLink } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { MyPreset } from '../../public/mytheme';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClient, HttpHandler, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { generalInterceptor } from './general/interceptor/general.interceptor';
@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     MessageService,
+    ConfirmationService,
     provideHttpClient(),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),

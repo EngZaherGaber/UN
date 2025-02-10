@@ -51,6 +51,13 @@ export class NavComponent {
         label: 'Config',
         icon: 'pi pi-cog', // Suitable for configuration settings
         shortcut: '⌘+O',
+        items: [
+          {
+            label: 'User',
+            icon: 'pi pi-person',
+            route: ['/admin/user'],
+          }
+        ]
       },
       {
         label: 'Report',

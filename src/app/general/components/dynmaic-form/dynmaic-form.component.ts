@@ -14,7 +14,7 @@ import { DynamicAttributeService } from '../../services/dynamic-attribute.servic
 import { DynamicInputComponent } from '../dynamic-input/dynamic-input.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { CardModule } from 'primeng/card';
-import { ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { StepsModule } from 'primeng/steps';
 import { CommonModule } from '@angular/common';
 import { InputDynamic } from '../../interfaces/input-dynamic';
@@ -38,6 +38,7 @@ export class DynmaicFormComponent {
   @Input() subtitle: string = '';
   @Input() preRoute: string = '';
   @Input() scrollHeight: string = '';
+  @Input() direction: string = 'column';
   @Input() submitLabel: string = '';
   @Input() isShow: boolean = false;
   @Input() withBackBtn: boolean = true;
@@ -68,7 +69,7 @@ export class DynmaicFormComponent {
     private route: Router,
     private DySrv: DynamicAttributeService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.stepsList = this.DySrv.createStepsFromObjs(this.objs);

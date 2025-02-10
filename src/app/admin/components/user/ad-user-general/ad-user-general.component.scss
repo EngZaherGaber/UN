@@ -1,0 +1,6 @@
+@import "../../../../../../public/color";
+@import "../../../../../../public/mixin";
+#con2 {
+  @include fullCon2();
+  // grid-column: 1;
+}

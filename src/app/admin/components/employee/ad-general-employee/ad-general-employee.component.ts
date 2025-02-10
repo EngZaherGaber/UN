@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
-import { ReplaySubject, Observable, of, switchMap, catchError } from 'rxjs';
+import { ReplaySubject, Observable, of, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../../general/services/toast.service';
 import { DyTableService } from '../../../../general/services/dy-table.service';
 import { DyButton } from '../../../../general/interfaces/dy-button';
 import { EmployeeService } from '../../../services/employee.service';
+import { InfoTable } from '../../../../general/interfaces/info-table';
 
 @Component({
   selector: 'ad-general-employee',
@@ -15,58 +16,24 @@ import { EmployeeService } from '../../../services/employee.service';
   styleUrl: './ad-general-employee.component.scss',
 })
 export class AdGeneralEmployeeComponent {
-  captionButton: DyButton[] = [
+  info: InfoTable;
+  columnsEvent = [
     {
-      isShow: true,
-      tooltip: 'Add New Item',
-      icon: 'pi pi-plus',
-      key: 'Add',
-      severity: 'primary',
+      field: 'isStudent',
     },
-  ];
-  Buttons: DyButton[] = [
-    {
-      isShow: true,
-      tooltip: 'Attach Managment',
-      icon: 'pi pi-paperclip',
-      key: 'Attach',
-      severity: 'help',
-    },
-    {
-      isShow: true,
-      tooltip: 'Item Details',
-      icon: 'pi pi-eye',
-      key: 'Details',
-    },
-    {
-      isShow: true,
-      tooltip: 'Edit Item',
-      icon: 'pi pi-pencil',
-      key: 'Edit',
-    },
-    {
-      isShow: true,
-      tooltip: 'Delete Item',
-      icon: 'pi pi-trash',
-      key: 'Delete',
-    },
-  ];
-  info = {
-    getSub$: new ReplaySubject(),
-    get$: new Observable(),
-    type: 'Employee',
-    columnsEvent: [
-      {
-        field: 'isStudent',
-      },
-    ],
-  };
+  ]
+  addFunc: () => void = () => {
+    this.router.navigate(['admin/employee/add'])
+  }
+
   constructor(
     private msgSrv: ToastService,
     private tblSrv: DyTableService,
     private router: Router,
     private empSrv: EmployeeService
-  ) { }
+  ) {
+    this.info = tblSrv.getStandardInfo(undefined, undefined, undefined, this.addFunc)
+  }
   ngOnInit(): void {
     this.info.get$ = this.tblSrv.getLibObs(
       this.info.getSub$.pipe(
@@ -74,7 +41,6 @@ export class AdGeneralEmployeeComponent {
           if (body === true) {
             return this.empSrv.getAll().pipe(
               switchMap(res => {
-                debugger
                 return of({
                   data: {
                     model: res.data,
@@ -132,7 +98,6 @@ export class AdGeneralEmployeeComponent {
                     ],
                   },
                 });
-
               })
             )
           } else {

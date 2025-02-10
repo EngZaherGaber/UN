@@ -5,13 +5,13 @@ import { MessageService } from 'primeng/api';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService) { }
   showSuccess(summary: string, detail: string) {
     this.messageService.add({
       severity: 'success',
       summary: summary,
       detail: detail,
-      sticky: true,
+      sticky: false,
     });
   }
 
@@ -20,7 +20,7 @@ export class ToastService {
       severity: 'info',
       summary: summary,
       detail: detail,
-      sticky: true,
+      sticky: false,
     });
   }
 
@@ -29,7 +29,7 @@ export class ToastService {
       severity: 'warn',
       summary: summary,
       detail: detail,
-      sticky: true,
+      sticky: false,
     });
   }
 
@@ -38,7 +38,7 @@ export class ToastService {
       severity: 'error',
       summary: summary,
       detail: detail,
-      sticky: true,
+      sticky: false,
     });
   }
 
@@ -47,7 +47,7 @@ export class ToastService {
       severity: 'contrast',
       summary: summary,
       detail: detail,
-      sticky: true,
+      sticky: false,
     });
   }
 
@@ -56,7 +56,7 @@ export class ToastService {
       severity: 'secondary',
       summary: summary,
       detail: detail,
-      sticky: true,
+      sticky: false,
     });
   }
 }

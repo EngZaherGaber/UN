@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Observable, first, of, catchError } from 'rxjs';
+import { Observable, first, of, catchError, ReplaySubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ToastService } from './toast.service';
+import { DyButton } from '../interfaces/dy-button';
+import { InfoTable } from '../interfaces/info-table';
 
 @Injectable({
   providedIn: 'root',
@@ -293,5 +295,76 @@ export class DyTableService {
       }
     });
     return schema;
+  }
+  getStandardButtons(deleteFunc?: (rowData: any) => void, editFunc?: (rowData: any) => void, displayFunc?: (rowData: any) => void) {
+    const Buttons: DyButton[] = [];
+    if (deleteFunc) {
+      Buttons.push({
+        isShow: true,
+        tooltip: 'Delete Item',
+        icon: 'pi pi-trash',
+        key: 'Delete',
+        severity: 'danger',
+        command: (rowData) => {
+          deleteFunc(rowData);
+        }
+      })
+    }
+    if (editFunc) {
+      Buttons.push({
+        isShow: true,
+        tooltip: 'Edit Item',
+        icon: 'pi pi-pencil',
+        key: 'Edit',
+        severity: 'success',
+        command: (rowData) => {
+          editFunc(rowData);
+        }
+      })
+    }
+    if (displayFunc) {
+      Buttons.push({
+        isShow: true,
+        tooltip: 'Item Details',
+        icon: 'pi pi-eye',
+        key: 'Details',
+        severity: 'secondary',
+        command: (rowData) => {
+          displayFunc(rowData);
+        }
+      })
+    }
+    return Buttons;
+  }
+  getStandardCaptionButtons(addFunc?: () => void) {
+    const Buttons: DyButton[] = [];
+    if (addFunc) {
+      Buttons.push({
+        isShow: true,
+        tooltip: 'Add New Item',
+        icon: 'pi pi-plus',
+        key: 'Add',
+        severity: 'primary',
+        command: () => {
+          addFunc();
+        }
+      },)
+    }
+    return Buttons;
+  }
+  getStandardInfo(
+    deleteFunc?: (rowData: any) => void,
+    editFunc?: (rowData: any) => void,
+    displayFunc?: (rowData: any) => void,
+    addFunc?: () => void): InfoTable {
+    const info: InfoTable = {
+      getSub$: new ReplaySubject(),
+      get$: new Observable(),
+      captionButton: [],
+      Buttons: [],
+    };
+    info.Buttons = this.getStandardButtons(deleteFunc, editFunc, displayFunc);
+    info.captionButton = this.getStandardCaptionButtons(addFunc);
+    return info;
   }
 }

@@ -10,13 +10,10 @@ import { LoginUser } from '../interfaces/login-user';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private router: Router,
-    private toastSrv: ToastService,
-    private http: HttpClient
-  ) { }
+  url = environment.api + 'users/';
+  constructor(private http: HttpClient) { }
   login(body: LoginUser): Observable<any> {
-    return this.http.post(environment.api + 'UserManagmentontroller/Login', body);
+    return this.http.post(this.url + 'Login', body);
   }
   sessionDataSave(data: { [key: string]: string }) {
     Object.keys(data).forEach(key => {
