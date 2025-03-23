@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   ContentChild,
   EventEmitter,
@@ -8,11 +7,8 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Table } from 'primeng/table';
-import { ExportDataService } from '../../services/export-data.service';
-import { PermissionService } from '../../services/permission.service';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
@@ -21,6 +17,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DyButton } from '../../interfaces/dy-button';
+import { UnSpinnerComponent } from '../un-spinner/un-spinner.component';
 
 @Component({
   selector: 'dynamic-table',
@@ -31,6 +28,7 @@ import { DyButton } from '../../interfaces/dy-button';
     CommonModule,
     ButtonModule,
     FormsModule,
+    UnSpinnerComponent,
     ToolbarModule,
   ],
   templateUrl: './dynamic-table.component.html',
@@ -50,7 +48,7 @@ export class DynamicTableComponent {
   @Input() dataKey: string = 'id';
   @Input() scrollHeight: string = '40vh';
   @Input() expandedTable: boolean = false;
-  @Input() changeColor: (rowData: any) => any = () => {};
+  @Input() changeColor: (rowData: any) => any = () => { };
   @Output() hitAction: EventEmitter<{ key: string; rowDataId: number }> =
     new EventEmitter<{ key: string; rowDataId: number }>();
   @Output() RowExpand: EventEmitter<any> = new EventEmitter<any>();
@@ -62,10 +60,10 @@ export class DynamicTableComponent {
     data: any[];
     columns: any[];
   } = {
-    loading: true,
-    data: [],
-    columns: [],
-  };
+      loading: true,
+      data: [],
+      columns: [],
+    };
   first: number = 0;
   rows: number = 5;
   totalRecords: number = 0;
@@ -80,14 +78,9 @@ export class DynamicTableComponent {
   @Input() lazyLoading: boolean = false;
   screenWidth = window.innerWidth;
   carsoulPage: number = 1;
-  constructor(
-    private exExcl: ExportDataService,
-    private perSrv: PermissionService,
-    private router: Router,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   ngAfterContentInit(): void {
     this.load.subscribe((body) => {
       if (this.columnsEvent && this.columnsEvent.length > 0) {
@@ -104,23 +97,23 @@ export class DynamicTableComponent {
       body.data =
         body.data.length > 0
           ? (body.data as any[]).map((row) => {
-              row.buttons = this.buttons.map((button) => ({ ...button }));
-              (body.columns as any[])
-                .filter(
-                  (col) =>
-                    col.HeaderType.toLowerCase() === 'datetime' ||
-                    col.HeaderType.toLowerCase() === 'datetimeo'
-                )
-                .forEach((col) => {
-                  if (row[col.field]) {
-                    const date = new Date(row[col.field]);
-                    row[col.field] = date;
-                  } else {
-                    row[col.field] = null;
-                  }
-                });
-              return row;
-            })
+            row.buttons = this.buttons.map((button) => ({ ...button }));
+            (body.columns as any[])
+              .filter(
+                (col) =>
+                  col.HeaderType.toLowerCase() === 'datetime' ||
+                  col.HeaderType.toLowerCase() === 'datetimeo'
+              )
+              .forEach((col) => {
+                if (row[col.field]) {
+                  const date = new Date(row[col.field]);
+                  row[col.field] = date;
+                } else {
+                  row[col.field] = null;
+                }
+              });
+            return row;
+          })
           : body.data;
       if (this.sortColumn) {
         body.data = body.data.sort((a: any, b: any) =>
@@ -188,7 +181,7 @@ export class DynamicTableComponent {
       this.filterdMode = false;
     }
   }
-  
+
   handleChange(e: any, field: string, rowData: any) {
     const actionEl = this.columnsEvent.find(
       (x) => x.field.toLowerCase() === field.toLowerCase()

@@ -304,7 +304,7 @@ export class DynamicAttributeService {
     return null;
   }
   getNameFromList(element: InputDynamic, id: string) {
-    return element.options.find((x) => x.id === id)?.name;
+    return element.options?.find((x) => x.id === id)?.name;
   }
   changeVisibleStatus(
     parent: string,

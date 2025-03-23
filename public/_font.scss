@@ -35,7 +35,7 @@ $small-mobile: 576px;
 @mixin responsive-headings {
   // Heading sizes
   h1 {
-    @include responsive-font-sizes(26px, 34px, 38px, 44px);
+    @include responsive-font-sizes(1.2px, 34px, 38px, 44px);
   }
 
   h2 {
@@ -61,7 +61,7 @@ $small-mobile: 576px;
   // Block elements with one set of font sizes
   div,
   p {
-    @include responsive-font-sizes(16px, 18px, 20px, 22px);
+    @include responsive-font-sizes(16px, 18px, 18px, 18px);
   }
 
   span,
@@ -76,7 +76,8 @@ $small-mobile: 576px;
   td > div > div,
   label,
   input,
-  a {
-    @include responsive-font-sizes(14px, 15px, 16px, 18px);
+  a,
+  ::ng-deep .p-tooltip {
+    @include responsive-font-sizes(0.625rem, 0.85rem, 0.975rem, 1rem);
   }
 }

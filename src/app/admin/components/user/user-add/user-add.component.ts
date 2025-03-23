@@ -3,7 +3,6 @@ import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { RoleService } from '../../../services/role.service';
-import { User } from '../../../../general/interfaces/user';
 import { UserService } from '../../../services/user.service';
 import { APIResponse } from '../../../../general/interfaces/response';
 import { ToastService } from '../../../../general/services/toast.service';
@@ -59,7 +58,7 @@ export class UserAddComponent {
     })
   }
   submit(event: any) {
-    this.userSrv.add(event.general).subscribe((res: APIResponse) => {
+    this.userSrv.add(event.general).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
         this.router.navigate(['admin/user']);

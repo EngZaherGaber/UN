@@ -13,7 +13,7 @@
                         <div class="animation-fade"
                             [style]="{'flex-direction':direction,'align-items':direction === 'row' ? 'center':'stretch' }">
                             <div *ngFor="let obj of objs[key]; let k = index" class="z-field"
-                                [style.display]="obj.visible ? 'block' : 'none'" style="padding-top: 5%;">
+                                [style.display]="obj.visible ? 'block' : 'none'" style="padding-top: 5px;">
                                 <div *ngIf="obj.visible">
                                     <div
                                         style="display: flex; justify-content: space-between; gap: -11px;margin-bottom: 20px !important;">

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
-import { ReplaySubject, Observable, of, switchMap } from 'rxjs';
+import { ReplaySubject, Observable, of, switchMap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../../general/services/toast.service';
 import { DyTableService } from '../../../../general/services/dy-table.service';
@@ -35,83 +35,104 @@ export class AdGeneralEmployeeComponent {
     this.info = tblSrv.getStandardInfo(undefined, undefined, undefined, this.addFunc)
   }
   ngOnInit(): void {
-    this.info.get$ = this.tblSrv.getLibObs(
+    this.info.get$ =
       this.info.getSub$.pipe(
         switchMap((body: any) => {
-          if (body === true) {
-            return this.empSrv.getAll().pipe(
+          if (body) {
+            return this.empSrv.getAll(body).pipe(
               switchMap(res => {
                 return of({
-                  data: {
-                    model: res.data,
-                    type: [
-                      {
-                        attribute: 'name',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                      {
-                        attribute: 'age',
-                        dynamic: null,
-                        dataType: 'int',
-                      },
-                      {
-                        attribute: 'email',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                      {
-                        attribute: 'address',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                      {
-                        attribute: 'isStudent',
-                        dynamic: null,
-                        dataType: 'bool',
-                      },
-                      {
-                        attribute: 'salary',
-                        dynamic: null,
-                        dataType: 'float',
-                      },
-                      {
-                        attribute: 'height',
-                        dynamic: null,
-                        dataType: 'float',
-                      },
-                      {
-                        attribute: 'birthDate',
-                        dynamic: null,
-                        dataType: 'DateTime',
-                      },
-                      {
-                        attribute: 'phoneNumber',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                      {
-                        attribute: 'nationality',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                    ],
-                  },
+                  data: res.data,
+                  columns: [
+                    {
+                      field: 'refNo',
+                      header: 'refNo',
+                      HeaderType: 'int',
+                    },
+                    {
+                      field: 'empName',
+                      header: 'empName',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'arabicName',
+                      header: 'arabicName',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'motherNameArabic',
+                      header: 'motherNameArabic',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'fatherNameArabic',
+                      header: 'fatherNameArabic',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'idNo',
+                      header: 'idNo',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'emailAddress',
+                      header: 'emailAddress',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'mobileNo',
+                      header: 'mobileNo',
+                      HeaderType: 'int',
+                    },
+                    {
+                      field: 'gender',
+                      header: 'gender',
+                      HeaderType: 'string',
+                    },
+                  ],
+                  loading: false,
+                  count: res.count
+                })
+              }),
+              catchError(err => {
+                return of({
+                  loading: false,
+                  data: [],
+                  columns: [
+                    {
+                      field: 'userName',
+                      header: 'userName',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'roleName',
+                      header: 'roleName',
+                      HeaderType: 'string',
+                    },
+                  ],
                 });
-              })
+              }),
+
             )
           } else {
             return of({
               loading: false,
               data: [],
-              columns: [],
+              columns: [
+                {
+                  field: 'userName',
+                  header: 'userName',
+                  HeaderType: 'string',
+                },
+                {
+                  field: 'roleName',
+                  header: 'roleName',
+                  HeaderType: 'string',
+                },
+              ],
             });
           }
         })
-      ),
-      ['Id', 'Deleted'],
-      ['isStudent']
-    );
-    this.info.getSub$.next(true);
+      );
   }
 }

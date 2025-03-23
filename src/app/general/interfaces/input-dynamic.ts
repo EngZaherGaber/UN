@@ -9,7 +9,7 @@ export interface InputDynamic {
   desc?: string;
   dataType: string;
   Max?: number;
-  required: boolean;
+  required?: boolean;
   options: any[];
   command?: (
     event?: any,
@@ -18,6 +18,6 @@ export interface InputDynamic {
     objs?: any,
     isListenAgain?: DynamicAttributeService
   ) => void;
-  visible?: boolean;
+  visible: boolean;
   source$?: string;
 }

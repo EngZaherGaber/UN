@@ -1,0 +1,43 @@
+@use "../../../../../public/_color.scss" as *;
+@use "../../../../../public/_mixin.scss" as *;
+.container {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  .not-found-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // box-shadow: 0px 0px 5px 0px $c5;
+    width: 100%;
+    // background: $c2;
+    overflow: hidden;
+    .logo {
+      position: relative;
+      height: 80%;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeIn 4s infinite;
+      #logo {
+        height: 30vh;
+        filter: drop-shadow(0px 0px 2px $c2);
+      }
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  }
+}

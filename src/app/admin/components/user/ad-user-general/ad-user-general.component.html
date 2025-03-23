@@ -1,6 +1,12 @@
 <ad-template [title]="'User'" [subTitle]="'Table'">
     <div id="con2" con2>
         <dynamic-table [tableName]="'User'" [load]="info.get$" [buttons]="info.Buttons"
-            [captionButton]="info.captionButton"></dynamic-table>
+            [captionButton]="info.captionButton" [lazyLoading]="true"
+            (onLazy)="info.getSub$.next($event)"></dynamic-table>
     </div>
 </ad-template>
+<p-dialog header="Reset Password" [appendTo]="'body'" [modal]="true" [(visible)]="showResetDialog"
+    [style]="{ width: '25rem' }">
+    <dynmaic-form (submit)="submit($event)" [direction]="'row'" [withBackBtn]="false" [justOneStep]="true"
+        [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+</p-dialog>

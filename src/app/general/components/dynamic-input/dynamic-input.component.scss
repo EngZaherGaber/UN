@@ -2,5 +2,10 @@
   min-width: 250px;
   label {
     z-index: 2;
+    padding-left: 15px;
   }
+}
+.required::after {
+  content: " *";
+  color: red;
 }

@@ -29,7 +29,7 @@
     opacity: 0.8;
 
     border-right: 10px solid $c5;
-    animation: forHeader1 5s forwards;
+    animation: forHeader1 1.5s forwards;
     transition: width 0.5s ease;
 
     h5 {
@@ -41,7 +41,7 @@
       margin-right: 10px;
       letter-spacing: 0.15em;
       opacity: 0;
-      animation: fadeIn 1s 3s forwards, typing 2.5s 3s steps(30, end);
+      animation: fadeIn 1s 2s forwards, typing 2.5s 2s steps(30, end);
     }
     small {
       padding-left: 40px;
@@ -49,7 +49,7 @@
       color: $c4;
       font-weight: bold;
       opacity: 0;
-      animation: jump 2s 4s forwards;
+      animation: jump 2s 3s forwards;
     }
   }
 }

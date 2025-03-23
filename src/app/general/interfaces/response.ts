@@ -1,6 +1,7 @@
-export interface APIResponse {
+export interface APIResponse <T>{
     success: boolean;
     message: string;
-    data: any;
-    error: any[]
+    data: T;
+    error: any[];
+    count?:number
 }

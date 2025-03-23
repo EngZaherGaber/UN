@@ -40,17 +40,18 @@ export class DynamicInputComponent {
     label: '',
     dataType: '',
     required: false,
+    visible: false,
     options: [],
   };
   @Input() FEcontrol: FormControl = new FormControl('');
   @ViewChild('drop') drop: Dropdown | null = null;
-  items: any[] = [];
+  items: any[] | undefined = [];
   autoCompleteValue: any;
   constructor() { }
   ngOnInit(): void {
     if (this.FEcontrol.value === null && this.FEcontrol.value !== 0) {
       if (this.object.dataType.toLowerCase() === 'autocomplete') {
-        const value = this.object.options.find(
+        const value = this.object.options?.find(
           (x) => x.id === this.FEcontrol.value
         );
         value ? (this.autoCompleteValue = value) : '';
@@ -71,7 +72,7 @@ export class DynamicInputComponent {
           this.FEcontrol.setValue(this.FEcontrol.value.id);
         }
       } else if (this.object.dataType.toLowerCase() === 'autocomplete') {
-        this.autoCompleteValue = this.object.options.find(
+        this.autoCompleteValue = this.object.options?.find(
           (x) => x.id === this.FEcontrol.value
         );
       } else if (this.object.dataType.toLowerCase() === 'datetime') {
@@ -91,7 +92,7 @@ export class DynamicInputComponent {
     return obj;
   }
   getSuggestions(event: any) {
-    this.items = this.object.options.filter((x) =>
+    this.items = this.object.options?.filter((x) =>
       (x.value as string).toLowerCase().includes(event.query.toLowerCase())
     );
   }
@@ -111,7 +112,7 @@ export class DynamicInputComponent {
       : null;
     if (this.drop) {
       if (searchValue) {
-        this.drop.options = this.object.options.filter((x) =>
+        this.drop.options = this.object.options?.filter((x) =>
           (x.name as string)
             .toLowerCase()
             .replace(/\s+/g, '')

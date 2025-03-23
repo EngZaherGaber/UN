@@ -10,6 +10,7 @@ import { generalInterceptor } from './general/interceptor/general.interceptor';
 import { AdTemplateComponent } from './admin/components/ad-template/ad-template.component';
 import { DynmaicFormComponent } from './general/components/dynmaic-form/dynmaic-form.component';
 import { DynamicTableComponent } from './general/components/dynamic-table/dynamic-table.component';
+import { UnSpinnerComponent } from './general/components/un-spinner/un-spinner.component';
 export const appConfig: ApplicationConfig = {
 
   providers: [
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
     AdTemplateComponent,
     DynmaicFormComponent,
     DynamicTableComponent,
+    UnSpinnerComponent,
     { provide: HTTP_INTERCEPTORS, useClass: generalInterceptor, multi: true }
   ],
 };

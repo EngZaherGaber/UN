@@ -1,6 +1,7 @@
 <ad-template [title]="'Employee'" [subTitle]="'Table'">
     <div id="con2" con2>
-        <dynamic-table [tableName]="'Employee'" [load]="info.get$" [buttons]="info.Buttons"
-            [captionButton]="info.captionButton" [columnsEvent]="columnsEvent"></dynamic-table>
+        <dynamic-table [tableName]="'Employee'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
+            [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"
+            [columnsEvent]="columnsEvent"></dynamic-table>
     </div>
 </ad-template>

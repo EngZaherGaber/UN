@@ -13,7 +13,7 @@ $small-mobile: 576px;
   margin-inline: 2%;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
-  animation: heightGrow 2s 5s forwards;
+  animation: heightGrow 2s 2s forwards;
 }
 
 @media screen and (min-width: $big) {

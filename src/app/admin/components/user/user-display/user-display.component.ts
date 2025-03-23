@@ -17,51 +17,51 @@ import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 })
 export class UserDisplayComponent {
   objs: { [key: string]: InputDynamic[] } = {};
+  userId?: number;
+  roles: { roleId: number, roleName: string }[] = [];
   constructor(
     roleSrv: RoleService,
     userSrv: UserService,
     route: ActivatedRoute) {
     route.params.pipe(
       switchMap(param => {
-        return forkJoin({ roles: roleSrv.getAll(), user: userSrv.getById(param['id']) });
+        this.userId = +param['id'];
+        return roleSrv.getAll();
       })
-    ).subscribe(res => {
-      this.objs = {
-        general: [
-          {
-            key: 'userName',
-            label: 'Username',
-            value: res.user.data.userName,
-            dataType: 'string',
-            options: [],
-            visible: true,
-            command: (value, element, form) => { },
-            required: true,
-          },
-          {
-            key: 'newPassword',
-            label: 'Password',
-            value: res.user.data.password,
-            dataType: 'string',
-            options: [],
-            visible: true,
-            command: (value, element, form) => { },
-            required: true,
-          },
-          {
-            key: 'roleId',
-            label: 'Role',
-            value: res.user.data.role.roleId,
-            dataType: 'list',
-            options: (res.roles.data as any[]).map(role => {
-              return { id: role.roleId, name: role.roleName }
-            }),
-            visible: true,
-            command: (value, element, form) => { },
-            required: true,
-          },
-        ],
-      };
-    })
+    )
+      .pipe(
+        switchMap(param => {
+          this.roles = param['data']
+          return userSrv.getById(this.userId ?? 0);
+        })
+      )
+      .subscribe(res => {
+        this.objs = {
+          general: [
+            {
+              key: 'userName',
+              label: 'Username',
+              value: res.data.userName,
+              dataType: 'string',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
+            {
+              key: 'roleId',
+              label: 'Role',
+              value: res.data.roleId,
+              dataType: 'list',
+              options: (this.roles).map(role => {
+                return { id: role.roleId, name: role.roleName }
+              }),
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
+          ],
+        };
+      })
   }
 }

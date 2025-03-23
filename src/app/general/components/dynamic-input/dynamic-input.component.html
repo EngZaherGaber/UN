@@ -6,7 +6,8 @@
                 }}</label>
             <p-select optionDisabled="disable" #drop (onChange)="drop.resetFilter()" [id]="object.label"
                 [appendTo]="'body'" [options]="object.options" [formControl]="FEcontrol" optionLabel="name"
-                [filter]="object.options.length > 4" optionValue="id" [showClear]="true" [checkmark]="true"></p-select>
+                [filter]="object.options ? object.options.length > 4 : false" optionValue="id" [showClear]="true"
+                [checkmark]="true"></p-select>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="List">
@@ -17,8 +18,9 @@
             <p-select optionDisabled="disable" [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'"
                 [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'" #drop
                 (onChange)="drop.resetFilter()" (onFilter)="filterList($event)" [appendTo]="'body'" [id]="object.label"
-                [options]="object.options" [formControl]="FEcontrol" [filter]="object.options.length > 4"
-                optionLabel="name" optionValue="id" [showClear]="true" [checkmark]="true"></p-select>
+                [options]="object.options" [formControl]="FEcontrol"
+                [filter]="object.options ? object.options.length > 4 : false" optionLabel="name" optionValue="id"
+                [showClear]="true" [checkmark]="true"></p-select>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="int">
@@ -45,6 +47,13 @@
                 [id]="object.label" [showButtons]="true" [min]="object.required ? 0.1 : null"></p-inputNumber>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
+        <ng-template ngSwitchCase="email">
+            <input [id]="object.label" [formControl]="FEcontrol" type="email" pInputText />
+            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+            <label [ngClass]="{ required: object.required }" [for]="object.label">{{
+                object.label
+                }}</label>
+        </ng-template>
         <ng-template ngSwitchCase="string">
             <input [id]="object.label" [formControl]="FEcontrol" type="text" pInputText />
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
@@ -60,13 +69,6 @@
                 object.label
                 }}</label>
         </ng-template>
-        <ng-template ngSwitchCase="bool">
-            <label [ngClass]="{ required: object.required }" [for]="object.label">{{
-                object.label
-                }}</label>
-            <p-checkbox [binary]="true" [formControl]="FEcontrol" [value]="object.value" inputId="binary"></p-checkbox>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
-        </ng-template>
         <ng-template ngSwitchCase="boolean">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{ object.label }}</label>
             <p-checkbox [binary]="true" [formControl]="FEcontrol" [value]="object.value" inputId="binary"></p-checkbox>
@@ -80,7 +82,7 @@
                 <small [id]="object.label + '-help'"> (AutoComplete)</small>
                 <p-autoComplete [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'" [id]="object.label"
                     [name]="object.key" [(ngModel)]="autoCompleteValue" field="value" (onSelect)="selectValue($event)"
-                    [dropdown]="true" [suggestions]="items" [disabled]="disableAutoComplete()"
+                    [dropdown]="true" [suggestions]="items ?? []" [disabled]="disableAutoComplete()"
                     (completeMethod)="getSuggestions($event)" [appendTo]="'body'"></p-autoComplete>
                 <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
             </div>
@@ -110,4 +112,13 @@
                 optionLabel="name" optionValue="id" [showClear]="object.required ? false : true"></p-multiSelect>
         </ng-template>
     </p-floatlabel>
+    <ng-template ngSwitchCase="bool">
+        <div style="display: flex;flex-direction: column;">
+            <label [ngClass]="{ required: object.required }" [for]="object.label">{{
+                object.label
+            }}</label>
+            <p-checkbox [binary]="true" [formControl]="FEcontrol" [value]="object.value" inputId="binary"></p-checkbox>
+            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+        </div>
+    </ng-template>
 </ng-container>
