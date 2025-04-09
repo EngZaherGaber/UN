@@ -12,6 +12,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'dynamic-input',
@@ -28,7 +29,8 @@ import { SelectModule } from 'primeng/select';
     FloatLabelModule,
     InputTextModule,
     PasswordModule,
-    SelectModule
+    SelectModule,
+    DatePickerModule
   ],
   templateUrl: './dynamic-input.component.html',
   styleUrl: './dynamic-input.component.scss',
@@ -47,6 +49,7 @@ export class DynamicInputComponent {
   @ViewChild('drop') drop: Dropdown | null = null;
   items: any[] | undefined = [];
   autoCompleteValue: any;
+  now: Date = new Date();
   constructor() { }
   ngOnInit(): void {
     if (this.FEcontrol.value === null && this.FEcontrol.value !== 0) {
@@ -65,6 +68,8 @@ export class DynamicInputComponent {
         this.FEcontrol.setValue(false);
       } else if (this.object.dataType.toLowerCase() === 'datetime') {
         this.FEcontrol.setValue(new Date());
+      } else if (this.object.dataType.toLowerCase() === 'year' || this.object.dataType.toLowerCase() === 'month') {
+        this.FEcontrol.setValue(null)
       }
     } else {
       if (this.object.dataType.toLowerCase() === 'list') {
@@ -102,6 +107,12 @@ export class DynamicInputComponent {
   }
   selectDate(event: any) {
     this.FEcontrol.setValue(new Date(new Date(event).setHours(3)));
+  }
+  selectYM(event: Date, type: 'mm' | 'yy') {
+    const date = new Date(event);
+    const yy = date.getFullYear();
+    const mm = date.getMonth() + 1;
+    this.FEcontrol.setValue(type === 'mm' ? mm : yy)
   }
   disableAutoComplete() {
     return this.FEcontrol.disabled;

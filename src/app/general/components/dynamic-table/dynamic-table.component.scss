@@ -4,35 +4,50 @@ tr {
   border-bottom: 1px solid;
   th,
   td {
-    min-width: 150px;
-    padding-block: 0 !important;
+    max-width: 250px;
+    width: 250px;
+    padding-block: 5px !important;
+    padding-inline: 20px !important;
     border: 0;
     display: flex;
     align-items: center;
-    & > div {
+    > div {
       display: flex;
       justify-content: left;
     }
-    & > small {
+    > small {
       display: flex;
       width: 100%;
       text-wrap: auto;
       padding-inline: 5px;
     }
+    .text-green-500 {
+      color: green;
+    }
+    .text-red-500 {
+      color: red;
+    }
   }
   td {
+    border-right: 0.5px solid;
     ::ng-deep .p-toggleswitch-slider {
       position: relative;
     }
+  }
+  .bool-cell {
+    justify-content: center;
+    max-width: 100px !important;
   }
   th:first-child,
   td:first-child {
     min-width: 200px;
     position: sticky;
+    justify-content: center;
     left: 0;
     padding-block: 0 !important;
     background-color: $c4;
-    box-shadow: 0px 0px 2px;
+    box-shadow: none !important;
+    z-index: 1;
   }
 }
 
@@ -43,17 +58,27 @@ tr {
     padding: 0;
   }
 }
+::ng-deep .p-toolbar-start {
+  gap: 10px;
+}
 ::ng-deep .p-paginator {
   flex-wrap: nowrap;
   .p-paginator-rpp-dropdown {
     max-width: 100px;
   }
 }
+::ng-deep .p-datatable-table-container table .p-button {
+  height: 35px;
+  width: 35px;
+}
 ::ng-deep
   .p-datatable-hoverable
   .p-datatable-tbody
   > tr:not(.p-datatable-row-selected):hover {
   background: var(--p-datatable-row-hover-background) !important;
+  color: var(--p-datatable-row-color) !important;
+  box-shadow: 0px 0px 5px;
+  position: relative;
 }
 ::ng-deep .p-datatable.p-datatable-sm .p-datatable-header {
   border: 0;

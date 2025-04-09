@@ -1,13 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
-import { ReplaySubject, Observable, of, switchMap, catchError } from 'rxjs';
+import { of, switchMap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../../general/services/toast.service';
 import { DyTableService } from '../../../../general/services/dy-table.service';
-import { DyButton } from '../../../../general/interfaces/dy-button';
 import { EmployeeService } from '../../../services/employee.service';
 import { InfoTable } from '../../../../general/interfaces/info-table';
+import { Employee } from '../../../../general/interfaces/employee';
+import { ConfirmService } from '../../../../general/services/confirm.service';
 
 @Component({
   selector: 'ad-general-employee',
@@ -17,22 +18,141 @@ import { InfoTable } from '../../../../general/interfaces/info-table';
 })
 export class AdGeneralEmployeeComponent {
   info: InfoTable;
-  columnsEvent = [
+  columns = [
     {
-      field: 'isStudent',
+      field: 'active',
+      header: 'Active',
+      HeaderType: 'bool',
     },
-  ]
+    {
+      field: 'empName',
+      header: 'English Name',
+      HeaderType: 'string',
+    },
+    {
+      field: 'arabicName',
+      header: 'arabicName',
+      HeaderType: 'string',
+    },
+    {
+      field: 'motherNameArabic',
+      header: 'motherNameArabic',
+      HeaderType: 'string',
+    },
+    {
+      field: 'fatherNameArabic',
+      header: 'fatherNameArabic',
+      HeaderType: 'string',
+    },
+    {
+      field: 'idNo',
+      header: 'idNo',
+      HeaderType: 'string',
+    },
+    {
+      field: 'emailAddress',
+      header: 'emailAddress',
+      HeaderType: 'string',
+    },
+    {
+      field: 'mobileNo',
+      header: 'mobileNo',
+      HeaderType: 'int',
+    },
+    {
+      field: 'gender',
+      header: 'gender',
+      HeaderType: 'string',
+    },
+    {
+      field: 'bankName',
+      header: 'Bank Name',
+      HeaderType: 'string',
+    },
+    {
+      field: 'typeOfAcc',
+      header: 'Type of Acc',
+      HeaderType: 'string',
+    },
+    {
+      field: 'typeOfContractName',
+      header: 'Type Of Contract Name',
+      HeaderType: 'string',
+    },
+
+  ];
+  changeColor(rowData: any) {
+    if (!rowData.active) {
+      return {
+        background: '#babfc5bf',
+        color: '#858585'
+      }
+    }
+    return '';
+  }
   addFunc: () => void = () => {
     this.router.navigate(['admin/employee/add'])
   }
-
+  editFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/employee/edit', rowData.refNo])
+  }
+  displayFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/employee/display', rowData.refNo])
+  }
+  insuranceFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/employee/insurance', rowData.refNo, rowData.empName])
+  }
+  salaryFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/employee/salary', rowData.refNo, rowData.empName])
+  }
+  contractFunc: (rowData: any) => void = (rowData) => {
+    this.router.navigate(['admin/employee/contract', rowData.refNo, rowData.empName])
+  }
   constructor(
-    private msgSrv: ToastService,
-    private tblSrv: DyTableService,
+    tblSrv: DyTableService,
     private router: Router,
-    private empSrv: EmployeeService
+    private empSrv: EmployeeService,
   ) {
-    this.info = tblSrv.getStandardInfo(undefined, undefined, undefined, this.addFunc)
+    this.info = tblSrv.getStandardInfo(undefined, this.editFunc, this.displayFunc, this.addFunc);
+    this.info.Buttons.push({
+      isShow: false,
+      tooltip: 'Employee Insurance',
+      icon: 'pi pi-book',
+      key: 'Delete',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.insuranceFunc(rowData);
+      },
+      showCommand: (body: any) => {
+        return body.active
+      }
+    });
+    this.info.Buttons.push({
+      isShow: false,
+      tooltip: 'Employee Salary',
+      icon: 'pi pi-dollar',
+      key: 'Delete',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.salaryFunc(rowData);
+      },
+      showCommand: (body: any) => {
+        return body.active
+      }
+    });
+    this.info.Buttons.push({
+      isShow: false,
+      tooltip: 'Employee Contract',
+      icon: 'pi pi-pencil',
+      key: 'Delete',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.contractFunc(rowData);
+      },
+      showCommand: (body: any) => {
+        return body.active
+      }
+    });
   }
   ngOnInit(): void {
     this.info.get$ =
@@ -43,53 +163,7 @@ export class AdGeneralEmployeeComponent {
               switchMap(res => {
                 return of({
                   data: res.data,
-                  columns: [
-                    {
-                      field: 'refNo',
-                      header: 'refNo',
-                      HeaderType: 'int',
-                    },
-                    {
-                      field: 'empName',
-                      header: 'empName',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'arabicName',
-                      header: 'arabicName',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'motherNameArabic',
-                      header: 'motherNameArabic',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'fatherNameArabic',
-                      header: 'fatherNameArabic',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'idNo',
-                      header: 'idNo',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'emailAddress',
-                      header: 'emailAddress',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'mobileNo',
-                      header: 'mobileNo',
-                      HeaderType: 'int',
-                    },
-                    {
-                      field: 'gender',
-                      header: 'gender',
-                      HeaderType: 'string',
-                    },
-                  ],
+                  columns: this.columns,
                   loading: false,
                   count: res.count
                 })
@@ -98,18 +172,7 @@ export class AdGeneralEmployeeComponent {
                 return of({
                   loading: false,
                   data: [],
-                  columns: [
-                    {
-                      field: 'userName',
-                      header: 'userName',
-                      HeaderType: 'string',
-                    },
-                    {
-                      field: 'roleName',
-                      header: 'roleName',
-                      HeaderType: 'string',
-                    },
-                  ],
+                  columns: this.columns,
                 });
               }),
 
@@ -118,18 +181,7 @@ export class AdGeneralEmployeeComponent {
             return of({
               loading: false,
               data: [],
-              columns: [
-                {
-                  field: 'userName',
-                  header: 'userName',
-                  HeaderType: 'string',
-                },
-                {
-                  field: 'roleName',
-                  header: 'roleName',
-                  HeaderType: 'string',
-                },
-              ],
+              columns: this.columns,
             });
           }
         })

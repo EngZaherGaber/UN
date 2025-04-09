@@ -11,7 +11,7 @@ export class CityService {
   url = environment.api + 'CityManagment';
   constructor(private http: HttpClient) { }
   getAll() {
-    return this.http.get<APIResponse<City[]>>(this.url + '/getAll');
+    return this.http.get<APIResponse<City[]>>(this.url);
   }
   getById(id: number) {
     return this.http.get<APIResponse<City>>(this.url + '/' + id);

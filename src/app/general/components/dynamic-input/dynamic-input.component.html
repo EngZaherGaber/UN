@@ -111,12 +111,28 @@
                 [id]="object.label" [options]="object.options" [formControl]="FEcontrol" [selectionLimit]="object.Max"
                 optionLabel="name" optionValue="id" [showClear]="object.required ? false : true"></p-multiSelect>
         </ng-template>
+        <ng-template ngSwitchCase="year">
+            <label [ngClass]="{ required: object.required }" [for]="object.label">{{
+                object.label
+                }}</label>
+            <p-datepicker [minDate]="now" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'yy')"
+                appendTo="body" view="year" dateFormat="yy"></p-datepicker>
+            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+        </ng-template>
+        <ng-template ngSwitchCase="month">
+            <label [ngClass]="{ required: object.required }" [for]="object.label">{{
+                object.label
+                }}</label>
+            <p-datepicker [minDate]="now" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'mm')"
+                appendTo="body" view="month" dateFormat="mm"></p-datepicker>
+            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+        </ng-template>
     </p-floatlabel>
     <ng-template ngSwitchCase="bool">
         <div style="display: flex;flex-direction: column;">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
-            }}</label>
+                }}</label>
             <p-checkbox [binary]="true" [formControl]="FEcontrol" [value]="object.value" inputId="binary"></p-checkbox>
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </div>

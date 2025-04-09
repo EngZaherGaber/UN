@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ClientService } from '../../../services/client.service';
 import { Router } from '@angular/router';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
@@ -8,13 +8,14 @@ import { DynmaicFormComponent } from '../../../../general/components/dynmaic-for
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 
 @Component({
-  selector: 'app-client-add',
-  imports: [AdTemplateComponent, DynmaicFormComponent],
+  selector: 'client-add',
+  imports: [DynmaicFormComponent],
   templateUrl: './client-add.component.html',
   styleUrl: './client-add.component.scss'
 })
 export class ClientAddComponent {
   objs: { [key: string]: InputDynamic[] } = {};
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
   constructor(private clntSrv: ClientService, private msgSrv: ToastService, private router: Router) {
     this.objs = {
       general: [
@@ -32,10 +33,10 @@ export class ClientAddComponent {
     };
   }
   submit(event: any) {
-    this.clntSrv.add(event.general).subscribe((res: APIResponse<any>) => {
+    this.clntSrv.add(event).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
-        this.router.navigate(['admin/client']);
+        this.close.emit(true)
       } else {
         this.msgSrv.showError('Error!', res.message);
       }

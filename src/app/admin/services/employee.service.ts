@@ -13,7 +13,7 @@ export class EmployeeService {
   url = environment.api + 'UnEmployeeManagment';
   constructor(private http: HttpClient) { }
   getAll(body: TableLazyLoadEvent) {
-    return this.http.post<APIResponse<Employee[]>>(this.url + '/getAll', body);
+    return this.http.post<APIResponse<Employee[]>>(this.url + '/GetAllUNEmployee', body);
   }
   getById(id: number) {
     return this.http.get<APIResponse<Employee>>(this.url + '/' + id);
@@ -26,5 +26,8 @@ export class EmployeeService {
   }
   edit(body: Employee, id: number) {
     return this.http.put<APIResponse<any>>(this.url + '/' + id, body);
+  }
+  disable(id: number) {
+    return this.http.patch<APIResponse<any>>(this.url + '/' + id, {});
   }
 }

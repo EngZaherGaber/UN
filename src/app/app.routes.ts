@@ -23,14 +23,13 @@ import { AdTeamGeneralComponent } from './admin/components/team/ad-team-general/
 import { TeamAddComponent } from './admin/components/team/team-add/team-add.component';
 import { TeamEditComponent } from './admin/components/team/team-edit/team-edit.component';
 import { TeamDisplayComponent } from './admin/components/team/team-display/team-display.component';
-import { AdPurchaseOrderGeneralComponent } from './admin/components/purchase-order/ad-purchase-order-general/ad-purchase-order-general.component';
-import { PoAddComponent } from './admin/components/purchase-order/po-add/po-add.component';
-import { PoEditComponent } from './admin/components/purchase-order/po-edit/po-edit.component';
-import { PoDisplayComponent } from './admin/components/purchase-order/po-display/po-display.component';
-import { AdBankGeneralComponent } from './admin/components/bank/ad-bank-general/ad-bank-general.component';
-import { BankAddComponent } from './admin/components/bank/bank-add/bank-add.component';
-import { BankEditComponent } from './admin/components/bank/bank-edit/bank-edit.component';
-import { BankDisplayComponent } from './admin/components/bank/bank-display/bank-display.component';
+import { SettingComponent } from './admin/components/setting/setting.component';
+import { AdGeneralRateComponent } from './admin/components/ad-general-rate/ad-general-rate.component';
+import { EmEditComponent } from './admin/components/employee/em-edit/em-edit.component';
+import { EmDisplayComponent } from './admin/components/employee/em-display/em-display.component';
+import { EmInsuranceComponent } from './admin/components/employee/em-insurance/em-insurance.component';
+import { EmSalaryComponent } from './admin/components/employee/em-salary/em-salary.component';
+import { EmContractComponent } from './admin/components/employee/em-contract/em-contract.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,31 +42,12 @@ export const routes: Routes = [
       {
         path: 'employee', children: [
           { path: '', component: AdGeneralEmployeeComponent, },
-          { path: 'add', component: EmAddComponent }
-        ]
-      },
-      {
-        path: 'bank', children: [
-          { path: '', component: AdBankGeneralComponent, },
-          { path: 'add', component: BankAddComponent },
-          { path: 'edit/:id', component: BankEditComponent },
-          { path: 'display/:id', component: BankDisplayComponent },
-        ]
-      },
-      {
-        path: 'purchase-order', children: [
-          { path: '', component: AdPurchaseOrderGeneralComponent, },
-          { path: 'add', component: PoAddComponent },
-          { path: 'edit/:id', component: PoEditComponent },
-          { path: 'display/:id', component: PoDisplayComponent },
-        ]
-      },
-      {
-        path: 'team', children: [
-          { path: '', component: AdTeamGeneralComponent, },
-          { path: 'add', component: TeamAddComponent },
-          { path: 'edit/:id', component: TeamEditComponent },
-          { path: 'display/:id', component: TeamDisplayComponent },
+          { path: 'add', component: EmAddComponent },
+          { path: 'edit/:id', component: EmEditComponent },
+          { path: 'display/:id', component: EmDisplayComponent },
+          { path: 'insurance/:id/:name', component: EmInsuranceComponent },
+          { path: 'salary/:id/:name', component: EmSalaryComponent },
+          { path: 'contract/:id/:name', component: EmContractComponent }
         ]
       },
       {
@@ -79,20 +59,18 @@ export const routes: Routes = [
         ]
       },
       {
-        path: 'client', children: [
-          { path: '', component: AdClientGeneralComponent, },
-          { path: 'add', component: ClientAddComponent },
-          { path: 'edit/:id', component: ClientEditComponent },
-          { path: 'display/:id', component: ClientDisplayComponent },
-        ]
-      },
-      {
         path: 'user', children: [
           { path: '', component: AdUserGeneralComponent, },
           { path: 'add', component: UserAddComponent },
           { path: 'edit/:id', component: UserEditComponent },
           { path: 'display/:id', component: UserDisplayComponent },
         ]
+      },
+      {
+        path: 'setting', component: SettingComponent,
+      },
+      {
+        path: 'setting/:subTitle', component: SettingComponent,
       },
       { path: '', component: AdHomeComponent },
       { path: '**', component: AdNotFoundComponent }],

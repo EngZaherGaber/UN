@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { Router } from '@angular/router';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
@@ -9,13 +9,14 @@ import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { ClientService } from '../../../services/client.service';
 
 @Component({
-  selector: 'app-team-add',
-  imports: [AdTemplateComponent, DynmaicFormComponent],
+  selector: 'team-add',
+  imports: [DynmaicFormComponent],
   templateUrl: './team-add.component.html',
   styleUrl: './team-add.component.scss'
 })
 export class TeamAddComponent {
   objs: { [key: string]: InputDynamic[] } = {};
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private teamSrv: TeamService,
     private msgSrv: ToastService,
@@ -23,7 +24,6 @@ export class TeamAddComponent {
     private clntSrv: ClientService
   ) {
     this.clntSrv.getAll().subscribe(res => {
-
       this.objs = {
         general: [
           {
@@ -54,10 +54,10 @@ export class TeamAddComponent {
 
   }
   submit(event: any) {
-    this.teamSrv.add(event.general).subscribe((res: APIResponse<any>) => {
+    this.teamSrv.add(event).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
-        this.router.navigate(['admin/team']);
+        this.close.emit(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }

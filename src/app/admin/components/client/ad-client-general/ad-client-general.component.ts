@@ -9,34 +9,53 @@ import { DyTableService } from '../../../../general/services/dy-table.service';
 import { ToastService } from '../../../../general/services/toast.service';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
+import { DialogModule } from 'primeng/dialog';
+import { CommonModule } from '@angular/common';
+import { ClientAddComponent } from '../client-add/client-add.component';
+import { ClientEditComponent } from '../client-edit/client-edit.component';
+import { ClientDisplayComponent } from '../client-display/client-display.component';
+import { Client } from '../../../../general/interfaces/client';
 
 @Component({
-  selector: 'app-ad-client-general',
-  imports: [AdTemplateComponent,
-    DynamicTableComponent,],
+  selector: 'ad-client-general',
+  imports: [
+    DynamicTableComponent,
+    DialogModule,
+    CommonModule,
+    ClientAddComponent,
+    ClientEditComponent,
+    ClientDisplayComponent
+  ],
   templateUrl: './ad-client-general.component.html',
   styleUrl: './ad-client-general.component.scss'
 })
 export class AdClientGeneralComponent {
   info: InfoTable;
   resetObjs: { [key: string]: InputDynamic[] } = {};
-  showResetDialog: boolean = false;
+  addDialog: boolean = false;
+  editDialog: boolean = false;
+  displayDialog: boolean = false;
+  editClientId: number = 0;
+  displayClientId: number = 0;
+
   addFunc: () => void = () => {
-    this.router.navigate(['admin/client/add'])
+    this.addDialog = true;
+  }
+  editFunc: (rowData: Client) => void = (rowData: Client) => {
+    this.editClientId = rowData.clientId;
+    this.editDialog = true;
+  }
+  displayFunc: (rowData: Client) => void = (rowData: Client) => {
+    this.displayClientId = rowData.clientId;
+    this.displayDialog = true;
   }
   deleteFunc: (rowData: any) => void = (rowData) => {
     this.confirm.deleteConfirm((obj) => {
       this.clntSrv.delete(obj).subscribe(res => {
-        this.msgSrv.showWarn('Success!', 'Client Deleted');
+        this.msgSrv.showSuccess('Success!', 'Client Deleted');
         this.info.getSub$.next({})
       });
     }, rowData.clientId)
-  }
-  editFunc: (rowData: any) => void = (rowData) => {
-    this.router.navigate(['admin/client/edit/' + rowData.clientId])
-  }
-  displayFunc: (rowData: any) => void = (rowData) => {
-    this.router.navigate(['admin/client/display/' + rowData.clientId])
   }
 
 
@@ -93,11 +112,6 @@ export class AdClientGeneralComponent {
                 {
                   field: 'clientName',
                   header: 'clientName',
-                  HeaderType: 'string',
-                },
-                {
-                  field: 'roleName',
-                  header: 'roleName',
                   HeaderType: 'string',
                 },
               ],

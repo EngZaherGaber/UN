@@ -2,17 +2,17 @@
 <p-table [value]="body.data" [paginator]="true" [rowHover]="true" [rows]="5" [rowsPerPageOptions]="[5,10,25,50,100]"
     [scrollable]="true" stateStorage="session" [stateKey]="tableName" [alwaysShowPaginator]="dt.value.length > 0"
     [exportFilename]="tableName" [lazy]="lazyLoading" [size]="'small'" stripedRows (onLazyLoad)="loadCarsLazy($event)"
-    [scrollHeight]="scrollHeight" (onRowExpand)="RowExpand.emit($event)" #dt sortMode="single"
+    [scrollHeight]="scrollHeight" (onRowExpand)="RowExpand.emit($event)" #dt sortMode="multiple"
     [paginatorDropdownAppendTo]="'body'" [columns]="body.columns" [dataKey]="dataKey" columnResizeMode="expand"
     [filterDelay]="0" [totalRecords]="totalRecords" [showLoader]="false" [loading]="body.loading" [rowHover]="true"
     [responsive]="true" [resizableColumns]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
     [autoLayout]="true" [globalFilterFields]="['Name']" [tableStyle]="{ 'min-width': '100%'}">
     <ng-template pTemplate="caption">
-        <p-toolbar>
+        <p-toolbar >
             <ng-template #start>
-                <ng-container *ngIf="captionButton && captionButton.length > 0">
-                    <ng-container *ngFor="let btn of captionButton">
+                <ng-container *ngIf="captionButton && captionButton.length > 0" >
+                    <ng-container *ngFor="let btn of captionButton" >
                         <p-button [severity]="btn.severity ?? 'primary'"
                             *ngIf="btn && btn.permission && ((btn.showCommand && btn.showCommand(body.data) ) || (!btn.showCommand && true)) && btn.isShow"
                             [pTooltip]="btn.tooltip" [icon]="btn.icon ?? ''"
@@ -26,7 +26,7 @@
                 </ng-container>
             </ng-template>
             <ng-template #end>
-                <p-button *ngIf="dt.value.length > 0" pTooltip="XLS" label="Export" severity="success"
+                <p-button *ngIf="dt.value.length > 0" pTooltip="XLS" label="Export" severity="secondary"
                     icon="pi pi-upload" (onClick)="dt.exportCSV()" />
             </ng-template>
         </p-toolbar>
@@ -35,13 +35,14 @@
         <tr pFrozenRow>
             <th pFrozenColumn style="max-width: 250px !important;justify-content: center;">
                 <div>
-                    <p-button *ngIf="body.data.length > 0" icon="pi pi-filter" [rounded]="true" [text]="true"
-                        pTooltip="Use custom filters" (click)="filterdMode = !filterdMode" severity="success" />
-                    <p-button *ngIf="filterdMode" icon="pi pi-filter-slash" [rounded]="true" [text]="true"
-                        pTooltip="Clear filters" (click)="dt.clear();clearFilter()" severity="danger" />
+                    <p-button icon="pi pi-filter" [rounded]="true" [text]="true" pTooltip="Use custom filters"
+                        *ngIf="dt.value.length > 0" (click)="filterdMode = !filterdMode" severity="primary" />
+                    <p-button icon="pi pi-filter-slash" [rounded]="true" [text]="true" pTooltip="Clear filters"
+                        *ngIf="filterdMode" (click)="dt.clear();clearFilter()" severity="secondary" />
                 </div>
             </th>
-            <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+            <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field"
+                [style]="col.HeaderType === 'bool' ? {'max-width':'100px !important'} : ''">
                 <div>
                     <small>{{col.header}}</small>
                     <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -51,16 +52,20 @@
         <tr *ngIf="filterdMode" pFrozenRow>
             <th pFrozenColumn style="max-width: 250px !important;">
             </th>
-            <th *ngFor="let col of columns" pResizableColumn>
+            <th *ngFor="let col of columns" pResizableColumn [ngClass]="col.HeaderType === 'bool' ? 'bool-cell' : ''"
+                [style]="col.HeaderType === 'bool' ? {'max-width':'100px !important'} : ''">
                 <div [ngSwitch]="col.HeaderType" [class]="'filter-div ' + col.HeaderType">
                     <div *ngSwitchCase="'bool'">
-                        <p-columnFilter type="boolean" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                        <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
+                            [placeholder]="col.field"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'Toggle'">
-                        <p-columnFilter type="boolean" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                        <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
+                            [placeholder]="col.field"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'toggle'">
-                        <p-columnFilter type="boolean" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                        <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
+                            [placeholder]="col.field"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'DateTime'">
                         <p-columnFilter type="date" [field]="col.field" [placeholder]="col.field"
@@ -114,16 +119,22 @@
                         (click)="btn.command(rowData,rowData.buttons,dt);hitAction.emit({key:btn.key,rowDataId:rowData.Id})" />
                 </ng-container>
             </td>
-            <td *ngFor="let col of columns">
+            <td *ngFor="let col of columns" [ngClass]="col.HeaderType === 'bool' ? 'bool-cell' : ''"
+                [style]="col.HeaderType === 'bool' ? {'max-width':'100px !important'} : ''">
                 <small *ngIf="col.HeaderType != 'DateTime' &&
                          col.HeaderType != 'DateTimeO' &&
                           col.HeaderType != 'Toggle' &&
                           col.HeaderType != 'json' &&
                           col.HeaderType !== 'float' &&
+                          col.HeaderType !== 'bool' &&
                           col.HeaderType !== 'double' ">
                     {{rowData[col.field]}}
                 </small>
-                <div *ngIf="col.HeaderType === 'DateTime' || col.HeaderType === 'DateTimeO' ">
+                <i *ngIf="col.HeaderType === 'bool'" class="pi" [ngClass]="{
+                                        'text-green-500 pi-check-circle': rowData[col.field],
+                                        'text-red-500 pi-times-circle': !rowData[col.field]
+                                    }"></i>
+                <div *ngIf="col.HeaderType === 'DateTime' ">
                     <small *ngIf="rowData[col.field] !== null">
                         {{ rowData[col.field] | date: 'MM/dd/yyyy'}}
                     </small>
@@ -131,13 +142,21 @@
                         {{ rowData[col.field] }}
                     </small>
                 </div>
+                <div *ngIf="col.HeaderType === 'DateTimeO' ">
+                    <small *ngIf="rowData[col.field] !== null">
+                        {{ rowData[col.field] | date: 'MM/dd/yyyy HH:mm'}}
+                    </small>
+                    <small *ngIf="rowData[col.field] === null">
+                        {{ rowData[col.field] }}
+                    </small>
+                </div>
+
                 <div *ngIf="col.HeaderType === 'float' || col.HeaderType === 'double' ">
                     <small *ngIf="rowData[col.field] !== null">
                         {{ rowData[col.field] | number:'1.2-2'}}
                     </small>
                 </div>
                 <div *ngIf="col.HeaderType == 'Toggle' ">
-
                     <p-toggleswitch [pTooltip]="rowData[col.field] ? 'True': 'False'"
                         *ngIf="hasToggleShow(col.field,rowData)" [(ngModel)]=" rowData[col.field]"
                         [disabled]="hasToggledisable(col.field,rowData) ?? false"

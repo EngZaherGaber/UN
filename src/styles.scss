@@ -17,16 +17,16 @@ body {
     box-sizing: border-box;
   }
   #con2 {
-     width: 96%;
-  height: 0%;
-  opacity: 0;
-  background-color: $c4;
-  grid-column: span 2;
-  margin-top: -5px;
-  margin-inline: 2%;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  animation: heightGrow 2s 2s forwards;
+    width: 96%;
+    height: 0%;
+    opacity: 0;
+    background-color: $c4;
+    grid-column: span 2;
+    margin-top: -5px;
+    margin-inline: 2%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    animation: heightGrow 2s 2s forwards;
   }
 }
 body {

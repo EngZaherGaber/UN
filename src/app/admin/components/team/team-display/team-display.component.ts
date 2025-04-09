@@ -1,25 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { Client } from '../../../../general/interfaces/client';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
-import { APIResponse } from '../../../../general/interfaces/response';
 import { ToastService } from '../../../../general/services/toast.service';
 import { ClientService } from '../../../services/client.service';
 import { TeamService } from '../../../services/team.service';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 
 @Component({
-  selector: 'app-team-display',
-  imports: [AdTemplateComponent, DynmaicFormComponent],
+  selector: 'team-display',
+  imports: [DynmaicFormComponent],
   templateUrl: './team-display.component.html',
   styleUrl: './team-display.component.scss'
 })
 export class TeamDisplayComponent {
-objs: { [key: string]: InputDynamic[] } = {};
+  objs: { [key: string]: InputDynamic[] } = {};
   clients: Client[] = [];
-  teamId: number = 0;
+  @Input() teamId: number = 0;
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private teamSrv: TeamService,
     private msgSrv: ToastService,
@@ -29,7 +29,9 @@ objs: { [key: string]: InputDynamic[] } = {};
   ) {
     route.params.pipe(
       switchMap(param => {
-        this.teamId = +param['id'];
+        if (this.teamId) {
+          this.teamId = +param['id'];
+        }
         return clntSrv.getAll();
       })
     )

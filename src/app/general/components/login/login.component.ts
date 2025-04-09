@@ -41,7 +41,7 @@ export class LoginComponent {
     authSrv.sessionDataClear();
   }
   submit(event: any) {
-    this.authSrv.login(event.general).subscribe(res => {
+    this.authSrv.login(event).subscribe(res => {
       const subToken = this.helper.decodeToken(res.data);
       const exp = this.convertStringToDate(subToken.expDate as string)?.toISOString();
       const obj = {

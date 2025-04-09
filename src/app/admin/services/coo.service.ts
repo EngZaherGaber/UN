@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { APIResponse } from '../../general/interfaces/response';
 import { User } from '../../general/interfaces/user';
 import { COO } from '../../general/interfaces/coo';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ import { COO } from '../../general/interfaces/coo';
 export class CooService {
   url = environment.api + 'CooManagment';
   constructor(private http: HttpClient) { }
-  getAll() {
-    return this.http.get<APIResponse<COO[]>>(this.url);
+  getAll(body: TableLazyLoadEvent) {
+    return this.http.post<APIResponse<COO[]>>(this.url + '/GetAll',body);
   }
   getById(id: number) {
     return this.http.get<APIResponse<COO>>(this.url + '/' + id);

@@ -11,6 +11,8 @@ import { AdTemplateComponent } from './admin/components/ad-template/ad-template.
 import { DynmaicFormComponent } from './general/components/dynmaic-form/dynmaic-form.component';
 import { DynamicTableComponent } from './general/components/dynamic-table/dynamic-table.component';
 import { UnSpinnerComponent } from './general/components/un-spinner/un-spinner.component';
+import { Base } from 'primeng/base';
+import { Theme } from '@primeng/themes';
 export const appConfig: ApplicationConfig = {
 
   providers: [
@@ -19,7 +21,9 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme: {
         preset: MyPreset,
-        options: {},
+        options: {
+          darkModeSelector: '.my-app-dark'
+        }
       },
     }),
     MessageService,

@@ -11,7 +11,7 @@
                     [ngSwitch]="activeIndex">
                     <ng-template class="p-fluid row p-mb-6 animation-fade" [ngSwitchCase]="i">
                         <div class="animation-fade"
-                            [style]="{'flex-direction':direction,'align-items':direction === 'row' ? 'center':'stretch' }">
+                            [style]="{'display':display,'flex-direction':direction,'align-items':direction === 'row' ? 'center':'stretch' }">
                             <div *ngFor="let obj of objs[key]; let k = index" class="z-field"
                                 [style.display]="obj.visible ? 'block' : 'none'" style="padding-top: 5px;">
                                 <div *ngIf="obj.visible">

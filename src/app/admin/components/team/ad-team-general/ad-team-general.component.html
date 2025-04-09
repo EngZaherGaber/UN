@@ -1,6 +1,14 @@
-<ad-template [title]="'User'" [subTitle]="'Table'">
-    <div id="con2" con2>
-        <dynamic-table [tableName]="'User'" [load]="info.get$" [buttons]="info.Buttons"
-            [captionButton]="info.captionButton" (onLazy)="info.getSub$.next($event)"></dynamic-table>
-    </div>
-</ad-template>
+<dynamic-table [tableName]="'User'" [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"
+    (onLazy)="info.getSub$.next($event)"></dynamic-table>
+<p-dialog header="New Client" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '25rem' }">
+    <team-add (close)="info.getSub$.next(true);addDialog = false" *ngIf="addDialog"></team-add>
+</p-dialog>
+<p-dialog header="Edit Client" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog" [style]="{ width: '25rem' }">
+    <team-edit [teamId]="editTeamId" (close)="info.getSub$.next(true);editDialog = false"
+        *ngIf="editDialog"></team-edit>
+</p-dialog>
+<p-dialog header="New Client" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog"
+    [style]="{ width: '25rem' }">
+    <team-display [teamId]="displayTeamId" (close)="info.getSub$.next(true);displayDialog = false"
+        *ngIf="displayDialog"></team-display>
+</p-dialog>

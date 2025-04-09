@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { APIResponse } from '../../../../general/interfaces/response';
@@ -10,20 +10,26 @@ import { switchMap } from 'rxjs';
 import { Client } from '../../../../general/interfaces/client';
 
 @Component({
-  selector: 'app-client-edit',
-  imports: [AdTemplateComponent, DynmaicFormComponent],
+  selector: 'client-edit',
+  imports: [DynmaicFormComponent],
   templateUrl: './client-edit.component.html',
   styleUrl: './client-edit.component.scss'
 })
 export class ClientEditComponent {
   objs: { [key: string]: InputDynamic[] } = {};
-  clientId: number = 0;
-  constructor(route: ActivatedRoute, private clntSrv: ClientService, private msgSrv: ToastService, private router: Router) {
-    route.params
+  @Input() clientId: number = 0;
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  constructor(private route: ActivatedRoute, private clntSrv: ClientService, private msgSrv: ToastService, private router: Router) {
+  }
+  ngOnInit() {
+    this.route.params
       .pipe(
         switchMap(param => {
-          this.clientId = +param['id'];
-          return this.clntSrv.getById(this.clientId)
+          if (param['id']) {
+            return this.clntSrv.getById(+param['id'])
+          } else {
+            return this.clntSrv.getById(this.clientId)
+          }
         })
       )
       .subscribe(res => {
@@ -54,10 +60,10 @@ export class ClientEditComponent {
       })
   }
   submit(event: any) {
-    this.clntSrv.edit(event.general, this.clientId).subscribe((res: APIResponse<any>) => {
+    this.clntSrv.edit(event, this.clientId).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
-        this.router.navigate(['admin/client']);
+        this.close.emit(true)
       } else {
         this.msgSrv.showError('Error!', res.message);
       }

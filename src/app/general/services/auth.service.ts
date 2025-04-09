@@ -10,9 +10,10 @@ import { LoginUser } from '../interfaces/login-user';
   providedIn: 'root',
 })
 export class AuthService {
-  url = environment.api + 'users/';
+  url = environment.api + 'UserManagement/';
   constructor(private http: HttpClient) { }
   login(body: LoginUser): Observable<any> {
+    debugger
     return this.http.post(this.url + 'Login', body);
   }
   sessionDataSave(data: { [key: string]: string }) {

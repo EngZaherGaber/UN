@@ -51,6 +51,15 @@ export class DynamicTableComponent {
   @Input() changeColor: (rowData: any) => any = () => { };
   @Output() hitAction: EventEmitter<{ key: string; rowDataId: number }> =
     new EventEmitter<{ key: string; rowDataId: number }>();
+  @Input() captionButton: DyButton[] = [];
+  @Input() columnsEvent: {
+    field: string;
+    command?: (event: any, field: string, rowData: any) => void;
+    permission?: string;
+    visible?: (rowData: any) => boolean;
+    disable?: (field: string, rowData: any) => boolean;
+  }[] = [];
+  @Input() lazyLoading: boolean = false;
   @Output() RowExpand: EventEmitter<any> = new EventEmitter<any>();
   @Output() onLazy: EventEmitter<any> = new EventEmitter<any>();
   filterdMode: boolean = false;
@@ -67,21 +76,14 @@ export class DynamicTableComponent {
   first: number = 0;
   rows: number = 5;
   totalRecords: number = 0;
-  @Input() captionButton: DyButton[] = [];
-  @Input() columnsEvent: {
-    field: string;
-    command?: (event: any, field: string, rowData: any) => void;
-    permission?: string;
-    visible?: (rowData: any) => boolean;
-    disable?: (field: string, rowData: any) => boolean;
-  }[] = [];
-  @Input() lazyLoading: boolean = false;
+
   screenWidth = window.innerWidth;
   carsoulPage: number = 1;
   constructor() { }
 
   ngOnInit(): void { }
   ngAfterContentInit(): void {
+    this.filterdMode = sessionStorage.getItem(this.tableName) ? true : false;
     this.load.subscribe((body) => {
       if (this.columnsEvent && this.columnsEvent.length > 0) {
         this.columnsEvent.forEach((col) => {
@@ -157,6 +159,7 @@ export class DynamicTableComponent {
   }
   clearFilter() {
     this.table?.reset();
+    sessionStorage.removeItem(this.tableName)
   }
   repeairHeader(
     columns: { field: string; header: string; HeaderType: string }[]
@@ -253,4 +256,5 @@ export class DynamicTableComponent {
   getCorrectDate(date: Date) {
     return date;
   }
+
 }

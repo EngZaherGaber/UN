@@ -304,7 +304,7 @@ export class DyTableService {
         tooltip: 'Delete Item',
         icon: 'pi pi-trash',
         key: 'Delete',
-        severity: 'danger',
+        severity: 'secondary',
         command: (rowData) => {
           deleteFunc(rowData);
         }
@@ -316,7 +316,7 @@ export class DyTableService {
         tooltip: 'Edit Item',
         icon: 'pi pi-pencil',
         key: 'Edit',
-        severity: 'success',
+        severity: 'secondary',
         command: (rowData) => {
           editFunc(rowData);
         }

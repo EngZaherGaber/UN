@@ -69,7 +69,7 @@ export class UserEditComponent {
   submit(event: any) {
     const body = {
       userId: this.userId,
-      ...event.general
+      ...event
     }
     this.userSrv.edit(body, this.userId ?? 0).subscribe((res: APIResponse<any>) => {
       if (res.success) {

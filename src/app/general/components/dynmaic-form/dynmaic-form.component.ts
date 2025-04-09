@@ -39,6 +39,7 @@ export class DynmaicFormComponent {
   @Input() preRoute: string = '';
   @Input() scrollHeight: string = '';
   @Input() direction: string = 'column';
+  @Input() display: string = 'grid';
   @Input() submitLabel: string = '';
   @Input() isShow: boolean = false;
   @Input() withBackBtn: boolean = true;
@@ -112,6 +113,7 @@ export class DynmaicFormComponent {
   }
 
   listenAgain() {
+    console.log('hi')
     this.keys.forEach((key) => {
       if (
         !this.withIdSteps.includes(key) &&
@@ -227,7 +229,7 @@ export class DynmaicFormComponent {
       this.withIdSteps
     );
     this.form;
-    this.submit.emit(body);
+    this.submit.emit(this.justOneStep ? body.general : body);
 
     this.keys.forEach((key) => {
       if (this.disableSteps.includes(key)) {

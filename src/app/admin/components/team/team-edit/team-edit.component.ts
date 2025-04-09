@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
@@ -11,15 +11,16 @@ import { Client } from '../../../../general/interfaces/client';
 import { switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-team-edit',
-  imports: [AdTemplateComponent, DynmaicFormComponent],
+  selector: 'team-edit',
+  imports: [DynmaicFormComponent],
   templateUrl: './team-edit.component.html',
   styleUrl: './team-edit.component.scss'
 })
 export class TeamEditComponent {
   objs: { [key: string]: InputDynamic[] } = {};
   clients: Client[] = [];
-  teamId: number = 0;
+  @Input() teamId: number = 0;
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private teamSrv: TeamService,
     private msgSrv: ToastService,
@@ -29,7 +30,9 @@ export class TeamEditComponent {
   ) {
     route.params.pipe(
       switchMap(param => {
-        this.teamId = +param['id'];
+        if (this.teamId) {
+          this.teamId = +param['id'];
+        }
         return clntSrv.getAll();
       })
     )
@@ -80,10 +83,10 @@ export class TeamEditComponent {
 
   }
   submit(event: any) {
-    this.teamSrv.edit(event.general, this.teamId).subscribe((res: APIResponse<any>) => {
+    this.teamSrv.edit(event, this.teamId).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
-        this.router.navigate(['admin/team']);
+        this.close.emit(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }

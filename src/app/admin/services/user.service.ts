@@ -10,7 +10,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
   providedIn: 'root'
 })
 export class UserService {
-  url = environment.api + 'users';
+  url = environment.api + 'UserManagement';
   constructor(private http: HttpClient) { }
   getAll(body: TableLazyLoadEvent): Observable<any> {
     return this.http.post<APIResponse<User[]>>(this.url + '/GetAllUsers', body);

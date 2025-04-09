@@ -31,34 +31,16 @@ export class NavComponent {
             route: ['/admin/coo'],
           },
           {
-            label: 'Team',
-            route: ['/admin/team'],
-          },
-          {
-            label: 'Client',
-            route: ['/admin/client'],
-          },
-          {
-            label: 'Bank',
-            route: ['/admin/bank'],
-          },
-          {
-            label: 'Purchase Date',
-            route: ['/admin/purchase-order'],
-          },
-        ],
-      },
-      {
-        label: 'Config',
-        icon: 'pi pi-cog', // Suitable for configuration settings
-        shortcut: '⌘+O',
-        items: [
-          {
             label: 'User',
             icon: 'pi pi-person',
             route: ['/admin/user'],
           }
-        ]
+        ],
+      },
+      {
+        label: 'Setting',
+        icon: 'pi pi-cog', // Suitable for configuration settings
+        route: ['/admin/setting']
       },
       {
         label: 'Report',

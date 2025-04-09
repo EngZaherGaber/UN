@@ -107,7 +107,7 @@ export class CooEditComponent {
 
   }
   submit(event: any) {
-    this.cooSrv.add(event.general).subscribe((res: APIResponse<any>) => {
+    this.cooSrv.edit(event,this.cooId).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
         this.router.navigate(['admin/coo']);

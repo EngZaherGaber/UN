@@ -13,7 +13,7 @@ export class TeamService {
   url = environment.api + 'TeamManagment';
   constructor(private http: HttpClient) { }
   getAll() {
-    return this.http.get<APIResponse<Team[]>>(this.url + '/getAll');
+    return this.http.get<APIResponse<Team[]>>(this.url);
   }
   getById(id: number) {
     return this.http.get<APIResponse<Team>>(this.url + '/' + id);

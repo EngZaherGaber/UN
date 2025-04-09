@@ -3,5 +3,5 @@ export interface APIResponse <T>{
     message: string;
     data: T;
     error: any[];
-    count?:number
+    count:number | 0
 }

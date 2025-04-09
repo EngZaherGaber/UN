@@ -10,7 +10,7 @@ export class DynamicAttributeService {
   firstTime: boolean = true;
   body: any;
   constructor(
-  ) {}
+  ) { }
   createFormFromAttForAdd(objs: InputDynamic[]): FormGroup {
     let group = new FormGroup({});
     objs.forEach((obj) => {
@@ -169,11 +169,11 @@ export class DynamicAttributeService {
   ) {
     disableSteps[key]
       ? disableSteps[key].forEach((att) => {
-          (form.controls[key] as FormGroup) &&
+        (form.controls[key] as FormGroup) &&
           (form.controls[key] as FormGroup).controls[att]
-            ? (form.controls[key] as FormGroup).controls[att].disable()
-            : '';
-        })
+          ? (form.controls[key] as FormGroup).controls[att].disable()
+          : '';
+      })
       : '';
   }
   disableInputRecursion(
@@ -226,9 +226,9 @@ export class DynamicAttributeService {
   ): InputDynamic[] {
     triggers[key]
       ? triggers[key].forEach((trigger) => {
-          const dynmaicInpt = objs.find((x) => x.key == trigger.key);
-          dynmaicInpt ? (dynmaicInpt.command = trigger.command) : '';
-        })
+        const dynmaicInpt = objs.find((x) => x.key == trigger.key);
+        dynmaicInpt ? (dynmaicInpt.command = trigger.command) : '';
+      })
       : '';
     return objs;
   }
@@ -359,5 +359,13 @@ export class DynamicAttributeService {
       );
     });
     return { ...orginObjs, ...newObjs };
+  }
+  getStringDate(date: Date) {
+    const year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+    const newMonth = month < 10 ? '0' + month : month.toString();
+    const newDay = day < 10 ? '0' + day : day.toString();
+    return year + '-' + newMonth + '-' + newDay;
   }
 }

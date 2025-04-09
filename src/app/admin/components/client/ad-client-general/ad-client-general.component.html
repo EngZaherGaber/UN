@@ -1,6 +1,14 @@
-<ad-template [title]="'Client'" [subTitle]="'Table'">
-    <div id="con2" con2>
-        <dynamic-table [tableName]="'Client'" [load]="info.get$" [buttons]="info.Buttons"
-            [captionButton]="info.captionButton"></dynamic-table>
-    </div>
-</ad-template>
+<dynamic-table [tableName]="'Client'" [load]="info.get$" [buttons]="info.Buttons"
+    [captionButton]="info.captionButton"></dynamic-table>
+<p-dialog header="New Client" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '25rem' }">
+    <client-add (close)="info.getSub$.next(true);addDialog = false" *ngIf="addDialog"></client-add>
+</p-dialog>
+<p-dialog header="Edit Client" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog" [style]="{ width: '25rem' }">
+    <client-edit [clientId]="editClientId" (close)="info.getSub$.next(true);editDialog = false"
+        *ngIf="editDialog"></client-edit>
+</p-dialog>
+<p-dialog header="New Client" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog"
+    [style]="{ width: '25rem' }">
+    <client-display [clientId]="displayClientId" (close)="info.getSub$.next(true);displayDialog = false"
+        *ngIf="displayDialog"></client-display>
+</p-dialog>

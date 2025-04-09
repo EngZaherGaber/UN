@@ -1,0 +1,7 @@
+<dynamic-table [tableName]="'Laptop Type'" [load]="info.get$" [buttons]="info.Buttons"
+    [captionButton]="info.captionButton"></dynamic-table>
+<p-dialog header="New Laptop Rent" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog"
+    [style]="{ width: '25rem' }">
+    <dynmaic-form *ngIf="addDialog" (submit)="add($event)" [display]="'flex'" [withBackBtn]="false" [justOneStep]="true"
+        [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+</p-dialog>

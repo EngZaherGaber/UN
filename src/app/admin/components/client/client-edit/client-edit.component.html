@@ -1,6 +1,2 @@
-<ad-template [title]="'Client'" [subTitle]="'Edit'">
-    <div id="con2" con2>
-        <dynmaic-form (submit)="submit($event)" [direction]="'row'" [preRoute]="'admin/client'" [justOneStep]="true"
-            [objs]="objs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
-    </div>
-</ad-template>
+<dynmaic-form (submit)="submit($event)" [direction]="'row'" [withBackBtn]="false" [justOneStep]="true" [objs]="objs"
+    style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>

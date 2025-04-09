@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { switchMap, of } from 'rxjs';
+import { switchMap, of, catchError } from 'rxjs';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
 import { InfoTable } from '../../../../general/interfaces/info-table';
 import { ConfirmService } from '../../../../general/services/confirm.service';
@@ -11,7 +11,7 @@ import { CooService } from '../../../services/coo.service';
 import { COO } from '../../../../general/interfaces/coo';
 
 @Component({
-  selector: 'app-ad-coo-general',
+  selector: 'ad-coo-general',
   imports: [AdTemplateComponent, DynamicTableComponent],
   templateUrl: './ad-coo-general.component.html',
   styleUrl: './ad-coo-general.component.scss'
@@ -24,7 +24,7 @@ export class AdCooGeneralComponent {
   deleteFunc: (rowData: COO) => void = (rowData) => {
     this.confirm.deleteConfirm((obj) => {
       this.cooSrv.delete(obj).subscribe(res => {
-        this.msgSrv.showWarn('Success!', 'COO Deleted');
+        this.msgSrv.showSuccess('Success!', 'COO Deleted');
         this.info.getSub$.next(true)
       });
     }, rowData.cooId)
@@ -46,58 +46,117 @@ export class AdCooGeneralComponent {
     this.info = tblSrv.getStandardInfo(this.deleteFunc, this.editFunc, this.displayFunc, this.addFunc)
   }
   ngOnInit(): void {
-    this.info.get$ = this.tblSrv.getLibObs(
+    this.info.get$ =
       this.info.getSub$.pipe(
         switchMap((body: any) => {
-          if (body === true) {
-            return this.cooSrv.getAll().pipe(
+          if (body) {
+            return this.cooSrv.getAll(body).pipe(
               switchMap(res => {
                 return of({
-                  data: {
-                    model: res.data,
-                    type: [
-                      {
-                        attribute: 'cooNumber',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                      {
-                        attribute: 'cooDate',
-                        dynamic: null,
-                        dataType: 'dateTime',
-                      },
-                      {
-                        attribute: 'totalValue',
-                        dynamic: null,
-                        dataType: 'int',
-                      },
-                      {
-                        attribute: 'clientName',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                      {
-                        attribute: 'currencyType',
-                        dynamic: null,
-                        dataType: 'string',
-                      },
-                    ],
-                  },
+                  data: res.data,
+                  columns: [
+                    {
+                      field: 'cooNumber',
+                      header: 'cooNumber',
+                      HeaderType: 'Toggle',
+                    },
+                    {
+                      field: 'cooDate',
+                      header: 'cooDate',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'clientName',
+                      header: 'clientName',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'currencyType',
+                      header: 'currencyType',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'poNumber',
+                      header: 'poNumber',
+                      HeaderType: 'string',
+                    },
+
+                  ],
+                  loading: false,
+                  count: res.count
+                })
+              }),
+              catchError(err => {
+                return of({
+                  loading: false,
+                  data: [],
+                  columns: [
+                    {
+                      field: 'cooNumber',
+                      header: 'cooNumber',
+                      HeaderType: 'Toggle',
+                    },
+                    {
+                      field: 'cooDate',
+                      header: 'cooDate',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'clientName',
+                      header: 'clientName',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'currencyType',
+                      header: 'currencyType',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'poNumber',
+                      header: 'poNumber',
+                      HeaderType: 'string',
+                    },
+
+                  ],
                 });
-              })
+              }),
+
             )
           } else {
             return of({
               loading: false,
               data: [],
-              columns: [],
+              columns: [
+                {
+                  field: 'cooNumber',
+                  header: 'cooNumber',
+                  HeaderType: 'Toggle',
+                },
+                {
+                  field: 'cooDate',
+                  header: 'cooDate',
+                  HeaderType: 'string',
+                },
+                {
+                  field: 'clientName',
+                  header: 'clientName',
+                  HeaderType: 'string',
+                },
+                {
+                  field: 'currencyType',
+                  header: 'currencyType',
+                  HeaderType: 'string',
+                },
+                {
+                  field: 'poNumber',
+                  header: 'poNumber',
+                  HeaderType: 'string',
+                },
+
+              ],
             });
           }
         })
-      ),
-      ['Id', 'Deleted'],
-      ['isStudent']
-    );
-    this.info.getSub$.next(true);
+      );
   }
 }

@@ -1,0 +1,14 @@
+<dynamic-table [tableName]="'City'" [load]="info.get$" [buttons]="info.Buttons"
+    [captionButton]="info.captionButton"></dynamic-table>
+<p-dialog header="New City" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '25rem' }">
+    <dynmaic-form *ngIf="addDialog" (submit)="add($event)" [display]="'flex'" [withBackBtn]="false" [justOneStep]="true"
+        [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+</p-dialog>
+<p-dialog header="Edit City" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog" [style]="{ width: '25rem' }">
+    <dynmaic-form *ngIf="editDialog" (submit)="edit($event)" [display]="'flex'" [withBackBtn]="false" [justOneStep]="true"
+        [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+</p-dialog>
+<p-dialog header="Display City" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog" [style]="{ width: '25rem' }">
+    <dynmaic-form *ngIf="displayDialog" [isShow]="true" (submit)="info.getSub$.next(true)" [display]="'flex'" (submit)="displayDialog = false;" [withBackBtn]="false" [justOneStep]="true" [objs]="resetObjs"
+        style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+</p-dialog>

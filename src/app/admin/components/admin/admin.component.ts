@@ -41,7 +41,7 @@ export class AdminComponent {
       },
       {
         label: 'Logout',
-        routerLink: ['login']
+        routerLink: ['/login']
       },
     ];
     this.resetObjs = {
@@ -76,7 +76,7 @@ export class AdminComponent {
     }
   }
   submit(event: any) {
-    this.usrSrv.resetPassword(event.general).subscribe((res: APIResponse<any>) => {
+    this.usrSrv.resetPassword(event).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
       } else {

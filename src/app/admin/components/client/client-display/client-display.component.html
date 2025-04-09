@@ -1,6 +1,2 @@
-<ad-template [title]="'Client'" [subTitle]="'Display'">
-    <div id="con2" con2>
-        <dynmaic-form [isShow]="true" [direction]="'row'" [preRoute]="'admin/client'"
-            [justOneStep]="true" [objs]="objs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
-    </div>
-</ad-template>
+<dynmaic-form [isShow]="true" [direction]="'row'" (submit)="close.emit(true)" [withBackBtn]="false" [justOneStep]="true" [objs]="objs"
+    style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>

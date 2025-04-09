@@ -8,36 +8,52 @@ import { ToastService } from '../../../../general/services/toast.service';
 import { ConfirmService } from '../../../../general/services/confirm.service';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
+import { TeamAddComponent } from '../team-add/team-add.component';
+import { TeamEditComponent } from '../team-edit/team-edit.component';
+import { TeamDisplayComponent } from '../team-display/team-display.component';
+import { DialogModule } from 'primeng/dialog';
+import { CommonModule } from '@angular/common';
+import { Team } from '../../../../general/interfaces/team';
 
 @Component({
-  selector: 'app-ad-team-general',
-  imports: [AdTemplateComponent, DynamicTableComponent],
+  selector: 'ad-team-general',
+  imports: [
+    DynamicTableComponent,
+    TeamAddComponent,
+    TeamEditComponent,
+    TeamDisplayComponent,
+    DialogModule,
+    CommonModule
+  ],
   templateUrl: './ad-team-general.component.html',
   styleUrl: './ad-team-general.component.scss'
 })
 export class AdTeamGeneralComponent {
   info: InfoTable;
-  columnsEvent = [
-    {
-      field: 'isStudent',
-    },
-  ]
+  addDialog: boolean = false;
+  editDialog: boolean = false;
+  displayDialog: boolean = false;
+  editTeamId: number = 0;
+  displayTeamId: number = 0;
+
   addFunc: () => void = () => {
-    this.router.navigate(['admin/team/add'])
+    this.addDialog = true;
+  }
+  editFunc: (rowData: Team) => void = (rowData: Team) => {
+    this.editTeamId = rowData.teamId ?? 0;
+    this.editDialog = true;
+  }
+  displayFunc: (rowData: Team) => void = (rowData: Team) => {
+    this.displayTeamId = rowData.teamId ?? 0;
+    this.displayDialog = true;
   }
   deleteFunc: (rowData: any) => void = (rowData) => {
     this.confirm.deleteConfirm((obj) => {
       this.teamSrv.delete(obj).subscribe(res => {
-        this.msgSrv.showWarn('Success!', 'Team Deleted');
+        this.msgSrv.showSuccess('Success!', 'Team Deleted');
         this.info.getSub$.next({})
       });
     }, rowData.teamId)
-  }
-  editFunc: (rowData: any) => void = (rowData) => {
-    this.router.navigate(['admin/team/edit/' + rowData.teamId])
-  }
-  displayFunc: (rowData: any) => void = (rowData) => {
-    this.router.navigate(['admin/team/display/' + rowData.teamId])
   }
   constructor(
     private msgSrv: ToastService,
@@ -84,7 +100,7 @@ export class AdTeamGeneralComponent {
         })
       ),
       ['Id', 'Deleted'],
-      ['isStudent']
+      []
     );
     this.info.getSub$.next(true);
   }

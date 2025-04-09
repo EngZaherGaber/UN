@@ -2,6 +2,6 @@
     <div id="con2" con2>
         <dynamic-table [tableName]="'Employee'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
             [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"
-            [columnsEvent]="columnsEvent"></dynamic-table>
+            [changeColor]="changeColor"></dynamic-table>
     </div>
 </ad-template>

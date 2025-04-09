@@ -58,7 +58,7 @@ export class UserAddComponent {
     })
   }
   submit(event: any) {
-    this.userSrv.add(event.general).subscribe((res: APIResponse<any>) => {
+    this.userSrv.add(event).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
         this.router.navigate(['admin/user']);

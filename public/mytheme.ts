@@ -3,6 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Material from '@primeng/themes/material';
 import { definePreset } from '@primeng/themes';
+import { Base } from 'primeng/base';
 
 export const MyPreset = definePreset(Material, {
   primitive: {
@@ -445,7 +446,7 @@ export const MyPreset = definePreset(Material, {
         },
         formField: {
           background: '#f3f3f4',
-          disabledBackground: '#b3b3b3',
+          disabledBackground: '#e4e4e4',
           filledBackground: '{surface.50}',
           filledHoverBackground: '{surface.50}',
           filledFocusBackground: '{surface.50}',
@@ -454,8 +455,8 @@ export const MyPreset = definePreset(Material, {
           focusBorderColor: '{primary.color}',
           invalidBorderColor: '{red.400}',
           color: '{surface.600}',
-          disabledColor: '{surface.950}',
-          placeholderColor: '{surface.500}',
+          disabledColor: '{surface.800}',
+          placeholderColor: '#818181',
           invalidPlaceholderColor: '{red.600}',
           floatLabelColor: '{surface.500}',
           floatLabelFocusColor: '#04457f',
@@ -537,131 +538,7 @@ export const MyPreset = definePreset(Material, {
           },
         },
       },
-      dark: {
-        surface: {
-          0: '#ffffff',
-          50: '#fafafa',
-          100: '#f4f4f5',
-          200: '#e4e4e7',
-          300: '#d4d4d8',
-          400: '#a1a1aa',
-          500: '#71717a',
-          600: '#52525b',
-          700: '#3f3f46',
-          800: '#27272a',
-          900: '#18181b',
-          950: '#09090b',
-        },
-        primary: {
-          color: '{primary.400}',
-          contrastColor: '{surface.900}',
-          hoverColor: '{primary.300}',
-          activeColor: '{primary.200}',
-        },
-        highlight: {
-          background: 'color-mix(in srgb, {primary.400}, transparent 84%)',
-          focusBackground: 'color-mix(in srgb, {primary.400}, transparent 76%)',
-          color: 'rgba(255,255,255,.87)',
-          focusColor: 'rgba(255,255,255,.87)',
-        },
-        mask: {
-          background: 'rgba(0,0,0,0.6)',
-          color: '{surface.200}',
-        },
-        formField: {
-          background: '{surface.950}',
-          disabledBackground: '{surface.700}',
-          filledBackground: '{surface.800}',
-          filledHoverBackground: '{surface.800}',
-          filledFocusBackground: '{surface.800}',
-          borderColor: '{surface.600}',
-          hoverBorderColor: '{surface.500}',
-          focusBorderColor: '{primary.color}',
-          invalidBorderColor: '{red.300}',
-          color: '{surface.800}',
-          disabledColor: '{surface.400}',
-          placeholderColor: '{surface.400}',
-          invalidPlaceholderColor: '{red.400}',
-          floatLabelColor: '{surface.400}',
-          floatLabelFocusColor: '{primary.color}',
-          floatLabelActiveColor: '{surface.400}',
-          floatLabelInvalidColor: '{form.field.invalid.placeholder.color}',
-          iconColor: '{surface.400}',
-          shadow: '0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05)',
-        },
-        text: {
-          color: '{surface.0}',
-          hoverColor: '{surface.0}',
-          mutedColor: '{surface.400}',
-          hoverMutedColor: '{surface.300}',
-        },
-        content: {
-          background: '{surface.900}',
-          hoverBackground: '{surface.800}',
-          borderColor: '{surface.700}',
-          color: '{text.color}',
-          hoverColor: '{text.hover.color}',
-        },
-        overlay: {
-          select: {
-            background: '{surface.900}',
-            borderColor: '{surface.700}',
-            color: '{text.color}',
-          },
-          popover: {
-            background: '{surface.900}',
-            borderColor: '{surface.700}',
-            color: '{text.color}',
-          },
-          modal: {
-            background: '{surface.900}',
-            borderColor: '{surface.700}',
-            color: '{text.color}',
-          },
-        },
-        list: {
-          option: {
-            focusBackground: '{surface.800}',
-            selectedBackground: '{highlight.background}',
-            selectedFocusBackground: '{highlight.focus.background}',
-            color: '{text.color}',
-            focusColor: '{text.hover.color}',
-            selectedColor: '{highlight.color}',
-            selectedFocusColor: '{highlight.focus.color}',
-            icon: {
-              color: '{surface.500}',
-              focusColor: '{surface.400}',
-            },
-          },
-          optionGroup: {
-            background: 'transparent',
-            color: '{text.muted.color}',
-          },
-        },
-        navigation: {
-          item: {
-            focusBackground: '{surface.800}',
-            activeBackground: '{surface.800}',
-            color: '{text.color}',
-            focusColor: '{text.hover.color}',
-            activeColor: '{text.hover.color}',
-            icon: {
-              color: '{surface.500}',
-              focusColor: '{surface.400}',
-              activeColor: '{surface.400}',
-            },
-          },
-          submenuLabel: {
-            background: 'transparent',
-            color: '{text.muted.color}',
-          },
-          submenuIcon: {
-            color: '{surface.500}',
-            focusColor: '{surface.400}',
-            activeColor: '{surface.400}',
-          },
-        },
-      },
+      
     },
   },
 });
@@ -672,6 +549,9 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme: {
         preset: MyPreset,
+        options: {
+          darkModeSelector: '.my-app-dark'
+        }
       },
     }),
   ],

@@ -12,8 +12,6 @@ import { DynmaicFormComponent } from '../../../../general/components/dynmaic-for
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { APIResponse } from '../../../../general/interfaces/response';
 import { DialogModule } from 'primeng/dialog';
-import { FilterMatchMode } from 'primeng/api';
-import { User } from '../../../../general/interfaces/user';
 
 @Component({
   selector: 'ad-user-general',
@@ -27,19 +25,19 @@ import { User } from '../../../../general/interfaces/user';
   styleUrl: './ad-user-general.component.scss'
 })
 export class AdUserGeneralComponent {
+  // deleteFunc: (rowData: any) => void = (rowData) => {
+  //   this.confirm.deleteConfirm((obj) => {
+  //     this.usrSrv.delete(obj).subscribe(res => {
+  //       this.msgSrv.showSuccess('Success!', 'User Deleted');
+  //       this.info.getSub$.next({})
+  //     });
+  //   }, rowData.userId)
+  // }
   info: InfoTable;
   resetObjs: { [key: string]: InputDynamic[] } = {};
   showResetDialog: boolean = false;
   addFunc: () => void = () => {
     this.router.navigate(['admin/user/add'])
-  }
-  deleteFunc: (rowData: any) => void = (rowData) => {
-    this.confirm.deleteConfirm((obj) => {
-      this.usrSrv.delete(obj).subscribe(res => {
-        this.msgSrv.showWarn('Success!', 'User Deleted');
-        this.info.getSub$.next({})
-      });
-    }, rowData.userId)
   }
   editFunc: (rowData: any) => void = (rowData) => {
     this.router.navigate(['admin/user/edit/' + rowData.userId])
@@ -77,9 +75,8 @@ export class AdUserGeneralComponent {
     tblSrv: DyTableService,
     private router: Router,
     private usrSrv: UserService,
-    private confirm: ConfirmService,
   ) {
-    this.info = tblSrv.getStandardInfo(this.deleteFunc, this.editFunc, this.displayFunc, this.addFunc);
+    this.info = tblSrv.getStandardInfo(undefined, this.editFunc, this.displayFunc, this.addFunc);
     this.info.Buttons.push({
       icon: 'pi pi-key',
       command: this.resetPasswordFunc,
@@ -154,7 +151,7 @@ export class AdUserGeneralComponent {
       );
   }
   submit(event: any) {
-    this.usrSrv.resetPassword(event.general).subscribe((res: APIResponse<any>) => {
+    this.usrSrv.resetPassword(event).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
       } else {
