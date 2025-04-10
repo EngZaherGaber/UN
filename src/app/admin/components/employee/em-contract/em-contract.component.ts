@@ -113,6 +113,12 @@ export class EmContractComponent {
   ]
   @Input() emp: { id: number, name: string } = { id: 0, name: '' };
   resetObjs: { [key: string]: InputDynamic[] } = {};
+  disableAtt: { [key: string]: string[] } = {
+    general: ['cooId']
+  };
+  returnIfDisable: { [key: string]: string[] } = {
+    general: ['cooId']
+  };
   editContractId: number = 0;
   addDialog: boolean = false;
   displayDialog: boolean = false;

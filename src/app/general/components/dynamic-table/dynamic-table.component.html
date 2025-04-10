@@ -26,8 +26,8 @@
                 </ng-container>
             </ng-template>
             <ng-template #end>
-                <p-button *ngIf="dt.value.length > 0" pTooltip="XLS" label="Export" severity="secondary"
-                    icon="pi pi-upload" (onClick)="dt.exportCSV()" />
+                <p-button *ngIf="dt.value.length > 0" pTooltip="XLS" label="Export" severity="success"
+                    icon="pi pi-file-excel" (onClick)="dt.exportCSV()" />
             </ng-template>
         </p-toolbar>
     </ng-template>

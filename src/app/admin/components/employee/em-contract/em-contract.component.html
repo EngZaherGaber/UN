@@ -11,7 +11,7 @@
 </p-dialog>
 <p-dialog header="Edit Contract" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog"
     [style]="{ width: '25rem' }">
-    <dynmaic-form *ngIf="editDialog" (submit)="edit($event)" [display]="'flex'" [withBackBtn]="false"
+    <dynmaic-form *ngIf="editDialog" [disableAtt]="disableAtt" [returnIfDisable]="returnIfDisable" (submit)="edit($event)" [display]="'flex'" [withBackBtn]="false"
         [justOneStep]="true" [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
 </p-dialog>
 <p-dialog header="Display Contract" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog"
