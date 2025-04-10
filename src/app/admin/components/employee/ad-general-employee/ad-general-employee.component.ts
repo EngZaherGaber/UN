@@ -57,7 +57,7 @@ export class AdGeneralEmployeeComponent {
     {
       field: 'mobileNo',
       header: 'mobileNo',
-      HeaderType: 'int',
+      HeaderType: 'string',
     },
     {
       field: 'gender',

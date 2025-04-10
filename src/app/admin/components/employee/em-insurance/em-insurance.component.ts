@@ -50,11 +50,17 @@ export class EmInsuranceComponent {
   returnIfDisable: { [key: string]: string[] } = {
     general: [
       'endLifeDate',
-      'endMedicalDate',
       'startLifeDate',
+      'endMedicalDate',
       'startMedicalDate',
     ],
   };
+  disableAtt: { [key: string]: string[] } = {
+    general: [
+      'endMedicalDate',
+      'startMedicalDate'
+    ]
+  }
   constructor(
     private insuranceSrv: InsuranceService,
     private attSrv: DynamicAttributeService,

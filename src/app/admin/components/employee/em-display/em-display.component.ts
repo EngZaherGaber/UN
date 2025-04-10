@@ -108,7 +108,7 @@ export class EmDisplayComponent {
               key: 'mobileNo',
               label: 'Mobile No.',
               value: res.emp.data.personal.mobileNo,
-              dataType: 'int',
+              dataType: 'string',
               options: [],
               visible: true,
               command: (value, element, form) => { },

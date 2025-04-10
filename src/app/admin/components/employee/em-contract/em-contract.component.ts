@@ -31,9 +31,9 @@ export class EmContractComponent {
   columns = [
 
     {
-      field: 'active',
-      header: 'Active',
-      HeaderType: 'bool',
+      field: 'status',
+      header: 'Status',
+      HeaderType: 'string',
     },
     {
       field: 'contractDuration',
@@ -53,11 +53,6 @@ export class EmContractComponent {
     {
       field: 'transportation',
       header: 'transportation',
-      HeaderType: 'bool',
-    },
-    {
-      field: 'contractSigned',
-      header: 'contractSigned',
       HeaderType: 'bool',
     },
     {
@@ -401,15 +396,6 @@ export class EmContractComponent {
           options: [],
         },
         {
-          key: 'contractSigned',
-          label: 'Contract Signed',
-          value: contract ? contract.contractSigned : null,
-          dataType: 'bool',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
           key: 'transportation',
           label: 'Transportation',
           value: contract ? contract.transportation : null,
@@ -418,7 +404,6 @@ export class EmContractComponent {
           visible: true,
           options: [],
         },
-
         {
           key: 'isMobile',
           label: 'Have Mobile',

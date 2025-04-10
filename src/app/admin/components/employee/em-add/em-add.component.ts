@@ -92,7 +92,7 @@ export class EmAddComponent {
             key: 'mobileNo',
             label: 'Mobile No.',
             value: null,
-            dataType: 'int',
+            dataType: 'string',
             options: [],
             visible: true,
             command: (value, element, form) => { },
@@ -139,7 +139,7 @@ export class EmAddComponent {
             options: [],
             visible: true,
             command: (value, element, form) => { },
-            required: true,
+            required: false,
           },
           {
             key: 'accountNumber',
