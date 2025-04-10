@@ -261,7 +261,9 @@ export class DynamicAttributeService {
         }
       } else {
         Object.keys(objs[key]).forEach((att) => {
-          if (objs[key][att] === 'datetime') {
+          if ((objs[key][att] as InputDynamic).dataType.toLowerCase() === 'datetime') {
+            const inpt: InputDynamic = objs[key][att];
+            body[key][inpt.key] = new Date(body[key][inpt.key]); 
           }
         });
       }

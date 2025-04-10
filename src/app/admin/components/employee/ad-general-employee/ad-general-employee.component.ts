@@ -117,7 +117,7 @@ export class AdGeneralEmployeeComponent {
     this.info.Buttons.push({
       isShow: false,
       tooltip: 'Employee Insurance',
-      icon: 'pi pi-book',
+      icon: 'pi pi-heart',
       key: 'Delete',
       severity: 'secondary',
       command: (rowData) => {
@@ -141,17 +141,14 @@ export class AdGeneralEmployeeComponent {
       }
     });
     this.info.Buttons.push({
-      isShow: false,
+      isShow: true,
       tooltip: 'Employee Contract',
-      icon: 'pi pi-pencil',
+      icon: 'pi pi-book',
       key: 'Delete',
       severity: 'secondary',
       command: (rowData) => {
         this.contractFunc(rowData);
       },
-      showCommand: (body: any) => {
-        return body.active
-      }
     });
   }
   ngOnInit(): void {

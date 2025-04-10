@@ -284,7 +284,7 @@ export class EmContractComponent {
 
     })
     this.addDialog = false;
-    this.info.getSub$.next(true);
+    this.info.getSub$.next({});
   }
   edit(event: any) {
     this.contractSrv.edit(event, this.editContractId).subscribe(res => {
@@ -295,7 +295,7 @@ export class EmContractComponent {
       }
     })
     this.editDialog = false;
-    this.info.getSub$.next(true);
+    this.info.getSub$.next({});
   }
 
   getGeneralObj(

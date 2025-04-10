@@ -21,31 +21,73 @@ export class NavComponent {
         items: [
           {
             label: 'Employee',
+            icon: 'pi pi-users',
             route: ['/admin/employee'],
           },
           {
-            label: 'Contract',
-          },
-          {
             label: 'COO',
+            icon: 'pi pi-briefcase', // More suitable for COO (Chief Operating Officer)
             route: ['/admin/coo'],
           },
           {
             label: 'User',
-            icon: 'pi pi-person',
+            icon: 'pi pi-user',
             route: ['/admin/user'],
           }
         ],
       },
       {
         label: 'Setting',
-        icon: 'pi pi-cog', // Suitable for configuration settings
-        route: ['/admin/setting']
+        icon: 'pi pi-cog',
+        items: [
+          {
+            label: 'Rate',
+            route: ['/admin/setting'],
+            fragment: 'Rate',
+            icon: 'pi pi-dollar', // For financial rates
+          },
+          {
+            label: 'Type of contract',
+            route: ['/admin/setting'],
+            fragment: 'Type of contract',
+            icon: 'pi pi-file', // Represents documents/contracts
+          },
+          {
+            label: 'City',
+            route: ['/admin/setting'],
+            fragment: 'City',
+            icon: 'pi pi-map-marker', // For locations
+          },
+          {
+            label: 'Bank',
+            route: ['/admin/setting'],
+            fragment: 'Bank',
+            icon: 'pi pi-credit-card', // Already correct for bank
+          },
+          {
+            label: 'Client',
+            route: ['/admin/setting'],
+            fragment: 'Client',
+            icon: 'pi pi-id-card', // For client identification
+          },
+          {
+            label: 'Team',
+            route: ['/admin/setting'],
+            fragment: 'Team',
+            icon: 'pi pi-users', // For groups of people
+          },
+          {
+            label: 'Laptop',
+            route: ['/admin/setting'],
+            fragment: 'Laptop',
+            icon: 'pi pi-desktop', // For computer equipment
+          },
+        ]
       },
       {
         label: 'Report',
-        icon: 'pi pi-chart-line', // Represents analytics or reporting
         shortcut: '⌘+O',
+        icon: 'pi pi-chart-bar' // Alternative chart icon
       },
     ];
   }

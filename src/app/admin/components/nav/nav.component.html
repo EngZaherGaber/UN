@@ -2,22 +2,23 @@
     <p-panelmenu [model]="items" styleClass="w-full md:w-80">
         <ng-template #item let-item>
             <ng-container *ngIf="item.route; else urlRef">
-                <a [routerLink]="item.route" class="flex align-items-center
-                    cursor-pointer text-color px-3 py-2" style="padding: 5px 10px;">
+                <a [routerLink]="item.route" [fragment]="item.fragment" class="flex align-items-center
+                    cursor-pointer text-color px-3 py-2" style="padding: 5px 10px;justify-content: flex-start;display: flex;gap: 15px;align-items: center;">
                     <span [class]="item.icon"></span>
                     <span class="ml-2">{{ item.label }}</span>
                 </a>
             </ng-container>
             <ng-template #urlRef>
-                <a *ngIf="item.url; else noLink" [href]="item.url" class="flex align-items-center
-                    cursor-pointer text-color px-3 py-2" style="padding: 5px 10px;">
+                <a *ngIf="item.route; else noLink" [routerLink]="item.route" [fragment]="item.fragment" class="flex align-items-center
+                    cursor-pointer text-color px-3 py-2"
+                    style="padding: 5px 10px;justify-content: flex-start;display: flex;gap: 15px;align-items: center;">
                     <span [class]="item.icon"></span>
                     <span class="ml-2">{{ item.label }}</span>
                 </a>
                 <ng-template #noLink>
                     <span style="justify-content: space-between;display: flex;padding: 5px 10px;"
                         class="flex items-center cursor-pointer text-surface-700 dark:text-surface-0 px-4 py-2">
-                        <div style="justify-content: flex-start;display: flex;gap: 15px;">
+                        <div style="justify-content: flex-start;display: flex;gap: 15px;align-items: center;">
                             <span [class]="item.icon"></span>
                             <span class="ml-2">{{ item.label }}</span>
                         </div>

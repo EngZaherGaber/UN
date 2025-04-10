@@ -9,10 +9,10 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
     [autoLayout]="true" [globalFilterFields]="['Name']" [tableStyle]="{ 'min-width': '100%'}">
     <ng-template pTemplate="caption">
-        <p-toolbar >
+        <p-toolbar>
             <ng-template #start>
-                <ng-container *ngIf="captionButton && captionButton.length > 0" >
-                    <ng-container *ngFor="let btn of captionButton" >
+                <ng-container *ngIf="captionButton && captionButton.length > 0">
+                    <ng-container *ngFor="let btn of captionButton">
                         <p-button [severity]="btn.severity ?? 'primary'"
                             *ngIf="btn && btn.permission && ((btn.showCommand && btn.showCommand(body.data) ) || (!btn.showCommand && true)) && btn.isShow"
                             [pTooltip]="btn.tooltip" [icon]="btn.icon ?? ''"

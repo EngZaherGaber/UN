@@ -16,7 +16,7 @@
 </p-dialog>
 <p-dialog header="Display Contract" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog"
     [style]="{ width: '25rem' }">
-    <dynmaic-form *ngIf="displayDialog" [isShow]="true" (submit)="info.getSub$.next(true)" [display]="'flex'"
+    <dynmaic-form *ngIf="displayDialog" [isShow]="true" (submit)="info.getSub$.next({})" [display]="'flex'"
         (submit)="displayDialog = false;" [withBackBtn]="false" [justOneStep]="true" [objs]="resetObjs"
         style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
 </p-dialog>
