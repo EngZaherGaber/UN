@@ -71,15 +71,14 @@ export class AdGeneralEmployeeComponent {
     },
     {
       field: 'typeOfAcc',
-      header: 'Type of Acc',
+      header: 'Type of Account',
       HeaderType: 'string',
     },
     {
-      field: 'typeOfContractName',
-      header: 'Type Of Contract Name',
+      field: 'accountNumber',
+      header: 'Account Number',
       HeaderType: 'string',
     },
-
   ];
   changeColor(rowData: any) {
     if (!rowData.active) {

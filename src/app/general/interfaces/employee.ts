@@ -8,7 +8,9 @@ export interface Employee {
         idNo: string,
         emailAddress: string,
         mobileNo: number,
-        gender: 0
+        gender: 0,
+        securityCheck: boolean,
+        oldEmployment: boolean,
     },
     bankInfo: {
         bankId: number,

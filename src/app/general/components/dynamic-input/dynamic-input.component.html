@@ -62,7 +62,7 @@
                 }}</label>
         </ng-template>
         <ng-template ngSwitchCase="password">
-            <p-password [id]="object.label" size="large" [feedback]="false" [formControl]="FEcontrol" type="text"
+            <p-password [id]="object.label"  [feedback]="false" [formControl]="FEcontrol" type="text"
                 [toggleMask]="true" />
             <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{

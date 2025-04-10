@@ -22,45 +22,13 @@ export class EmInsuranceComponent {
   objs?: { [key: string]: InputDynamic[] };
   emp: { id: number, name: string } = { id: 0, name: '' };
   firstTime: boolean = true;
-  triggers: {
-    [key: string]: {
-      key: string;
-      command: (
-        event?: any,
-        element?: InputDynamic,
-        form?: FormGroup,
-        objs?: any,
-        dySrv?: DynamicAttributeService
-      ) => void;
-    }[];
-  } = {
-      general: [
-        {
-          key: 'insuranceLife',
-          command: this.insuranceLifeCommand,
-        },
-        {
-          key: 'insuranceMedical',
-          command: this.insuranceMedicalCommand,
-        },
-
-      ],
-
-    };
   returnIfDisable: { [key: string]: string[] } = {
     general: [
       'endLifeDate',
       'startLifeDate',
-      'endMedicalDate',
-      'startMedicalDate',
     ],
   };
-  disableAtt: { [key: string]: string[] } = {
-    general: [
-      'endMedicalDate',
-      'startMedicalDate'
-    ]
-  }
+
   constructor(
     private insuranceSrv: InsuranceService,
     private attSrv: DynamicAttributeService,
@@ -86,6 +54,7 @@ export class EmInsuranceComponent {
             visible: true,
             command: (value, element, form) => {
 
+              this.insuranceLifeCommand(value, element, form, this.objs)
             },
             required: true,
           },
@@ -93,6 +62,16 @@ export class EmInsuranceComponent {
             key: 'insuranceMedical',
             label: 'Insurance Medical',
             value: res.data.insuranceMedical,
+            dataType: 'bool',
+            options: [],
+            visible: true,
+            command: (value, element, form) => { },
+            required: true,
+          },
+          {
+            key: 'insuranceCardDelivered',
+            label: 'Delivered insurance Card',
+            value: res.data.insuranceCardDelivered,
             dataType: 'bool',
             options: [],
             visible: true,
@@ -119,36 +98,6 @@ export class EmInsuranceComponent {
             command: (value, element, form) => { },
             required: true,
           },
-          {
-            key: 'startMedicalDate',
-            label: 'Start Medical Date',
-            value: res.data.startMedicalDate,
-            dataType: 'datetime',
-            options: [],
-            visible: true,
-            command: (value, element, form) => { },
-            required: true,
-          },
-          {
-            key: 'endMedicalDate',
-            label: 'End Medical Date',
-            value: res.data.endMedicalDate,
-            dataType: 'datetime',
-            options: [],
-            visible: true,
-            command: (value, element, form) => { },
-            required: true,
-          },
-          {
-            key: 'sendInsuranceDate',
-            label: 'Send Insurance Date',
-            value: res.data.sendInsuranceDate,
-            dataType: 'datetime',
-            options: [],
-            visible: true,
-            command: (value, element, form) => { },
-            required: true,
-          },
         ],
       };
     })
@@ -156,7 +105,6 @@ export class EmInsuranceComponent {
   ngAfterViewChecked() {
     if (this.objs && this.firstTime) {
       this.firstTime = false;
-      console.log(this.formParent)
       this.formParent?.listenAgain();
     }
   }
@@ -167,9 +115,6 @@ export class EmInsuranceComponent {
     };
     body.startLifeDate = this.attSrv.getStringDate(body.startLifeDate)
     body.endLifeDate = this.attSrv.getStringDate(body.endLifeDate)
-    body.startMedicalDate = this.attSrv.getStringDate(body.startMedicalDate)
-    body.endMedicalDate = this.attSrv.getStringDate(body.endMedicalDate)
-    body.sendInsuranceDate = this.attSrv.getStringDate(body.sendInsuranceDate)
     this.insuranceSrv.edit(body, this.emp.id).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
@@ -187,16 +132,6 @@ export class EmInsuranceComponent {
     } else if (value === false) {
       form?.get('general.endLifeDate')?.disable();
       form?.get('general.startLifeDate')?.disable();
-
-    }
-  }
-  insuranceMedicalCommand(value: any, element?: InputDynamic, form?: FormGroup, objs?: { [key: string]: InputDynamic[] }) {
-    if (value === true) {
-      form?.get('general.startMedicalDate')?.enable();
-      form?.get('general.endMedicalDate')?.enable();
-    } else if (value === false) {
-      form?.get('general.endMedicalDate')?.disable();
-      form?.get('general.startMedicalDate')?.disable();
 
     }
   }

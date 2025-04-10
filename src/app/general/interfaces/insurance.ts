@@ -4,6 +4,7 @@ export interface Insurance {
     arabicName: string,
     insuranceLife: boolean,
     insuranceMedical: boolean,
+    insuranceCardDelivered: boolean,
     startLifeDate: Date,
     endLifeDate: Date,
     startMedicalDate: Date,

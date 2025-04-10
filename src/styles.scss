@@ -20,12 +20,14 @@ body {
     width: 96%;
     height: 0%;
     opacity: 0;
-    background-color: $c4;
+    background-color: #f3f3f4;
     grid-column: span 2;
     margin-top: -5px;
     margin-inline: 2%;
-    border-bottom-right-radius: 20px;
+    padding: 1%;
+    border-radius: 20px;
     border-bottom-left-radius: 20px;
+    box-shadow: 0px 0px 5px 0px gray;
     animation: heightGrow 1s forwards;
   }
 }

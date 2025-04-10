@@ -133,6 +133,26 @@ export class EmDisplayComponent {
               command: (value, element, form) => { },
               required: true,
             },
+            {
+              key: 'oldEmployment',
+              label: 'Is Old Employee',
+              value: res.emp.data.personal.oldEmployment,
+              dataType: 'bool',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
+            {
+              key: 'securityCheck',
+              label: 'Security Check',
+              value: res.emp.data.personal.securityCheck,
+              dataType: 'bool',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
           ],
           bankInfo: [
             {

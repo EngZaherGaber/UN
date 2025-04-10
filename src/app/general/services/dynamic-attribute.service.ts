@@ -364,7 +364,7 @@ export class DynamicAttributeService {
   }
   getStringDate(date: Date) {
     const year = date.getFullYear();
-    let month = date.getMonth();
+    let month = date.getMonth() + 1;
     let day = date.getDate();
     const newMonth = month < 10 ? '0' + month : month.toString();
     const newDay = day < 10 ? '0' + day : day.toString();

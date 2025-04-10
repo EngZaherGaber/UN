@@ -4,6 +4,7 @@ export interface Contract {
     clientId: number,
     teamId: number,
     cooId: number,
+    cooNumber: string,
     contractSigned: boolean,
     contractStartDate: Date,
     contractEndDate: Date,
@@ -18,5 +19,6 @@ export interface Contract {
     insuranceMedical: boolean,
     superVisor: string,
     areaManager: string,
-    projectName: string
+    projectName: string,
+    status: string
 }

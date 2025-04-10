@@ -113,7 +113,6 @@ export class DynmaicFormComponent {
   }
 
   listenAgain() {
-    console.log('hi')
     this.keys.forEach((key) => {
       if (
         !this.withIdSteps.includes(key) &&
@@ -121,7 +120,7 @@ export class DynmaicFormComponent {
         !this.recursionSteps.includes(key)
       ) {
         this.objs[key].forEach((element: InputDynamic) => {
-          if (element.value) {
+          if (element.value !== null) {
             this.DySrv.firstTime = true;
             if (element.dataType.toLowerCase() === 'list') {
               (this.form.controls[key] as FormGroup).controls[

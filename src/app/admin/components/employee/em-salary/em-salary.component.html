@@ -1,4 +1,4 @@
-<ad-template [title]="'Salary'" [subTitle]="'Salary of ' + emp.name + ' employee'">
+<ad-template [title]="'Salary of ' + emp.name" [subTitle]="'Table'">
     <div id="con2" con2>
         <dynamic-table [tableName]="'Employee'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
             [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"></dynamic-table>

@@ -117,6 +117,26 @@ export class EmAddComponent {
             command: (value, element, form) => { },
             required: true,
           },
+          {
+            key: 'oldEmployment',
+            label: 'Is Old Employee',
+            value: null,
+            dataType: 'bool',
+            options: [],
+            visible: true,
+            command: (value, element, form) => { },
+            required: true,
+          },
+          {
+            key: 'securityCheck',
+            label: 'Security Check',
+            value: null,
+            dataType: 'bool',
+            options: [],
+            visible: true,
+            command: (value, element, form) => { },
+            required: true,
+          },
         ],
         bankInfo: [
           {

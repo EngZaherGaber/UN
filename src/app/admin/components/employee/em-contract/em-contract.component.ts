@@ -12,7 +12,6 @@ import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { Contract } from '../../../../general/interfaces/contract';
-import { ClientService } from '../../../services/client.service';
 import { TeamService } from '../../../services/team.service';
 import { CooService } from '../../../services/coo.service';
 import { CityService } from '../../../services/city.service';
@@ -33,6 +32,11 @@ export class EmContractComponent {
     {
       field: 'status',
       header: 'Status',
+      HeaderType: 'string',
+    },
+    {
+      field: 'cooNumber',
+      header: 'COO Number',
       HeaderType: 'string',
     },
     {
@@ -119,17 +123,15 @@ export class EmContractComponent {
   displayDialog: boolean = false;
   editDialog: boolean = false;
   lists: {
-    clients: { id: number, name: string }[],
     teams: { id: number, name: string }[],
     cities: { id: number, name: string }[],
-    cooSrv: { id: number, name: string }[],
+    coos: { id: number, name: string }[],
     typesOfContracts: { id: number, name: string }[],
     laptopTypes: { id: number, name: string }[],
   } = {
-      clients: [],
       teams: [],
       cities: [],
-      cooSrv: [],
+      coos: [],
       typesOfContracts: [],
       laptopTypes: [],
     };
@@ -168,7 +170,6 @@ export class EmContractComponent {
     private contractSrv: ContractService,
     private confirm: ConfirmService,
     private route: ActivatedRoute,
-    clientSrv: ClientService,
     teamSrv: TeamService,
     cooSrv: CooService,
     citySrv: CityService,
@@ -189,11 +190,10 @@ export class EmContractComponent {
     this.info.Buttons[0].icon = 'pi pi-times';
     this.info.Buttons[0].tooltip = 'Cancel Contract';
     this.info.Buttons[0].isShow = false;
-    this.info.Buttons[0].showCommand = (rowData) => {
-      return new Date(rowData.contractEndDate) > new Date()
+    this.info.Buttons[0].showCommand = (rowData: Contract) => {
+      return rowData.status.toLowerCase() === 'active'
     };
     forkJoin({
-      clients: clientSrv.getAll(),
       teams: teamSrv.getAll(),
       cities: citySrv.getAll(),
       cooSrv: cooSrv.getAll({}),
@@ -201,12 +201,6 @@ export class EmContractComponent {
       laptopTypeSrv: laptopTypeSrv.getAll(),
     }).subscribe(res => {
       this.lists = {
-        clients: res.clients.data.map(x => {
-          return {
-            id: x.clientId,
-            name: x.clientName
-          }
-        }),
         teams: res.teams.data.map(x => {
           return {
             id: x.teamId ?? 0,
@@ -219,7 +213,7 @@ export class EmContractComponent {
             name: x.nameEn
           }
         }),
-        cooSrv: res.cooSrv.data.map(x => {
+        coos: res.cooSrv.data.map(x => {
           return {
             id: x.cooId,
             name: x.cooNumber
@@ -301,7 +295,7 @@ export class EmContractComponent {
 
   getGeneralObj(
     employeeId: number,
-    contract?: Contract
+    contract?: Contract,
   ) {
     return {
       general: [
@@ -316,21 +310,12 @@ export class EmContractComponent {
         },
         {
           key: 'employeeId',
-          label: 'Client',
+          label: 'employee',
           value: this.emp.id,
           dataType: 'list',
           required: true,
           visible: false,
           options: [],
-        },
-        {
-          key: 'clientId',
-          label: 'Client',
-          value: contract?.clientId,
-          dataType: 'list',
-          required: true,
-          visible: true,
-          options: this.lists.clients,
         },
         {
           key: 'teamId',
@@ -348,7 +333,7 @@ export class EmContractComponent {
           dataType: 'list',
           required: true,
           visible: true,
-          options: this.lists.cooSrv,
+          options: contract ? [{ id: contract?.cooId, name: contract?.cooNumber }] : this.lists.coos,
         },
         {
           key: 'typeOfContractId',

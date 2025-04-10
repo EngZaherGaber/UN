@@ -2,13 +2,8 @@ import { Component } from '@angular/core';
 import { AdTemplateComponent } from "../../ad-template/ad-template.component";
 import { DynmaicFormComponent } from "../../../../general/components/dynmaic-form/dynmaic-form.component";
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
-import { CooService } from '../../../services/coo.service';
 import { BankService } from '../../../services/bank.service';
-import { ClientService } from '../../../services/client.service';
-import { TeamService } from '../../../services/team.service';
-import { CityService } from '../../../services/city.service';
 import { forkJoin, switchMap } from 'rxjs';
-import { TypeOfContractService } from '../../../services/type-of-contract.service';
 import { EmployeeService } from '../../../services/employee.service';
 import { APIResponse } from '../../../../general/interfaces/response';
 import { ToastService } from '../../../../general/services/toast.service';
@@ -167,12 +162,32 @@ export class EmEditComponent {
               command: (value, element, form) => { },
               required: true,
             },
+            {
+              key: 'oldEmployment',
+              label: 'Is Old Employee',
+              value: res.emp.data.personal.oldEmployment,
+              dataType: 'bool',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
+            {
+              key: 'securityCheck',
+              label: 'Security Check',
+              value: res.emp.data.personal.securityCheck,
+              dataType: 'bool',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
           ],
         };
       })
   }
   submit(event: any) {
-    this.empSrv.edit(event,this.empId).subscribe((res: APIResponse<any>) => {
+    this.empSrv.edit(event, this.empId).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
         this.router.navigate(['admin/employee']);
