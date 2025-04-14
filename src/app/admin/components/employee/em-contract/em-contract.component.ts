@@ -50,6 +50,11 @@ export class EmContractComponent {
       HeaderType: 'int',
     },
     {
+      field: 'tittle',
+      header: 'tittle',
+      HeaderType: 'string',
+    },
+    {
       field: 'teamName',
       header: 'teamName',
       HeaderType: 'string',
@@ -81,7 +86,12 @@ export class EmContractComponent {
     },
     {
       field: 'superVisor',
-      header: 'superVisor',
+      header: 'Supervisor',
+      HeaderType: 'string',
+    },
+    {
+      field: 'projectName',
+      header: 'projectName',
       HeaderType: 'string',
     },
     {
@@ -100,14 +110,14 @@ export class EmContractComponent {
       HeaderType: 'string',
     },
     {
-      field: 'laptop',
+      field: 'laptopType',
       header: 'Laptop Type',
       HeaderType: 'string',
     },
     {
-      field: 'typeOfContractName',
-      header: 'Type Of Contract Name',
-      HeaderType: 'string',
+      field: 'isMobile',
+      header: 'Have Mobile',
+      HeaderType: 'bool',
     },
   ]
   @Input() emp: { id: number, name: string } = { id: 0, name: '' };
@@ -191,7 +201,11 @@ export class EmContractComponent {
     this.info.Buttons[0].tooltip = 'Cancel Contract';
     this.info.Buttons[0].isShow = false;
     this.info.Buttons[0].showCommand = (rowData: Contract) => {
-      return rowData.status.toLowerCase() === 'active'
+      return rowData.status.toLowerCase().includes('active')
+    };
+    this.info.Buttons[1].isShow = false;
+    this.info.Buttons[1].showCommand = (rowData: Contract) => {
+      return rowData.status.toLowerCase().includes('active')
     };
     forkJoin({
       teams: teamSrv.getAll(),
@@ -354,9 +368,9 @@ export class EmContractComponent {
           options: this.lists.cities,
         },
         {
-          key: 'laptop',
+          key: 'laptopTypeId',
           label: 'Laptop Type',
-          value: contract?.laptop,
+          value: contract?.laptopTypeId,
           dataType: 'list',
           required: true,
           visible: true,

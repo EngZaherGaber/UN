@@ -58,12 +58,12 @@ export class AdCooGeneralComponent {
                     {
                       field: 'cooNumber',
                       header: 'cooNumber',
-                      HeaderType: 'Toggle',
+                      HeaderType: 'string',
                     },
                     {
                       field: 'cooDate',
                       header: 'cooDate',
-                      HeaderType: 'string',
+                      HeaderType: 'DateTime',
                     },
                     {
                       field: 'clientName',

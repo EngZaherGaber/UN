@@ -12,7 +12,7 @@ export interface Contract {
     tittle: string,
     salary: number,
     transportation: boolean,
-    laptop: number,
+    laptopTypeId: number,
     isMobile: boolean,
     typeOfContractId: number,
     insuranceLife: boolean,

@@ -18,7 +18,7 @@ import { AdTemplateComponent } from '../../ad-template/ad-template.component';
   styleUrl: './coo-display.component.scss'
 })
 export class CooDisplayComponent {
-objs: { [key: string]: InputDynamic[] } = {};
+  objs: { [key: string]: InputDynamic[] } = {};
   clients: Client[] = [];
   currencies: Currency[] = [];
   cooId: number = 0;
@@ -91,11 +91,21 @@ objs: { [key: string]: InputDynamic[] } = {};
             {
               key: 'clientId',
               label: 'Client Name',
-              value: null,
+              value: res.data.clientId,
               dataType: 'list',
               options: this.clients.map(client => {
                 return { id: client.clientId, name: client.clientName }
               }),
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
+            {
+              key: 'poNumber',
+              label: 'PO Number',
+              value: res.data.poNumber,
+              dataType: 'string',
+              options: [],
               visible: true,
               command: (value, element, form) => { },
               required: true,

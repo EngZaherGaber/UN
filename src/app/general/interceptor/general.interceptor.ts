@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ToastService } from '../services/toast.service';
+import { Router } from '@angular/router';
 @Injectable()
 export class generalInterceptor implements HttpInterceptor {
-  constructor(private msgSrv: ToastService) { }
+  constructor(private msgSrv: ToastService, private router: Router) { }
   intercept(req: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
     let newReq;
     if (localStorage.getItem('token')) {
@@ -25,6 +26,7 @@ export class generalInterceptor implements HttpInterceptor {
             case 401:
               msg = msg ?? 'Your Credential is Invalid';
               this.msgSrv.showError(msg, 'Unauthorized!');
+              this.router.navigate(['login'])
               break;
             case 404:
               msg = msg ?? 'Your API not found';

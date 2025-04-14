@@ -92,11 +92,21 @@ export class CooEditComponent {
             {
               key: 'clientId',
               label: 'Client Name',
-              value: null,
+              value: res.data.clientId,
               dataType: 'list',
               options: this.clients.map(client => {
                 return { id: client.clientId, name: client.clientName }
               }),
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
+            {
+              key: 'poNumber',
+              label: 'PO Number',
+              value: res.data.poNumber,
+              dataType: 'string',
+              options: [],
               visible: true,
               command: (value, element, form) => { },
               required: true,

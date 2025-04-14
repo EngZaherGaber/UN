@@ -82,6 +82,16 @@ export class CooAddComponent {
             command: (value, element, form) => { },
             required: true,
           },
+          {
+            key: 'poNumber',
+            label: 'PO Number',
+            value: null,
+            dataType: 'string',
+            options:[],
+            visible: true,
+            command: (value, element, form) => { },
+            required: true,
+          },
         ],
       };
     })

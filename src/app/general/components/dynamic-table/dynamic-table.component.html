@@ -84,7 +84,8 @@
                             [placeholder]="col.field"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'int'">
-                        <p-columnFilter type="numeric" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                        <p-columnFilter type="numeric" [useGrouping]="false" [field]="col.field"
+                            [placeholder]="col.field"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'json'">
 

@@ -30,6 +30,7 @@ import { EmDisplayComponent } from './admin/components/employee/em-display/em-di
 import { EmInsuranceComponent } from './admin/components/employee/em-insurance/em-insurance.component';
 import { EmSalaryComponent } from './admin/components/employee/em-salary/em-salary.component';
 import { EmContractComponent } from './admin/components/employee/em-contract/em-contract.component';
+import { InvoiceComponent } from './admin/components/invoice/invoice.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -71,6 +72,11 @@ export const routes: Routes = [
       },
       {
         path: 'setting/:subTitle', component: SettingComponent,
+      },
+      {
+        path: 'report', children: [
+          { path: 'invoice', component: InvoiceComponent }
+        ]
       },
       { path: '', component: AdHomeComponent },
       { path: '**', component: AdNotFoundComponent }],

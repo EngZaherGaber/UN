@@ -7,6 +7,6 @@ export interface COO {
     currencyId: number,
     employeeCoos: { employeeName: string, arabicName: string }[],
     lifeInsurances: { startDate: string, endDate: string }[],
-    purchaseOrders: { orderNumber: string }[],
+    poNumber: string,
     unEmps: { empName: string }[]
 }

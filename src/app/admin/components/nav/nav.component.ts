@@ -87,7 +87,13 @@ export class NavComponent {
       {
         label: 'Report',
         shortcut: '⌘+O',
-        icon: 'pi pi-chart-bar' // Alternative chart icon
+        icon: 'pi pi-chart-bar',
+        items: [
+          {
+            label: 'invoice',
+            route: ['/admin/report/invoice'],
+          }
+        ]
       },
     ];
   }
