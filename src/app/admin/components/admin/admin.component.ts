@@ -79,6 +79,7 @@ export class AdminComponent {
     this.usrSrv.resetPassword(event).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.showChangePasswordDialog = false;
       } else {
         this.msgSrv.showError('Error!', res.message);
       }

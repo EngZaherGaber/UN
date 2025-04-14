@@ -42,7 +42,7 @@
                 </div>
             </th>
             <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field"
-                [style]="col.HeaderType === 'bool' ? {'max-width':'100px !important'} : ''">
+                [style]="col.HeaderType === 'bool' ? {'justify-content':'center'} : ''">
                 <div>
                     <small>{{col.header}}</small>
                     <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -53,7 +53,7 @@
             <th pFrozenColumn style="max-width: 250px !important;">
             </th>
             <th *ngFor="let col of columns" pResizableColumn [ngClass]="col.HeaderType === 'bool' ? 'bool-cell' : ''"
-                [style]="col.HeaderType === 'bool' ? {'max-width':'100px !important'} : ''">
+                [style]="col.HeaderType === 'bool' ? {'justify-content':'center'} : ''">
                 <div [ngSwitch]="col.HeaderType" [class]="'filter-div ' + col.HeaderType">
                     <div *ngSwitchCase="'bool'">
                         <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
@@ -120,8 +120,7 @@
                         (click)="btn.command(rowData,rowData.buttons,dt);hitAction.emit({key:btn.key,rowDataId:rowData.Id})" />
                 </ng-container>
             </td>
-            <td *ngFor="let col of columns" [ngClass]="col.HeaderType === 'bool' ? 'bool-cell' : ''"
-                [style]="col.HeaderType === 'bool' ? {'max-width':'100px !important'} : ''">
+            <td *ngFor="let col of columns" [ngClass]="col.HeaderType === 'bool' ? 'bool-cell' : ''">
                 <small *ngIf="col.HeaderType != 'DateTime' &&
                          col.HeaderType != 'DateTimeO' &&
                           col.HeaderType != 'Toggle' &&

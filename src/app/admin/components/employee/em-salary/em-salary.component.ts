@@ -189,7 +189,8 @@ export class EmSalaryComponent {
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
-      this.info.getSub$.next(true)
+      this.info.getSub$.next({})
+      this.calcDialog = false;
       this.calcDialog = false;
     })
   }
