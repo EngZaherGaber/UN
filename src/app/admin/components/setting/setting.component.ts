@@ -12,6 +12,7 @@ import { AdClientGeneralComponent } from '../client/ad-client-general/ad-client-
 import { AdTeamGeneralComponent } from '../team/ad-team-general/ad-team-general.component';
 import { AdGeneralLaptopTypeComponent } from '../ad-general-laptop-type/ad-general-laptop-type.component';
 import { AdGeneralLaptopRentComponent } from '../ad-general-laptop-rent/ad-general-laptop-rent.component';
+import { AdGeneralCompanyAccountComponent } from '../ad-general-company-account/ad-general-company-account.component';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
@@ -28,7 +29,8 @@ import { AdGeneralLaptopRentComponent } from '../ad-general-laptop-rent/ad-gener
     AdClientGeneralComponent,
     AdTeamGeneralComponent,
     AdGeneralLaptopTypeComponent,
-    AdGeneralLaptopRentComponent
+    AdGeneralLaptopRentComponent,
+    AdGeneralCompanyAccountComponent
   ],
   standalone: true,
 })
@@ -41,6 +43,7 @@ export class SettingComponent implements OnInit {
     'Type of contract',
     'City',
     'Bank',
+    'Company Account',
     'Client',
     'Team',
     'Laptop',

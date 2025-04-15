@@ -96,7 +96,7 @@ export class AdGeneralContractTypeComponent {
     this.confirm.deleteConfirm((obj) => {
       this.typeOfContractSrv.delete(obj).subscribe(res => {
         this.msgSrv.showSuccess('Success!', 'Type Of Contract Deleted');
-        this.info.getSub$.next({})
+        this.info.getSub$.next(true)
       });
     }, rowData.typeOfContractId)
   }

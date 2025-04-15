@@ -123,7 +123,7 @@ export class AdGeneralCityComponent {
     this.confirm.deleteConfirm((obj) => {
       this.citySrv.delete(obj).subscribe(res => {
         this.msgSrv.showSuccess('Success!', 'City Deleted');
-        this.info.getSub$.next({})
+        this.info.getSub$.next(true)
       });
     }, rowData.cityId)
   }
@@ -208,23 +208,23 @@ export class AdGeneralCityComponent {
     this.citySrv.add(event).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.addDialog = false;
+        this.info.getSub$.next(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
 
     })
-    this.addDialog = false;
-    this.info.getSub$.next(true);
   }
   edit(event: any) {
     this.citySrv.edit(event, this.editCityId).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.editDialog = false;
+        this.info.getSub$.next(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
     })
-    this.editDialog = false;
-    this.info.getSub$.next(true);
   }
 }

@@ -7,17 +7,24 @@ import { ToastService } from '../../../../general/services/toast.service';
 import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { BankService } from '../../../services/bank.service';
 import { switchMap } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FileUploadModule } from 'primeng/fileupload';
+import { Bank } from '../../../../general/interfaces/bank';
 
 @Component({
   selector: 'bank-edit',
-  imports: [DynmaicFormComponent],
+  imports: [DynmaicFormComponent, CommonModule, FileUploadModule],
   templateUrl: './bank-edit.component.html',
   styleUrl: './bank-edit.component.scss'
 })
 export class BankEditComponent {
-  objs: { [key: string]: InputDynamic[] } = {};
   @Input() banksId: number = 0;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  bank: Bank | null = null;
+  objs: { [key: string]: InputDynamic[] } = {};
+  file: any = null;
+  showUploader: boolean = false;
+
   constructor(
     private bnkSrv: BankService,
     private msgSrv: ToastService,
@@ -36,9 +43,9 @@ export class BankEditComponent {
         return this.bnkSrv.getById(this.banksId);
       })
     ).subscribe(res => {
-
+      this.bank = res.data;
       this.objs = {
-        general: [
+        info: [
           {
             key: 'banksName',
             label: 'Bank Name',
@@ -50,11 +57,13 @@ export class BankEditComponent {
             required: true,
           },
         ],
+        image: [
+        ],
       };
     })
   }
   submit(event: any) {
-    this.bnkSrv.edit(event, this.banksId).subscribe((res: APIResponse<any>) => {
+    this.bnkSrv.edit(event, this.banksId, this.file).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
         this.close.emit(true)
@@ -62,5 +71,13 @@ export class BankEditComponent {
         this.msgSrv.showError('Error!', res.message);
       }
     })
+  }
+
+  onBasicUploadAuto(event: any) {
+    this.file = event.files[0];
+  }
+
+  activeIndexChange(event: number) {
+    this.showUploader = event === 1;
   }
 }

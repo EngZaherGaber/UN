@@ -1,6 +1,6 @@
-<dynamic-table [tableName]="'Rate'" [load]="info.get$" [buttons]="info.Buttons"
+<dynamic-table [tableName]="'Type Of Contract'" [load]="info.get$" [buttons]="info.Buttons"
     [captionButton]="info.captionButton"></dynamic-table>
-<p-dialog header="New Rate" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '25rem' }">
+<p-dialog header="New Type Of Contract" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '25rem' }">
     <dynmaic-form *ngIf="addDialog" (submit)="add($event)" [display]="'flex'" [withBackBtn]="false" [justOneStep]="true"
         [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
 </p-dialog>

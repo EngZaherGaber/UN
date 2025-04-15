@@ -99,7 +99,7 @@ export class AdGeneralLaptopTypeComponent {
     this.confirm.deleteConfirm((obj) => {
       this.laptopTypeSrv.delete(obj).subscribe(res => {
         this.msgSrv.showSuccess('Success!', 'Laptop Type Deleted');
-        this.info.getSub$.next({})
+        this.info.getSub$.next(true)
       });
     }, rowData.id)
   }
@@ -169,23 +169,23 @@ export class AdGeneralLaptopTypeComponent {
     this.laptopTypeSrv.add(event).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.addDialog = false;
+        this.info.getSub$.next(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
 
     })
-    this.addDialog = false;
-    this.info.getSub$.next(true);
   }
   edit(event: any) {
     this.laptopTypeSrv.edit(event, this.editLaptopTypeId).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.editDialog = false;
+        this.info.getSub$.next(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
     })
-    this.editDialog = false;
-    this.info.getSub$.next(true);
   }
 }

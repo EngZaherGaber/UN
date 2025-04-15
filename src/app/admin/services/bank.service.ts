@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Bank } from '../../general/interfaces/bank';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { APIResponse } from '../../general/interfaces/response';
 
@@ -8,7 +8,7 @@ import { APIResponse } from '../../general/interfaces/response';
   providedIn: 'root'
 })
 export class BankService {
-url = environment.api + 'BankManagement';
+  url = environment.api + 'BankManagement';
   constructor(private http: HttpClient) { }
   getAll() {
     return this.http.get<APIResponse<Bank[]>>(this.url);
@@ -19,10 +19,16 @@ url = environment.api + 'BankManagement';
   delete(id: number) {
     return this.http.delete<APIResponse<any>>(this.url + '/' + id);
   }
-  add(body: Bank) {
-    return this.http.post<APIResponse<any>>(this.url, body);
+  add(body: any, file: File) {
+    const formData = new FormData();
+    const params = new HttpParams().append('BanksName', body.info.banksName)
+    formData.append('files', file, body.banksName + '-file',);
+    return this.http.post<APIResponse<any>>(this.url, formData, { params: params });
   }
-  edit(body: Bank, id: number) {
-    return this.http.put<APIResponse<any>>(this.url + '/' + id, body);
+  edit(body: any, id: number, file: File) {
+    const formData = new FormData();
+    const params = new HttpParams().append('BanksName', body.info.banksName)
+    formData.append('files', file, body.banksName + '-file',);
+    return this.http.put<APIResponse<any>>(this.url + '/' + id, formData, { params: params });
   }
 }

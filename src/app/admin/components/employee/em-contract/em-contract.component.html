@@ -1,7 +1,8 @@
 <ad-template [title]="'Contracts of ' + emp.name" [subTitle]="'Table'">
     <div id="con2" con2>
-        <dynamic-table [tableName]="'Contract'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
-            [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"></dynamic-table>
+        <dynamic-table [getSeverity]="getSeverity" [tableName]="'Contract'" (onLazy)="info.getSub$.next($event)"
+            [lazyLoading]="true" [load]="info.get$" [buttons]="info.Buttons"
+            [captionButton]="info.captionButton"></dynamic-table>
     </div>
 </ad-template>
 <p-dialog [header]="'New Contract of ' + emp.name + ' employee'" [appendTo]="'body'" [modal]="true"

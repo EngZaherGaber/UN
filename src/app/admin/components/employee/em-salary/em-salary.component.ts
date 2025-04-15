@@ -13,16 +13,28 @@ import { CommonModule } from '@angular/common';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { Salary } from '../../../../general/interfaces/salary';
+import { PdfService } from '../../../../general/services/pdf.service';
+import { CompanyAccountService } from '../../../services/company-account.service';
+import { CopmanyAccount } from '../../../../general/interfaces/company-account';
 
 @Component({
   selector: 'app-em-salary',
-  imports: [DynamicTableComponent, AdTemplateComponent, DialogModule, CommonModule, DynmaicFormComponent],
+  imports: [
+    DynamicTableComponent,
+    AdTemplateComponent,
+    DialogModule,
+    CommonModule,
+    DynmaicFormComponent,
+  ],
   templateUrl: './em-salary.component.html',
   styleUrl: './em-salary.component.scss'
 })
 export class EmSalaryComponent {
+  @Input() emp: { id: number, name: string } = { id: 0, name: '' };
   info: InfoTable;
+  salaryRow: any;
   resetObjs: { [key: string]: InputDynamic[] } = {};
+  billObjs: { [key: string]: InputDynamic[] } = {};
   columns = [
     {
       field: 'cooNumber',
@@ -58,7 +70,10 @@ export class EmSalaryComponent {
   ];
   month: number = (new Date()).getMonth() + 1;
   calcDialog: boolean = false;
-  @Input() emp: { id: number, name: string } = { id: 0, name: '' };
+  billDialog: boolean = false;
+  singleBillPreviewDialog: boolean = false;
+  tableBillPreviewDialog: boolean = false;
+  companyAccounts: CopmanyAccount[] = [];
   calcFunc: () => void = () => {
     this.resetObjs = {
       general: [
@@ -107,19 +122,71 @@ export class EmSalaryComponent {
           visible: true,
           options: [],
         },
+      ],
+    };
+    this.calcDialog = true;
+  }
+  billFunc: (rowData: any) => void = async (rowData: any) => {
+    this.salaryRow = rowData;
+    this.billObjs = {
+      template: [
         {
-          key: 'dsa',
-          label: 'DSA',
-          value: null,
+          key: 'employeeId',
+          label: 'employee',
+          value: +this.emp.id,
           dataType: 'int',
+          required: true,
+          visible: false,
+          options: [],
+        },
+        {
+          key: 'salaryId',
+          label: 'Salary',
+          value: rowData.totalSalaryCalculatedinSyrianPounds,
+          dataType: 'int',
+          required: true,
+          visible: false,
+          options: [],
+        },
+        {
+          key: 'template',
+          label: 'Template',
+          value: null,
+          dataType: 'list',
+          required: true,
+          visible: true,
+          options: [
+            { id: 0, name: 'التجاري' },
+            { id: 1, name: 'البركة' },
+            { id: 2, name: 'الاهلي (داخلي)' },
+            { id: 3, name: 'الاهلي (خارجي)' },
+          ],
+        },
+      ],
+      description: [
+        {
+          key: 'branch',
+          label: 'Branch',
+          value: null,
+          dataType: 'string',
           required: true,
           visible: true,
           options: [],
         },
-
+        {
+          key: 'ourAccount',
+          label: 'Our Account',
+          value: null,
+          dataType: 'list',
+          required: true,
+          visible: true,
+          options: this.companyAccounts.map(res => {
+            return { id: res.accountCompanyId, name: res.accountNumber }
+          }),
+        },
       ],
     };
-    this.calcDialog = true;
+    this.billDialog = true;
   }
   constructor(
     tblSrv: DyTableService,
@@ -127,8 +194,11 @@ export class EmSalaryComponent {
     private router: Router,
     private salarySrv: SalaryService,
     private confirm: ConfirmService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pdfSrv: PdfService,
+    private companyAccountSrv: CompanyAccountService
   ) {
+    this.companyAccountSrv.getAll().subscribe(res => this.companyAccounts = res.data)
     this.info = tblSrv.getStandardInfo(undefined, undefined, undefined, this.calcFunc);
     this.info.captionButton.unshift({
       isShow: true,
@@ -142,6 +212,16 @@ export class EmSalaryComponent {
     })
     this.info.captionButton[1].icon = 'pi pi-calculator';
     this.info.captionButton[1].tooltip = 'Calc Salary for ' + this.month + ' Month';
+    this.info.Buttons.push({
+      isShow: true,
+      tooltip: 'Salary Bill',
+      icon: 'pi pi-receipt',
+      key: 'receipt',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.billFunc(rowData);
+      },
+    })
   }
   ngOnInit(): void {
     this.route.params.subscribe(param => {
@@ -193,5 +273,16 @@ export class EmSalaryComponent {
       this.calcDialog = false;
       this.calcDialog = false;
     })
+  }
+  async generateBill(event: any) {
+    this.billDialog = false;
+    this.salaryRow = {
+      ...this.salaryRow,
+      event
+    }
+    debugger
+    if (event.template.template === 0) {
+      this.singleBillPreviewDialog = true;
+    }
   }
 }

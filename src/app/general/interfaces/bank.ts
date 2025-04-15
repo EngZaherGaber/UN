@@ -1,4 +1,5 @@
 export interface Bank {
     banksId: number,
-    banksName: string
+    banksName: string,
+    bankLogoUrl: string
 }

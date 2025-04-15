@@ -38,7 +38,6 @@ export class InvoiceComponent {
         position: 'General Manager'
       }
     };
-    const pdf = await this.pdfSrv.generatePDFInvoice(template, 'x');
     // const url = window.URL.createObjectURL(pdf);
     // const a = document.createElement('a');
     // a.href = url;

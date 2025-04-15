@@ -6,6 +6,11 @@
 </ad-template>
 <p-dialog [header]="'Calc Salary for ' + month + ' Month'" [appendTo]="'body'" [modal]="true" [(visible)]="calcDialog"
     [style]="{ width: '25rem' }">
-    <dynmaic-form *ngIf="calcDialog" (submit)="calc($event)" [display]="'flex'" [withBackBtn]="false"
-        [justOneStep]="true" [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+    <dynmaic-form *ngIf="calcDialog" (submit)="calc($event)" [withBackBtn]="false" [justOneStep]="true"
+        [objs]="resetObjs"></dynmaic-form>
+</p-dialog>
+<p-dialog header="Generate Bill" [appendTo]="'body'" [modal]="true" [(visible)]="billDialog"
+    [style]="{ width: '25rem' }">
+    <dynmaic-form *ngIf="billDialog" (submit)="generateBill($event)" [withBackBtn]="false"
+        [objs]="billObjs"></dynmaic-form>
 </p-dialog>

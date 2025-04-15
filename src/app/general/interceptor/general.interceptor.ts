@@ -33,7 +33,7 @@ export class generalInterceptor implements HttpInterceptor {
               this.msgSrv.showError(msg, '404!');
               break;
             case 400:
-              msg = msg ?? 'Bad Request!';
+              msg = error.error.message ?? 'Bad Request!';
               this.msgSrv.showError(msg, '400!');
               break;
             case 500:

@@ -4,21 +4,26 @@ import { DynmaicFormComponent } from '../../../../general/components/dynmaic-for
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { APIResponse } from '../../../../general/interfaces/response';
 import { ToastService } from '../../../../general/services/toast.service';
-import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { BankService } from '../../../services/bank.service';
+import { FileUploadModule } from 'primeng/fileupload';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'bank-add',
-  imports: [DynmaicFormComponent],
+  imports: [DynmaicFormComponent, FileUploadModule, CommonModule, ButtonModule],
   templateUrl: './bank-add.component.html',
   styleUrl: './bank-add.component.scss'
 })
 export class BankAddComponent {
-  objs: { [key: string]: InputDynamic[] } = {};
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  objs: { [key: string]: InputDynamic[] } = {};
+  file: any;
+  showUploader: boolean = false;
+
   constructor(private bnkSrv: BankService, private msgSrv: ToastService, private router: Router) {
     this.objs = {
-      general: [
+      info: [
         {
           key: 'banksName',
           label: 'Bank Name',
@@ -30,10 +35,13 @@ export class BankAddComponent {
           required: true,
         },
       ],
+      image: [
+      ],
     };
   }
+
   submit(event: any) {
-    this.bnkSrv.add(event).subscribe((res: APIResponse<any>) => {
+    this.bnkSrv.add(event, this.file).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
         this.close.emit(true)
@@ -41,5 +49,13 @@ export class BankAddComponent {
         this.msgSrv.showError('Error!', res.message);
       }
     })
+  }
+  onBasicUploadAuto(event: any) {
+    console.log(event);
+    this.file = event.files[0];
+  }
+
+  activeIndexChange(event: number) {
+    this.showUploader = event === 1;
   }
 }

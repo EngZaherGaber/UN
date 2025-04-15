@@ -79,6 +79,11 @@ export class AdBankGeneralComponent {
                       header: 'banksName',
                       HeaderType: 'string',
                     },
+                    {
+                      field: 'bankLogoUrl',
+                      header: 'bankLogoUrl',
+                      HeaderType: 'img',
+                    },
                   ],
                   loading: false,
                   count: res.count

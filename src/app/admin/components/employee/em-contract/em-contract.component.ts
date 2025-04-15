@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ContractService } from '../../../services/contract.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, of, catchError, forkJoin } from 'rxjs';
+import { switchMap, of, catchError, forkJoin, switchScan } from 'rxjs';
 import { InfoTable } from '../../../../general/interfaces/info-table';
 import { ConfirmService } from '../../../../general/services/confirm.service';
 import { DyTableService } from '../../../../general/services/dy-table.service';
@@ -32,7 +32,7 @@ export class EmContractComponent {
     {
       field: 'status',
       header: 'Status',
-      HeaderType: 'string',
+      HeaderType: 'tag',
     },
     {
       field: 'cooNumber',
@@ -172,7 +172,18 @@ export class EmContractComponent {
       });
     }, rowData.id, 'Are You Need to Cancel This Contract?')
   }
-
+  getSeverity(rowData: any) {
+    switch (rowData.status) {
+      case 'Cancelled':
+        return 'danger';
+      case 'Expired':
+        return 'info';
+      case 'Active':
+        return 'success';
+      default:
+        return 'secondary'
+    }
+  }
   constructor(
     tblSrv: DyTableService,
     private msgSrv: ToastService,

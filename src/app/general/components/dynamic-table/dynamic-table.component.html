@@ -1,13 +1,13 @@
 <!-- <div> -->
 <p-table [value]="body.data" [paginator]="true" [rowHover]="true" [rows]="5" [rowsPerPageOptions]="[5,10,25,50,100]"
-    [scrollable]="true" stateStorage="session" [stateKey]="tableName" [alwaysShowPaginator]="dt.value.length > 0"
-    [exportFilename]="tableName" [lazy]="lazyLoading" [size]="'small'" stripedRows (onLazyLoad)="loadCarsLazy($event)"
-    [scrollHeight]="scrollHeight" (onRowExpand)="RowExpand.emit($event)" #dt sortMode="multiple"
-    [paginatorDropdownAppendTo]="'body'" [columns]="body.columns" [dataKey]="dataKey" columnResizeMode="expand"
-    [filterDelay]="0" [totalRecords]="totalRecords" [showLoader]="false" [loading]="body.loading" [rowHover]="true"
-    [responsive]="true" [resizableColumns]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-    [autoLayout]="true" [globalFilterFields]="['Name']" [tableStyle]="{ 'min-width': '100%'}">
+    [scrollable]="true" [stateKey]="tableName" [alwaysShowPaginator]="dt.value.length > 0" [exportFilename]="tableName"
+    [lazy]="lazyLoading" [size]="'small'" stripedRows (onLazyLoad)="loadCarsLazy($event)" [scrollHeight]="scrollHeight"
+    (onRowExpand)="RowExpand.emit($event)" #dt sortMode="multiple" [paginatorDropdownAppendTo]="'body'"
+    [columns]="body.columns" [dataKey]="dataKey" columnResizeMode="expand" [filterDelay]="0"
+    [totalRecords]="totalRecords" [showLoader]="false" [loading]="body.loading" [rowHover]="true" [responsive]="true"
+    [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true" [autoLayout]="true" [globalFilterFields]="['Name']"
+    [tableStyle]="{ 'min-width': '100%'}">
     <ng-template pTemplate="caption">
         <p-toolbar>
             <ng-template #start>
@@ -45,7 +45,7 @@
                 [style]="col.HeaderType === 'bool' ? {'justify-content':'center'} : ''">
                 <div>
                     <small>{{col.header}}</small>
-                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                    <p-sortIcon *ngIf="col.HeaderType !== 'img'" [field]="col.field"></p-sortIcon>
                 </div>
             </th>
         </tr>
@@ -57,41 +57,44 @@
                 <div [ngSwitch]="col.HeaderType" [class]="'filter-div ' + col.HeaderType">
                     <div *ngSwitchCase="'bool'">
                         <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
-                            [placeholder]="col.field"></p-columnFilter>
+                            [placeholder]="col.header"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'Toggle'">
                         <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
-                            [placeholder]="col.field"></p-columnFilter>
+                            [placeholder]="col.header"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'toggle'">
                         <p-columnFilter type="boolean" [matchMode]="'equals'" [field]="col.field"
-                            [placeholder]="col.field"></p-columnFilter>
+                            [placeholder]="col.header"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'DateTime'">
-                        <p-columnFilter type="date" [field]="col.field" [placeholder]="col.field"
+                        <p-columnFilter type="date" [field]="col.field" [placeholder]="col.header"
                             appendTo="body"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'DateTimeO'">
-                        <p-columnFilter type="date" [field]="col.field" [placeholder]="col.field"
+                        <p-columnFilter type="date" [field]="col.field" [placeholder]="col.header"
                             appendTo="body"></p-columnFilter>
+                    </div>
+                    <div *ngSwitchCase="'img'">
+
                     </div>
                     <div *ngSwitchCase="'float'">
                         <p-columnFilter type="numeric" [maxFractionDigits]="2" [field]="col.field"
-                            [placeholder]="col.field"></p-columnFilter>
+                            [placeholder]="col.header"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'double'">
                         <p-columnFilter type="numeric" [maxFractionDigits]="2" [field]="col.field"
-                            [placeholder]="col.field"></p-columnFilter>
+                            [placeholder]="col.header"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'int'">
                         <p-columnFilter type="numeric" [useGrouping]="false" [field]="col.field"
-                            [placeholder]="col.field"></p-columnFilter>
+                            [placeholder]="col.header"></p-columnFilter>
                     </div>
                     <div *ngSwitchCase="'json'">
 
                     </div>
                     <div *ngSwitchDefault>
-                        <p-columnFilter type="text" [field]="col.field" [placeholder]="col.field"></p-columnFilter>
+                        <p-columnFilter type="text" [field]="col.field" [placeholder]="col.header"></p-columnFilter>
 
                     </div>
                 </div>
@@ -120,14 +123,17 @@
                         (click)="btn.command(rowData,rowData.buttons,dt);hitAction.emit({key:btn.key,rowDataId:rowData.Id})" />
                 </ng-container>
             </td>
-            <td *ngFor="let col of columns" [ngClass]="col.HeaderType === 'bool' ? 'bool-cell' : ''">
+            <td *ngFor="let col of columns"
+                [ngClass]="col.HeaderType === 'bool' || col.HeaderType === 'img' ? 'bool-cell' : ''">
                 <small *ngIf="col.HeaderType != 'DateTime' &&
                          col.HeaderType != 'DateTimeO' &&
                           col.HeaderType != 'Toggle' &&
                           col.HeaderType != 'json' &&
                           col.HeaderType !== 'float' &&
                           col.HeaderType !== 'bool' &&
-                          col.HeaderType !== 'double' ">
+                          col.HeaderType !== 'double' &&
+                          col.HeaderType !== 'img' &&
+                          col.HeaderType !== 'tag'">
                     {{rowData[col.field]}}
                 </small>
                 <i *ngIf="col.HeaderType === 'bool'" class="pi" [ngClass]="{
@@ -168,6 +174,12 @@
                 <div *ngIf="col.HeaderType === 'json'">
                     <button pButton pRipple pTooltip="download JSON file" icon="pi pi-download"
                         (click)="downloadJSON(rowData[col.field])"></button>
+                </div>
+                <div *ngIf="col.HeaderType === 'img'" style="margin: 5px;">
+                    <img *ngIf="rowData[col.field]" [src]="rowData[col.field]" width="200" height="100">
+                </div>
+                <div *ngIf="col.HeaderType === 'tag'" >
+                    <p-tag [value]="rowData[col.field]" [severity]="getSeverity(rowData)" />
                 </div>
             </td>
         </tr>

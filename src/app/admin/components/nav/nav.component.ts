@@ -65,6 +65,12 @@ export class NavComponent {
             icon: 'pi pi-credit-card', // Already correct for bank
           },
           {
+            label: 'Company Account',
+            route: ['/admin/setting'],
+            fragment: 'Company Account',
+            icon: 'pi pi-user', // Already correct for bank
+          },
+          {
             label: 'Client',
             route: ['/admin/setting'],
             fragment: 'Client',

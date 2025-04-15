@@ -51,7 +51,7 @@ export class AdTeamGeneralComponent {
     this.confirm.deleteConfirm((obj) => {
       this.teamSrv.delete(obj).subscribe(res => {
         this.msgSrv.showSuccess('Success!', 'Team Deleted');
-        this.info.getSub$.next({})
+        this.info.getSub$.next(true)
       });
     }, rowData.teamId)
   }
@@ -83,7 +83,7 @@ export class AdTeamGeneralComponent {
                       {
                         attribute: 'clientName',
                         dynamic: null,
-                        dataType: 'int',
+                        dataType: 'string',
                       },
                     ],
                   },

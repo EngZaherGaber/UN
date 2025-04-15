@@ -62,6 +62,16 @@ export class UserEditComponent {
               command: (value, element, form) => { },
               required: true,
             },
+            {
+              key: 'email',
+              label: 'Email',
+              value: res.data.email,
+              dataType: 'email',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
           ],
         };
       })

@@ -106,6 +106,11 @@ export class AdUserGeneralComponent {
                       header: 'roleName',
                       HeaderType: 'string',
                     },
+                    {
+                      field: 'email',
+                      header: 'email',
+                      HeaderType: 'string',
+                    },
                   ],
                 });
               }),
@@ -121,6 +126,11 @@ export class AdUserGeneralComponent {
                     {
                       field: 'roleName',
                       header: 'roleName',
+                      HeaderType: 'string',
+                    },
+                    {
+                      field: 'email',
+                      header: 'email',
                       HeaderType: 'string',
                     },
                   ],
@@ -142,6 +152,11 @@ export class AdUserGeneralComponent {
                 {
                   field: 'roleName',
                   header: 'roleName',
+                  HeaderType: 'string',
+                },
+                {
+                  field: 'email',
+                  header: 'email',
                   HeaderType: 'string',
                 },
               ],

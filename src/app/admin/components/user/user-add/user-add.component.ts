@@ -52,6 +52,16 @@ export class UserAddComponent {
             command: (value, element, form) => { },
             required: true,
           },
+          {
+            key: 'email',
+            label: 'Email',
+            value: null,
+            dataType: 'email',
+            options: [],
+            visible: true,
+            command: (value, element, form) => { },
+            required: true,
+          },
         ],
       };
 

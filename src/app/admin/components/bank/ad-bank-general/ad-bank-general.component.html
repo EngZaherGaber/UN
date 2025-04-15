@@ -1,11 +1,11 @@
 <dynamic-table [tableName]="'Bank'" [load]="info.get$" [buttons]="info.Buttons"
     [captionButton]="info.captionButton"></dynamic-table>
-<p-dialog header="New Bank" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '25rem' }">
-    <bank-add (close)="addDialog = false" *ngIf="addDialog"></bank-add>
+<p-dialog header="New Bank" [appendTo]="'body'" [modal]="true" [(visible)]="addDialog" [style]="{ width: '50%' }">
+    <bank-add (close)="info.getSub$.next(true);addDialog = false" *ngIf="addDialog"></bank-add>
 </p-dialog>
-<p-dialog header="Edit Bank" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog" [style]="{ width: '25rem' }">
+<p-dialog header="Edit Bank" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog" [style]="{ width: '50%' }">
     <bank-edit [banksId]="editBankId" (close)="info.getSub$.next(true);editDialog = false" *ngIf="editDialog"></bank-edit>
 </p-dialog>
-<p-dialog header="New Bank" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog" [style]="{ width: '25rem' }">
+<p-dialog header="New Bank" [appendTo]="'body'" [modal]="true" [(visible)]="displayDialog" [style]="{ width: '50%' }">
     <bank-display [banksId]="displayBankId" (close)="info.getSub$.next(true);displayDialog = false" *ngIf="displayDialog"></bank-display>
 </p-dialog>

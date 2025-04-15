@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Table } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
@@ -30,6 +31,7 @@ import { UnSpinnerComponent } from '../un-spinner/un-spinner.component';
     FormsModule,
     UnSpinnerComponent,
     ToolbarModule,
+    TagModule
   ],
   templateUrl: './dynamic-table.component.html',
   styleUrl: './dynamic-table.component.scss',
@@ -49,6 +51,7 @@ export class DynamicTableComponent {
   @Input() scrollHeight: string = '40vh';
   @Input() expandedTable: boolean = false;
   @Input() changeColor: (rowData: any) => any = () => { };
+  @Input() getSeverity: (rowData: any) => "success" | "info" | "warn" | "danger" | "secondary" | "contrast" | undefined = () => { return 'secondary' };
   @Output() hitAction: EventEmitter<{ key: string; rowDataId: number }> =
     new EventEmitter<{ key: string; rowDataId: number }>();
   @Input() captionButton: DyButton[] = [];
@@ -83,7 +86,6 @@ export class DynamicTableComponent {
 
   ngOnInit(): void { }
   ngAfterContentInit(): void {
-    this.filterdMode = sessionStorage.getItem(this.tableName) ? true : false;
     this.load.subscribe((body) => {
       if (this.columnsEvent && this.columnsEvent.length > 0) {
         this.columnsEvent.forEach((col) => {

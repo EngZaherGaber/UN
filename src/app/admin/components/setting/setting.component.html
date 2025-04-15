@@ -18,6 +18,9 @@
       <p-tabpanel value="Bank">
         <ad-bank-general *ngIf="subTitle === 'Bank'"></ad-bank-general>
       </p-tabpanel>
+      <p-tabpanel value="Company Account">
+        <ad-general-company-account *ngIf="subTitle === 'Company Account'"></ad-general-company-account>
+      </p-tabpanel>
       <p-tabpanel value="Client">
         <ad-client-general *ngIf="subTitle === 'Client'"></ad-client-general>
       </p-tabpanel>
@@ -25,7 +28,7 @@
         <ad-team-general *ngIf="subTitle === 'Team'"></ad-team-general>
       </p-tabpanel>
       <p-tabpanel value="Laptop">
-        <p-tabs>
+        <p-tabs *ngIf="subTitle === 'Laptop'">
           <p-tablist>
             <p-tab [value]="'Type'">Type</p-tab>
             <p-tab [value]="'Rent'">Rent</p-tab>
