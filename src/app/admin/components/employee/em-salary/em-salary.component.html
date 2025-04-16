@@ -1,5 +1,6 @@
 <ad-template [title]="'Salary of ' + emp.name" [subTitle]="'Table'">
     <div id="con2" con2>
+        <div id="document-preview"></div>
         <dynamic-table [tableName]="'Employee'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
             [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"></dynamic-table>
     </div>

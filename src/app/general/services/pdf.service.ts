@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, HeadingLevel, AlignmentType } from 'docx';
-import { InvoiceTemplate } from '../interfaces/invoice-template';
-
+import { HttpClient } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 
 
@@ -17,10 +14,18 @@ export class PdfService {
   tens = ['', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
   hundreds = ['', 'مئة', 'مئتان', 'ثلاثمئة', 'أربعمئة', 'خمسمئة', 'ستمئة', 'سبعمئة', 'ثمانمئة', 'تسعمئة'];
   scales = ['', 'ألف', 'مليون', 'مليار', 'تريليون'];
+  templatePath = 'templates/'; // Path in public folder
+  formData = {
+    name: '',
+    date: new Date().toISOString().split('T')[0],
+    address: '',
+    // Add other fields as needed
+  };
+  isLoading = false;
 
-  constructor() {
-  }
+  constructor(private http: HttpClient) { }
 
+  
 
   convertToSyrianPounds(amount: number): string {
     if (amount === 0) return 'صفر ليرة سورية';

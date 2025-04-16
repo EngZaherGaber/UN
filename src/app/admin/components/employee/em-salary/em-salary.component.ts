@@ -16,7 +16,6 @@ import { Salary } from '../../../../general/interfaces/salary';
 import { PdfService } from '../../../../general/services/pdf.service';
 import { CompanyAccountService } from '../../../services/company-account.service';
 import { CopmanyAccount } from '../../../../general/interfaces/company-account';
-
 @Component({
   selector: 'app-em-salary',
   imports: [
@@ -127,66 +126,66 @@ export class EmSalaryComponent {
     this.calcDialog = true;
   }
   billFunc: (rowData: any) => void = async (rowData: any) => {
-    this.salaryRow = rowData;
-    this.billObjs = {
-      template: [
-        {
-          key: 'employeeId',
-          label: 'employee',
-          value: +this.emp.id,
-          dataType: 'int',
-          required: true,
-          visible: false,
-          options: [],
-        },
-        {
-          key: 'salaryId',
-          label: 'Salary',
-          value: rowData.totalSalaryCalculatedinSyrianPounds,
-          dataType: 'int',
-          required: true,
-          visible: false,
-          options: [],
-        },
-        {
-          key: 'template',
-          label: 'Template',
-          value: null,
-          dataType: 'list',
-          required: true,
-          visible: true,
-          options: [
-            { id: 0, name: 'التجاري' },
-            { id: 1, name: 'البركة' },
-            { id: 2, name: 'الاهلي (داخلي)' },
-            { id: 3, name: 'الاهلي (خارجي)' },
-          ],
-        },
-      ],
-      description: [
-        {
-          key: 'branch',
-          label: 'Branch',
-          value: null,
-          dataType: 'string',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'ourAccount',
-          label: 'Our Account',
-          value: null,
-          dataType: 'list',
-          required: true,
-          visible: true,
-          options: this.companyAccounts.map(res => {
-            return { id: res.accountCompanyId, name: res.accountNumber }
-          }),
-        },
-      ],
-    };
-    this.billDialog = true;
+    // this.salaryRow = rowData;
+    // this.billObjs = {
+    //   template: [
+    //     {
+    //       key: 'employeeId',
+    //       label: 'employee',
+    //       value: +this.emp.id,
+    //       dataType: 'int',
+    //       required: true,
+    //       visible: false,
+    //       options: [],
+    //     },
+    //     {
+    //       key: 'salaryId',
+    //       label: 'Salary',
+    //       value: rowData.totalSalaryCalculatedinSyrianPounds,
+    //       dataType: 'int',
+    //       required: true,
+    //       visible: false,
+    //       options: [],
+    //     },
+    //     {
+    //       key: 'template',
+    //       label: 'Template',
+    //       value: null,
+    //       dataType: 'list',
+    //       required: true,
+    //       visible: true,
+    //       options: [
+    //         { id: 0, name: 'التجاري' },
+    //         { id: 1, name: 'البركة' },
+    //         { id: 2, name: 'الاهلي (داخلي)' },
+    //         { id: 3, name: 'الاهلي (خارجي)' },
+    //       ],
+    //     },
+    //   ],
+    //   description: [
+    //     {
+    //       key: 'branch',
+    //       label: 'Branch',
+    //       value: null,
+    //       dataType: 'string',
+    //       required: true,
+    //       visible: true,
+    //       options: [],
+    //     },
+    //     {
+    //       key: 'ourAccount',
+    //       label: 'Our Account',
+    //       value: null,
+    //       dataType: 'list',
+    //       required: true,
+    //       visible: true,
+    //       options: this.companyAccounts.map(res => {
+    //         return { id: res.accountCompanyId, name: res.accountNumber }
+    //       }),
+    //     },
+    //   ],
+    // };
+    
   }
   constructor(
     tblSrv: DyTableService,
