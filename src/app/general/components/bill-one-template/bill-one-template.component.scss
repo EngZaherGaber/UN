@@ -1,0 +1,136 @@
+.a4-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+  * {
+    font-size: 12px !important;
+  }
+  .sml {
+    font-size: 10px !important;
+  }
+  .a4-document {
+    width: 210mm;
+    height: 297mm;
+    min-width: 210mm;
+    min-height: 297mm;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 8mm 10mm;
+    box-sizing: border-box;
+    position: relative;
+    margin-block: 10px;
+    font-family: "Arial", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    small {
+      font-size: 11px;
+      font-weight: bold;
+      color: gray;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      padding-bottom: 20px;
+      height: 90px;
+      .contact {
+        display: flex;
+        width: 150px;
+        // height: 60px;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        .contact-con {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          gap: 10px;
+
+          .detail {
+            width: 70%;
+          }
+        }
+      }
+    }
+    .content {
+      height: calc(100% - 110px);
+      display: flex;
+      flex-direction: column;
+      direction: rtl;
+      line-height: 0.5;
+      .type {
+        display: flex;
+        justify-content: space-around;
+        .title-ar {
+          width: 90px;
+        }
+        .types {
+          display: flex;
+          justify-content: space-evenly;
+          gap: 10px;
+        }
+      }
+      .request {
+        margin-top: 10px;
+        line-height: 0.8;
+        .title {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 5px;
+        }
+        table {
+          border: 2px solid black;
+          width: 100%;
+          font-size: 14px !important;
+          direction: rtl;
+          td {
+            padding: 8px;
+          }
+          td:first-child {
+            text-align: right;
+            width: 25%;
+            background-color: #f0f0f0; /* Baby blue color */
+          }
+          td:nth-child(2) {
+            text-align: center;
+            width: 45%;
+            background-color: white; /* Baby blue color */
+          }
+          td:last-child {
+            text-align: left;
+            background-color: #f0f0f0; /* Baby blue color */
+          }
+          .baby-blue {
+            background-color: #f0f0f0; /* Baby blue color */
+          }
+        }
+      }
+    }
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 10px;
+      height: 50px;
+      small {
+        white-space: pre;
+      }
+    }
+  }
+  .tool {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0px 1px 5px 0px;
+  }
+}

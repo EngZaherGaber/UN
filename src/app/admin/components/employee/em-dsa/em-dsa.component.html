@@ -1,10 +1,15 @@
-<ad-template [title]="'Salary of ' + emp.name" [subTitle]="'Table'">
+<ad-template [title]="'DSA of ' + emp.name" [subTitle]="'Table'">
     <div id="con2" con2>
-        <dynamic-table [tableName]="'Salary'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
-            [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"></dynamic-table>
+        <dynamic-table [tableName]="'DSA'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true" [load]="info.get$"
+            [buttons]="info.Buttons" [captionButton]="info.captionButton"></dynamic-table>
     </div>
 </ad-template>
-<p-dialog [header]="'Calc Salary'" [appendTo]="'body'" [modal]="true" [(visible)]="calcDialog"
+<p-dialog [header]="'Calc DSA for Month ' + month" [appendTo]="'body'" [modal]="true" [(visible)]="calcDialog"
+    [style]="{ width: '25rem' }">
+    <dynmaic-form *ngIf="calcDialog" (submit)="calc($event)" [withBackBtn]="false" [showSteps]="true"
+        [objs]="resetObjs"></dynmaic-form>
+</p-dialog>
+<p-dialog [header]="'Calc DSA'" [appendTo]="'body'" [modal]="true" [(visible)]="calcDialog"
     [style]="{ width: '25rem' }">
     <dynmaic-form *ngIf="calcDialog" (submit)="calc($event)" [withBackBtn]="false" [justOneStep]="true"
         [objs]="resetObjs"></dynmaic-form>
@@ -16,17 +21,17 @@
 </p-dialog>
 <p-dialog header="Preview Bill" [appendTo]="'body'" [modal]="true" [(visible)]="zeroBillPreviewDialog"
     [style]="{ width: '75%' }" [maximizable]="true">
-    <bill-zero-template *ngIf="zeroBillPreviewDialog" [data]="salaryRow"></bill-zero-template>
+    <bill-zero-template *ngIf="zeroBillPreviewDialog" [data]="dsaRow"></bill-zero-template>
 </p-dialog>
 <p-dialog header="Preview Bill" [appendTo]="'body'" [modal]="true" [(visible)]="oneBillPreviewDialog"
     [style]="{ width: '75%' }" [maximizable]="true">
-    <bill-one-template *ngIf="oneBillPreviewDialog" [data]="salaryRow"></bill-one-template>
+    <bill-one-template *ngIf="oneBillPreviewDialog" [data]="dsaRow"></bill-one-template>
 </p-dialog>
 <p-dialog header="Preview Bill" [appendTo]="'body'" [modal]="true" [(visible)]="twoBillPreviewDialog"
     [style]="{ width: '75%' }" [maximizable]="true">
-    <bill-two-template *ngIf="twoBillPreviewDialog" [data]="salaryRow"></bill-two-template>
+    <bill-two-template *ngIf="twoBillPreviewDialog" [data]="dsaRow"></bill-two-template>
 </p-dialog>
 <p-dialog header="Preview Bill" [appendTo]="'body'" [modal]="true" [(visible)]="threeBillPreviewDialog"
     [style]="{ width: '75%' }" [maximizable]="true">
-    <bill-three-template *ngIf="threeBillPreviewDialog" [data]="salaryRow"></bill-three-template>
+    <bill-three-template *ngIf="threeBillPreviewDialog" [data]="dsaRow"></bill-three-template>
 </p-dialog>

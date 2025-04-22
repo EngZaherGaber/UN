@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { APIResponse } from '../../general/interfaces/response';
 import { Salary } from '../../general/interfaces/salary';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { DSA } from '../../general/interfaces/dsa';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,11 @@ export class SalaryService {
   }
   calculate(body: Salary) {
     return this.http.put<APIResponse<any>>(this.url + '/CalculateSalary', body);
+  }
+  getAllDSA(body: TableLazyLoadEvent, empId: number) {
+    return this.http.post<APIResponse<any>>(this.url + '/GetAllDsaByEmployeeId/' + empId, body);
+  }
+  addDSA(body: DSA) {
+    return this.http.post<APIResponse<any>>(this.url + '/AddDsa', body);
   }
 }

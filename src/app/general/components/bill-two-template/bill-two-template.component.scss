@@ -1,0 +1,104 @@
+.a4-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+  * {
+    font-size: calc(12 * 1.3333px) !important;
+    font-family: "Times New Roman", Times, serif !important;
+  }
+  .larg {
+    font-size: calc(13 * 1.3333px) !important;
+  }
+  .sml {
+    font-size: 10px !important;
+  }
+  .a4-document {
+    width: 210mm;
+    height: 297mm;
+    min-width: 210mm;
+    min-height: 297mm;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 8mm 10mm;
+    box-sizing: border-box;
+    position: relative;
+    margin-block: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    td {
+      padding: 10px 5px;
+    }
+    small {
+      font-size: 11px;
+      font-weight: bold;
+      color: gray;
+    }
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      img {
+        filter: brightness(0) contrast(0.5);
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: calc(100% - 110px);
+      .order {
+        display: flex;
+        justify-content: space-between;
+        > div {
+          width: 25%;
+          height: 17px;
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 2px solid black;
+          * {
+          }
+        }
+        .header-cell {
+          position: relative;
+          height: 40px;
+          padding-inline: 15%;
+          .out {
+            position: absolute;
+            top: -8.5px;
+            left: 15%;
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            b {
+              background-color: white;
+              padding-inline: 5px;
+            }
+          }
+        }
+      }
+      .request-div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .brdr {
+          display: flex;
+          width: 250px;
+          height: 40px;
+        }
+      }
+    }
+  }
+  .tool {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0px 1px 5px 0px;
+  }
+}

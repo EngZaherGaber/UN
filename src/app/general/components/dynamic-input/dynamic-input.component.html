@@ -8,7 +8,6 @@
                 [appendTo]="'body'" [options]="object.options" [formControl]="FEcontrol" optionLabel="name"
                 [filter]="object.options ? object.options.length > 4 : false" optionValue="id" [showClear]="true"
                 [checkmark]="true"></p-select>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="List">
             <div class="field"></div>
@@ -21,7 +20,6 @@
                 [options]="object.options" [formControl]="FEcontrol"
                 [filter]="object.options ? object.options.length > 4 : false" optionLabel="name" optionValue="id"
                 [showClear]="true" [checkmark]="true"></p-select>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="int">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
@@ -29,7 +27,6 @@
                 }}</label>
             <p-inputNumber [step]="1" [id]="object.label" [formControl]="FEcontrol" [min]="object.required ? 1 : null"
                 [showButtons]="true" (keydown)="preventSpace($event, FEcontrol.value)"></p-inputNumber>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="float">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
@@ -37,7 +34,6 @@
                 }}</label>
             <p-inputNumber [minFractionDigits]="1" [step]="0.1" mode="decimal" [formControl]="FEcontrol"
                 [id]="object.label" [showButtons]="true" [min]="object.required ? 0.1 : null"></p-inputNumber>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="double">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
@@ -45,26 +41,22 @@
                 }}</label>
             <p-inputNumber [minFractionDigits]="1" [step]="0.1" mode="decimal" [formControl]="FEcontrol"
                 [id]="object.label" [showButtons]="true" [min]="object.required ? 0.1 : null"></p-inputNumber>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="email">
             <input [id]="object.label" [formControl]="FEcontrol" type="email" pInputText />
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
         </ng-template>
         <ng-template ngSwitchCase="string">
             <input [id]="object.label" [formControl]="FEcontrol" type="text" pInputText />
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
         </ng-template>
         <ng-template ngSwitchCase="password">
-            <p-password [id]="object.label"  [feedback]="false" [formControl]="FEcontrol" type="text"
+            <p-password [id]="object.label" [feedback]="false" [formControl]="FEcontrol" type="text"
                 [toggleMask]="true" />
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
@@ -72,19 +64,17 @@
         <ng-template ngSwitchCase="boolean">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{ object.label }}</label>
             <p-checkbox [binary]="true" [formControl]="FEcontrol" [value]="object.value" inputId="binary"></p-checkbox>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="autoComplete">
             <div class="p-field">
                 <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                     object.label
                     }}</label>
-                <small [id]="object.label + '-help'"> (AutoComplete)</small>
-                <p-autoComplete [showTransitionOptions]="'250ms'" [hideTransitionOptions]="'250ms'" [id]="object.label"
-                    [name]="object.key" [(ngModel)]="autoCompleteValue" field="value" (onSelect)="selectValue($event)"
-                    [dropdown]="true" [suggestions]="items ?? []" [disabled]="disableAutoComplete()"
-                    (completeMethod)="getSuggestions($event)" [appendTo]="'body'"></p-autoComplete>
-                <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+                <p-autoComplete [dropdown]="true" [id]="object.label" [name]="object.key"
+                    [(ngModel)]="autoCompleteValue" field="name" [suggestions]="items ?? []"
+                    [disabled]="disableAutoComplete()" [virtualScroll]="true" [virtualScrollItemSize]="10"
+                    (completeMethod)="getSuggestions($event)" (onSelect)="selectValue($event.value)"
+                    [appendTo]="'body'"></p-autoComplete>
             </div>
         </ng-template>
         <ng-template ngSwitchCase="DateTime">
@@ -92,16 +82,14 @@
                 object.label
                 }}</label>
             <p-calendar (onSelect)="selectDate($event)" appendTo="body" dataType="string" [showIcon]="true"
-                inputId="icon" dateFormat="MM/dd/yy" [formControl]="FEcontrol"></p-calendar>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+                inputId="icon" dateFormat="yy-mm-dd" [formControl]="FEcontrol"></p-calendar>
         </ng-template>
         <ng-template ngSwitchCase="datetime">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
             <p-calendar (onSelect)="selectDate($event)" appendTo="body" dataType="string" [showIcon]="true"
-                inputId="icon" dateFormat="MM/dd/yy" [formControl]="FEcontrol"></p-calendar>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+                inputId="icon" dateFormat="yy-mm-dd" [formControl]="FEcontrol"></p-calendar>
         </ng-template>
         <ng-template ngSwitchCase="MultiSelect">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
@@ -117,7 +105,6 @@
                 }}</label>
             <p-datepicker [minDate]="now" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'yy')"
                 appendTo="body" view="year" dateFormat="yy"></p-datepicker>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
         <ng-template ngSwitchCase="month">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
@@ -125,9 +112,11 @@
                 }}</label>
             <p-datepicker [minDate]="now" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'mm')"
                 appendTo="body" view="month" dateFormat="mm"></p-datepicker>
-            <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
         </ng-template>
     </p-floatlabel>
+    <small *ngIf="object.dataType === 'autoComplete'" [id]="object.label + 'help'" class="helper">AutoComplete</small>
+    <small [id]="object.label + 'help'" class="helper">{{ object.desc }}</small>
+
     <ng-template ngSwitchCase="bool">
         <div style="display: flex;flex-direction: column;">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{

@@ -1,0 +1,271 @@
+<div class="a4-container">
+    <div class="tool">
+        <p-toolbar>
+            <ng-template #start>
+                <p-button (onClick)="downloadAsPDF()" icon="pi pi-download" severity="secondary" /> </ng-template>
+        </p-toolbar>
+    </div>
+    <div id="a4-document" class="a4-document">
+        <div class="header">
+            <img src="ATB.png" alt="" width="200" height="75">
+            <img src="ATB.png" alt="" width="200" height="75">
+        </div>
+        <div class="content">
+            <div class="order">
+                <b style="border-bottom: 2px solid black;font-size: 22px !important;">Application for issuance a
+                    Transfer</b>
+                <b style="border-bottom: 2px solid black;font-size: 22px !important;">طلب إصدار حوالة</b>
+            </div>
+            <div class="order">
+                <div
+                    style="display: flex;justify-content: space-evenly;width: 35%;align-items: center;margin-left: 5%;">
+                    <p class="larg chk-before">Foreign Transfer</p>
+                    <p class="larg">تحويل خارجي</p>
+                </div>
+                <div
+                    style="display: flex;justify-content: space-evenly;width: 35%;align-items: center;margin-right: 5%;">
+                    <p class="larg">Local Transfer</p>
+                    <p class="larg chk-after">تحويل محلي</p>
+                </div>
+
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-evenly;width: 45%;align-items: baseline;">
+                    <p class="larg">Date: </p>
+                    <p class="larg" style="border-bottom: 2px dotted black;width: 60%;"></p>
+                    <p class="larg">: التاريخ</p>
+                </div>
+                <div style="display: flex;justify-content: space-evenly;width: 45%;align-items: baseline;">
+                    <p class="larg">Branch: </p>
+                    <p class="larg" style="border-bottom: 2px dotted black;width: 60%;text-align: center;">
+                        {{data.event.description.branch}}</p>
+                    <p class="larg">: الفرع</p>
+                </div>
+            </div>
+            <div class="order" style="justify-content: space-evenly;align-items: baseline;">
+                <p class="larg">Amount of Transfer:</p>
+                <div class="brdr">
+                    <div
+                        style="border: 1px solid;width: 200px;height: 40px;display: flex;align-items: center;justify-content: center;text-align: center;">
+                        {{data.totalSalaryCalculatedinSyrianPounds}}</div>
+
+                </div>
+                <p class="larg">: المبلغ المراد تحويله</p>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 45%;align-items: baseline;">
+                    <p>Exchange Rate: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 40%;"></p>
+                    <p>: سعر التحويل</p>
+                </div>
+                <div style="display: flex;justify-content: space-between;width: 45%;align-items: baseline;">
+                    <p>Currency: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 40%;"></p>
+                    <p>: عملة التحويل</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>ِAmount in Word: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;text-align: center;">
+                        {{pdfSrv.convertToSyrianPounds(data.totalSalaryCalculatedinSyrianPounds)}}</p>
+                    <p>:تفقيط المبلغ</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>ِApplicant's Name: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;">مؤسسة عمر فلوح التجارية
+                    </p>
+                    <p>:اسم طالب التحويل</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p> ِApplicant's Address: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;"></p>
+                    <p>:العنوان</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 45%;align-items: baseline;">
+                    <p>Payment Currency: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 40%;"></p>
+                    <p>:عملة الدفع</p>
+                </div>
+                <div style="display: flex;justify-content: space-between;width: 45%;align-items: baseline;">
+                    <p>Telephone: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 40%;"></p>
+                    <p>: رقم الهاتف</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Details of Payment: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">
+                        {{data.event.description.reason}}</p>
+                    <p>:الغرض من التحويل</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-evenly;width: 100%;align-items: baseline;">
+                    <p>Debit to Our Account No: </p>
+                    <p style="width: 20%;"></p>
+                    <p>:القيد على حسابنا رقم</p>
+                </div>
+            </div>
+            <div class="order" style="justify-content: center;">
+                <table border="1" cellspacing="0" cellpadding="8" style="width: 70%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.event.description.ourAccount,0,6)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.event.description.ourAccount,6,9)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.event.description.ourAccount,9)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td style="width: 60px;">
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        /
+                                    </b>
+                                </div>
+                            </td>
+                            <td style="padding-inline: 5px;">
+                                {{getBranch(data.event.description.ourAccount)}}
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 47%;align-items: baseline;">
+                    <p class="sml" style="padding-right: 5px;">Amount Paid: </p>
+                    <p class="sml chk-before" style="padding-right: 5px;">Include</p>
+                    <p class="sml chk-before">Not Inluding (Comm. & Charges)</p>
+                </div>
+                <div style="display: flex;justify-content: space-between;width: 40%;align-items: baseline;">
+                    <p class="sml chk-after" style="direction: rtl;">لا يتضمن (العملات والمصاريف)</p>
+                    <p class="sml chk-after">يتضمن</p>
+                    <p class="sml">المبلغ المدفوع: </p>
+                </div>
+            </div>
+            <div class="order">
+                <b style="border-bottom: 2px solid black;font-size: 18px !important;">Beneficiary's Data:</b>
+                <b style="border-bottom: 2px solid black;font-size: 18px !important;">:بيانات المستفيد</b>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Beneficiary's Name: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;">{{data.arabicName}} بن {{data.fatherNameArabic}}</p>
+                    <p>:اسم المستفيد</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Beneficiary's Address: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;"></p>
+                    <p>:عنوان المستفيد</p>
+                </div>
+            </div>
+            <div class="order" style="justify-content: flex-end;">
+                <div style="display: flex;justify-content: space-between;width: 50%;align-items: baseline;">
+                    <p>Telephone: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;"></p>
+                    <p>:رقم الهاتف</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Beneficiary's Account No.: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">{{data.accountNumber}}
+                    </p>
+                    <p>:رقم حساب المستفيد</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Beneficiary's Bank: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">{{data.bankName}}</p>
+                    <p>:بنك المستفيد الدافع</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>For European Transfers (IBAN): </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 48%;"></p>
+                    <p>:(IBAN) للحوالات الأوروبية</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Applicant's Address: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;"></p>
+                    <p>:العنوان</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Intermediary Bank (If applicable): </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 50%;"></p>
+                    <p>:بنك الوسيط (إن وجد)</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-evenly;width: 100%;align-items: baseline;">
+                    <p style="padding-right: 5px;">Details Of Charges: </p>
+                    <div style="display: flex;align-items: baseline;">
+                        <p class="chk-after" style="padding-right: 5px;">BEN</p>
+                    </div>
+                    <div style="display: flex;align-items: baseline;">
+                        <p class="chk-after" style="padding-right: 5px;">SHA</p>
+                    </div>
+                    <div style="display: flex;align-items: baseline;">
+                        <p class="chk-after" style="padding-right: 5px;">OUR</p>
+                    </div>
+                    <p>:عمولة البنك المراسل</p>
+                </div>
+            </div>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Other Information: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;"></p>
+                    <p>:معلومات إضافية</p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="order">
+                <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
+                    <p>Applicant's Signature: </p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 65%;"></p>
+                    <p>:توقيع طالب التحويل</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer sml" style="background-color: gainsboro;direction: rtl;font-size: 9px !important;">
+            بنك الائتمان الأهلي (أي تي بي) ش.م.م.ع – الإدارة العامة: كفرسوسة
+            – مجمع الشام سيتي سنتر – بناء بلازا 68 دمشق
+            – سورية
+            هاتف 23888000 فاكس 22458510 ص.ب 6228 س.ت 14456 , سجل المصارف رقم 12
+        </div>
+    </div>
+</div>

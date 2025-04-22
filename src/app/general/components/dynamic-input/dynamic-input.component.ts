@@ -52,8 +52,10 @@ export class DynamicInputComponent {
   now: Date = new Date();
   constructor() { }
   ngOnInit(): void {
+
     if (this.FEcontrol.value === null && this.FEcontrol.value !== 0) {
       if (this.object.dataType.toLowerCase() === 'autocomplete') {
+        this.items;
         const value = this.object.options?.find(
           (x) => x.id === this.FEcontrol.value
         );
@@ -77,6 +79,7 @@ export class DynamicInputComponent {
           this.FEcontrol.setValue(this.FEcontrol.value.id);
         }
       } else if (this.object.dataType.toLowerCase() === 'autocomplete') {
+        this.items;
         this.autoCompleteValue = this.object.options?.find(
           (x) => x.id === this.FEcontrol.value
         );
@@ -98,8 +101,8 @@ export class DynamicInputComponent {
   }
   getSuggestions(event: any) {
     this.items = this.object.options?.filter((x) =>
-      (x.value as string).toLowerCase().includes(event.query.toLowerCase())
-    );
+      (x.name as string).toLowerCase().includes(event.query.toLowerCase())
+    ).sort((a, b) => (a.name as string).localeCompare((b.name as string)));
   }
   selectValue(event: any) {
     this.autoCompleteValue = event;

@@ -1,43 +1,43 @@
-<ad-template [title]="'Setting'" [subTitle]="subTitle">
+<ad-template [title]="'Setting'" [subTitle]="Title">
   <div id="con2" con2>
-    <p-tabs [(value)]="subTitle">
+    <p-tabs [(value)]="Title" scrollable>
       <p-tablist>
         @for (tab of tabs; track tab) {
         <p-tab [value]="tab">{{ tab }}</p-tab>
         }
       </p-tablist>
       <p-tabpanel value="Rate">
-        <ad-general-rate *ngIf="subTitle === 'Rate'"></ad-general-rate>
+        <ad-general-rate *ngIf="Title === 'Rate'"></ad-general-rate>
       </p-tabpanel>
       <p-tabpanel value="Type of contract">
-        <ad-general-contract-type *ngIf="subTitle === 'Type of contract'"></ad-general-contract-type>
+        <ad-general-contract-type *ngIf="Title === 'Type of contract'"></ad-general-contract-type>
       </p-tabpanel>
       <p-tabpanel value="City">
-        <ad-general-city *ngIf="subTitle === 'City'"></ad-general-city>
+        <ad-general-city *ngIf="Title === 'City'"></ad-general-city>
       </p-tabpanel>
       <p-tabpanel value="Bank">
-        <ad-bank-general *ngIf="subTitle === 'Bank'"></ad-bank-general>
+        <ad-bank-general *ngIf="Title === 'Bank'"></ad-bank-general>
       </p-tabpanel>
       <p-tabpanel value="Company Account">
-        <ad-general-company-account *ngIf="subTitle === 'Company Account'"></ad-general-company-account>
+        <ad-general-company-account *ngIf="Title === 'Company Account'"></ad-general-company-account>
       </p-tabpanel>
       <p-tabpanel value="Client">
-        <ad-client-general *ngIf="subTitle === 'Client'"></ad-client-general>
+        <ad-client-general *ngIf="Title === 'Client'"></ad-client-general>
       </p-tabpanel>
       <p-tabpanel value="Team">
-        <ad-team-general *ngIf="subTitle === 'Team'"></ad-team-general>
+        <ad-team-general *ngIf="Title === 'Team'"></ad-team-general>
       </p-tabpanel>
       <p-tabpanel value="Laptop">
-        <p-tabs *ngIf="subTitle === 'Laptop'">
+        <p-tabs *ngIf="Title === 'Laptop'" [(value)]="subTitle">
           <p-tablist>
             <p-tab [value]="'Type'">Type</p-tab>
             <p-tab [value]="'Rent'">Rent</p-tab>
           </p-tablist>
           <p-tabpanel value="Type">
-            <ad-general-laptop-type></ad-general-laptop-type>
+            <ad-general-laptop-type *ngIf="subTitle === 'Type'"></ad-general-laptop-type>
           </p-tabpanel>
           <p-tabpanel value="Rent">
-            <ad-general-laptop-rent></ad-general-laptop-rent>
+            <ad-general-laptop-rent *ngIf="subTitle === 'Rent'"></ad-general-laptop-rent>
           </p-tabpanel>
         </p-tabs>
       </p-tabpanel>

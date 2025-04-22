@@ -14,7 +14,10 @@ export class CooService {
   url = environment.api + 'CooManagment';
   constructor(private http: HttpClient) { }
   getAll(body: TableLazyLoadEvent) {
-    return this.http.post<APIResponse<COO[]>>(this.url + '/GetAll',body);
+    return this.http.post<APIResponse<COO[]>>(this.url + '/GetAll', body);
+  }
+  getAllWithoutPagination() {
+    return this.http.post<APIResponse<COO[]>>(this.url + '/GetAllCooWithoutPagination', {});
   }
   getById(id: number) {
     return this.http.get<APIResponse<COO>>(this.url + '/' + id);

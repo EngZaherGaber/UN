@@ -11,26 +11,18 @@ import { AdNotFoundComponent } from './admin/components/ad-not-found/ad-not-foun
 import { UserEditComponent } from './admin/components/user/user-edit/user-edit.component';
 import { UserDisplayComponent } from './admin/components/user/user-display/user-display.component';
 import { AdHomeComponent } from './admin/components/ad-home/ad-home.component';
-import { AdClientGeneralComponent } from './admin/components/client/ad-client-general/ad-client-general.component';
-import { ClientAddComponent } from './admin/components/client/client-add/client-add.component';
-import { ClientEditComponent } from './admin/components/client/client-edit/client-edit.component';
-import { ClientDisplayComponent } from './admin/components/client/client-display/client-display.component';
 import { AdCooGeneralComponent } from './admin/components/coo/ad-coo-general/ad-coo-general.component';
 import { CooAddComponent } from './admin/components/coo/coo-add/coo-add.component';
 import { CooEditComponent } from './admin/components/coo/coo-edit/coo-edit.component';
 import { CooDisplayComponent } from './admin/components/coo/coo-display/coo-display.component';
-import { AdTeamGeneralComponent } from './admin/components/team/ad-team-general/ad-team-general.component';
-import { TeamAddComponent } from './admin/components/team/team-add/team-add.component';
-import { TeamEditComponent } from './admin/components/team/team-edit/team-edit.component';
-import { TeamDisplayComponent } from './admin/components/team/team-display/team-display.component';
 import { SettingComponent } from './admin/components/setting/setting.component';
-import { AdGeneralRateComponent } from './admin/components/ad-general-rate/ad-general-rate.component';
 import { EmEditComponent } from './admin/components/employee/em-edit/em-edit.component';
 import { EmDisplayComponent } from './admin/components/employee/em-display/em-display.component';
 import { EmInsuranceComponent } from './admin/components/employee/em-insurance/em-insurance.component';
 import { EmSalaryComponent } from './admin/components/employee/em-salary/em-salary.component';
 import { EmContractComponent } from './admin/components/employee/em-contract/em-contract.component';
 import { InvoiceComponent } from './admin/components/invoice/invoice.component';
+import { EmDSAComponent } from './admin/components/employee/em-dsa/em-dsa.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -48,6 +40,7 @@ export const routes: Routes = [
           { path: 'display/:id', component: EmDisplayComponent },
           { path: 'insurance/:id/:name', component: EmInsuranceComponent },
           { path: 'salary/:id/:name', component: EmSalaryComponent },
+          { path: 'dsa/:id/:name', component: EmDSAComponent },
           { path: 'contract/:id/:name', component: EmContractComponent }
         ]
       },

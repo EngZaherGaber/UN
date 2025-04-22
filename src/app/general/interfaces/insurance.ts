@@ -5,6 +5,7 @@ export interface Insurance {
     insuranceLife: boolean,
     insuranceMedical: boolean,
     insuranceCardDelivered: boolean,
+    insuranceCardDeliveredDate: Date,
     startLifeDate: Date,
     endLifeDate: Date,
     startMedicalDate: Date,

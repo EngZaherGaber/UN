@@ -19,6 +19,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DyButton } from '../../interfaces/dy-button';
 import { UnSpinnerComponent } from '../un-spinner/un-spinner.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'dynamic-table',
@@ -31,7 +33,8 @@ import { UnSpinnerComponent } from '../un-spinner/un-spinner.component';
     FormsModule,
     UnSpinnerComponent,
     ToolbarModule,
-    TagModule
+    TagModule,
+    MultiSelectModule
   ],
   templateUrl: './dynamic-table.component.html',
   styleUrl: './dynamic-table.component.scss',
@@ -79,9 +82,10 @@ export class DynamicTableComponent {
   first: number = 0;
   rows: number = 5;
   totalRecords: number = 0;
-
   screenWidth = window.innerWidth;
   carsoulPage: number = 1;
+  columns: string[] = [];
+  selectedColumns: string[] = [];
   constructor() { }
 
   ngOnInit(): void { }
@@ -132,6 +136,8 @@ export class DynamicTableComponent {
             return z;
           });
         });
+      this.columns = (body.columns as any[]).map(x => x.header);
+      this.selectedColumns = this.columns;
       this.totalRecords = this.lazyLoading ? body.count : body.data.length;
       this.body = body;
     });
@@ -156,12 +162,14 @@ export class DynamicTableComponent {
     const minutes = String(originalDate.getMinutes()).padStart(2, '0');
     return `${year}/${month}/${day} ${hours}:${minutes}`;
   }
+  isSelect(header: string): boolean {
+    return this.selectedColumns.includes(header);
+  }
   loadCarsLazy(event: any) {
     this.onLazy.emit(event);
   }
   clearFilter() {
     this.table?.reset();
-    sessionStorage.removeItem(this.tableName)
   }
   repeairHeader(
     columns: { field: string; header: string; HeaderType: string }[]
@@ -174,6 +182,35 @@ export class DynamicTableComponent {
       col.header = col.header.replace('_', ' ');
       col.header = col.header.charAt(0).toUpperCase() + col.header.slice(1);
     });
+  }
+  exportExcel() {
+    let arr = this.table?.filteredValue ?? this.table?.value;
+    if (arr && arr.length > 0) {
+      arr = arr.map((x) => {
+        let z: any= {};
+        this.body.columns.forEach((col: any) => {
+          if (this.selectedColumns.includes(col.header))
+            z[col.header] = x[col.field];
+        });
+        return z;
+      });
+      const filterData = arr.map(({ buttons, ...rest }) => {
+        const seenKeys = new Set<string>();
+        return Object.keys(rest).reduce((acc, key) => {
+          const lowerCaseKey = key.toLowerCase();
+          if (!seenKeys.has(lowerCaseKey)) {
+            seenKeys.add(lowerCaseKey);
+            acc[key] = rest[key];
+          }
+          return acc;
+        }, {} as { [key: string]: any });
+      });
+
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filterData);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, `${this.tableName}.xlsx`);
+    }
   }
   resetPaginator() {
     if (this.table) {

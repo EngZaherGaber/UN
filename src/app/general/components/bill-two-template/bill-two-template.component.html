@@ -1,0 +1,183 @@
+<div class="a4-container">
+    <div class="tool">
+        <p-toolbar>
+            <ng-template #start>
+                <p-button (onClick)="downloadAsPDF()" icon="pi pi-download" severity="secondary" /> </ng-template>
+        </p-toolbar>
+    </div>
+    <div id="a4-document" class="a4-document">
+        <div class="header">
+            <img src="ATB.png" alt="" width="200" height="75">
+        </div>
+        <div class="content">
+            <div class="order">
+                <div>
+                    <b>Transfer Order</b>
+                    <b>أمر تحويل</b>
+                </div>
+                <table border="1" cellspacing="0" cellpadding="8" style="width: 70%;">
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="header-cell">
+                                <div>
+                                    <div class="out">
+                                        <b class="larg">By the order of</b>
+                                        <b class="larg">معطي الأمر</b>
+                                    </div>
+                                    <div style="width: 100%;display: flex;justify-content: center;padding-top: 5px;">
+                                        <b>مؤسسة عمر فلوح التجارية
+                                        </b>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%;">
+                                <b>A/C NO.</b>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.event.description.ourAccount,0,6)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.event.description.ourAccount,6,9)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.event.description.ourAccount,9)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        /
+                                    </b>
+                                </div>
+                            </td>
+                            <td style="padding-inline: 10px;">{{getBranch(data.event.description.ourAccount)}}</td>
+                            <td style="width: 15%;">
+                                <b>حساب رقم</b>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div class="request-div">
+                <p class="larg">Kindly transfer from the above mentioned account:</p>
+                <p class="larg">نرجو منكم أن تحولوا من حسابنا المذكور أعلاه</p>
+            </div>
+            <br>
+            <br>
+            <div class="request-div" style="justify-content: space-evenly;">
+                <p class="larg">The amount of:</p>
+                <div class="brdr">
+                    <div
+                        style="border: 1px solid;width: 200px;height: 40px;display: flex;align-items: center;justify-content: center;">
+                        {{data.totalSalaryCalculatedinSyrianPounds}}</div>
+                    <div
+                        style="border: 1px solid;width: 50px;height: 40px;display: flex;align-items: center;justify-content: center">
+                        00</div>
+                </div>
+                <p class="larg">مبلغاً وقدره</p>
+            </div>
+            <br>
+            <br>
+            <div class="request-div">
+                <div style="width: 100%;display: flex;justify-content: space-between;">
+                    <p>Only :</p>
+                    <p style="border-bottom: 2px dotted black;width: 80%;text-align: center;padding-bottom: 5px;">
+                        {{pdfSrv.convertToSyrianPounds(data.totalSalaryCalculatedinSyrianPounds)}}</p>
+                    <p>: فقط </p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="order" style="justify-content: flex-end;">
+                <table border="1" cellspacing="0" cellpadding="8" style="width: 70%;">
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="header-cell">
+                                <div>
+                                    <div class="out">
+                                        <b class="larg">To / Beneficiary</b>
+                                        <b class="larg">إلى / المستفيد</b>
+                                    </div>
+                                    <div style="width: 100%;display: flex;justify-content: center;padding-top: 5px;">
+                                        <b>{{data.arabicName}} بن {{data.fatherNameArabic}}
+                                        </b>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%;">
+                                <b>A/C NO.</b>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.accountNumber,0,6)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.accountNumber,6,9)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        {{getfrag(data.accountNumber,9)}}
+                                    </b>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex;justify-content: center;">
+                                    <b>
+                                        /
+                                    </b>
+                                </div>
+                            </td>
+                            <td style="padding-inline: 10px;">{{getBranch(data.accountNumber)}}</td>
+                            <td style="width: 15%;">
+                                <b>حساب رقم</b>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <br>
+            <div class="request-div" style="flex-direction: column;align-items: center;">
+                <div style="width: 100%;display: flex;justify-content: space-between;">
+                    <p>Details :</p>
+                    <p style="border-bottom: 2px dotted black;width: 80%;text-align: center;padding-bottom: 5px;">
+                        {{data.event.description.reason}}
+                    </p>
+                    <p>: تفاصيل </p>
+                </div>
+                <p style="border-bottom: 2px dotted black;width: 80%;text-align: center;padding-top: 40px;"></p>
+            </div>
+            <br>
+            <br>
+            <div class="request-div" style="flex-direction: column;">
+                <pre>Date:………………………..….Signature……………………………………التاريخ…………………..….. :الإمضاء</pre>
+            </div>
+        </div>
+    </div>
+</div>

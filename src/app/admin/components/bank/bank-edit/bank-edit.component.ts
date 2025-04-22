@@ -22,7 +22,7 @@ export class BankEditComponent {
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
   bank: Bank | null = null;
   objs: { [key: string]: InputDynamic[] } = {};
-  file: any = null;
+  file: File | null = null;
   showUploader: boolean = false;
 
   constructor(
@@ -42,7 +42,7 @@ export class BankEditComponent {
         }
         return this.bnkSrv.getById(this.banksId);
       })
-    ).subscribe(res => {
+    ).subscribe(async res => {
       this.bank = res.data;
       this.objs = {
         info: [
@@ -60,6 +60,7 @@ export class BankEditComponent {
         image: [
         ],
       };
+      this.file = await this.bnkSrv.pathToFileObject(res.data.bankLogoUrl, 'file');
     })
   }
   submit(event: any) {

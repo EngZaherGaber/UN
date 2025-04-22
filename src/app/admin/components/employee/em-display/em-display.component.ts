@@ -187,6 +187,16 @@ export class EmDisplayComponent {
               command: (value, element, form) => { },
               required: true,
             },
+            {
+              key: 'isDelegated',
+              label: 'With Delegation',
+              value: res.emp.data.bankInfo.isDelegated,
+              dataType: 'bool',
+              options: [],
+              visible: true,
+              command: (value, element, form) => { },
+              required: true,
+            },
           ],
         };
       })

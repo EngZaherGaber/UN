@@ -35,6 +35,16 @@ export class EmContractComponent {
       HeaderType: 'tag',
     },
     {
+      field: 'employeeName',
+      header: 'English Name',
+      HeaderType: 'string',
+    },
+    {
+      field: 'arabicName',
+      header: 'Arabic Name',
+      HeaderType: 'string',
+    },
+    {
       field: 'cooNumber',
       header: 'COO Number',
       HeaderType: 'string',
@@ -214,14 +224,11 @@ export class EmContractComponent {
     this.info.Buttons[0].showCommand = (rowData: Contract) => {
       return rowData.status.toLowerCase().includes('active')
     };
-    this.info.Buttons[1].isShow = false;
-    this.info.Buttons[1].showCommand = (rowData: Contract) => {
-      return rowData.status.toLowerCase().includes('active')
-    };
+
     forkJoin({
       teams: teamSrv.getAll(),
       cities: citySrv.getAll(),
-      cooSrv: cooSrv.getAll({}),
+      coos: cooSrv.getAllWithoutPagination(),
       typesOfContracts: typeOfContractSrv.getAll(),
       laptopTypeSrv: laptopTypeSrv.getAll(),
     }).subscribe(res => {
@@ -238,7 +245,7 @@ export class EmContractComponent {
             name: x.nameEn
           }
         }),
-        coos: res.cooSrv.data.map(x => {
+        coos: res.coos.data.map(x => {
           return {
             id: x.cooId,
             name: x.cooNumber
@@ -298,24 +305,24 @@ export class EmContractComponent {
     this.contractSrv.add(event).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.addDialog = false;
+        this.info.getSub$.next({});
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
 
     })
-    this.addDialog = false;
-    this.info.getSub$.next({});
   }
   edit(event: any) {
     this.contractSrv.edit(event, this.editContractId).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.editDialog = false;
+        this.info.getSub$.next({});
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
     })
-    this.editDialog = false;
-    this.info.getSub$.next({});
   }
 
   getGeneralObj(
@@ -355,7 +362,7 @@ export class EmContractComponent {
           key: 'cooId',
           label: 'COO',
           value: contract?.cooId,
-          dataType: 'list',
+          dataType: 'autoComplete',
           required: true,
           visible: true,
           options: contract ? [{ id: contract?.cooId, name: contract?.cooNumber }] : this.lists.coos,

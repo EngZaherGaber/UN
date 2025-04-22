@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { saveAs } from 'file-saver';
-
-
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+interface TransferData {
+  branch: string;
+  amount: number;
+  accountFrom: string;
+  accountTo: string;
+  recipientName: string;
+  serviceType: string;
+  date: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +28,51 @@ export class PdfService {
     address: '',
     // Add other fields as needed
   };
+  months = [
+    'كانون الثاني',
+    'شباط',
+    'اذار',
+    'نيسان',
+    'ايار',
+    'حزيران',
+    'تموز',
+    'اب',
+    'ايلول',
+    'تشرين الاول',
+    'تشرين الثاني',
+    'كانون الاول',
+  ]
   isLoading = false;
 
-  constructor(private http: HttpClient) { }
+  constructor() {
+
+
+  }
+
+  downloadAsPDF() {
+    const element = document.getElementById('a4-document') as HTMLElement;
+    console.log(element)
+    html2canvas(element, {
+      logging: false,
+      useCORS: true,
+      allowTaint: false
+    }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = 297;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('document.pdf');
+    });
+  }
+
 
   
 
   convertToSyrianPounds(amount: number): string {
     if (amount === 0) return 'صفر ليرة سورية';
-    return `${this.convertNumber(amount)} ليرة سورية فقط لا غير.`;
+    return `${this.convertNumber(amount)} ليرة سورية `;
   }
 
   convertNumber(num: number): string {

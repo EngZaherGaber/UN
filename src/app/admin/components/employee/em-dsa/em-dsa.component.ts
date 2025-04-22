@@ -12,7 +12,6 @@ import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
-import { Salary } from '../../../../general/interfaces/salary';
 import { PdfService } from '../../../../general/services/pdf.service';
 import { CompanyAccountService } from '../../../services/company-account.service';
 import { CopmanyAccount } from '../../../../general/interfaces/company-account';
@@ -20,8 +19,9 @@ import { BillZeroTemplateComponent } from '../../../../general/components/bill-z
 import { BillOneTemplateComponent } from '../../../../general/components/bill-one-template/bill-one-template.component';
 import { BillTwoTemplateComponent } from '../../../../general/components/bill-two-template/bill-two-template.component';
 import { BillThreeTemplateComponent } from '../../../../general/components/bill-three-template/bill-three-template.component';
+import { DSA } from '../../../../general/interfaces/dsa';
 @Component({
-  selector: 'em-salary',
+  selector: 'em-dsa',
   imports: [
     DynamicTableComponent,
     AdTemplateComponent,
@@ -33,13 +33,13 @@ import { BillThreeTemplateComponent } from '../../../../general/components/bill-
     BillTwoTemplateComponent,
     BillThreeTemplateComponent
   ],
-  templateUrl: './em-salary.component.html',
-  styleUrl: './em-salary.component.scss'
+  templateUrl: './em-dsa.component.html',
+  styleUrl: './em-dsa.component.scss'
 })
-export class EmSalaryComponent {
+export class EmDSAComponent {
   @Input() emp: { id: number, name: string } = { id: 0, name: '' };
   info: InfoTable;
-  salaryRow: any;
+  dsaRow: any;
   resetObjs: { [key: string]: InputDynamic[] } = {};
   columns = [
     {
@@ -63,24 +63,29 @@ export class EmSalaryComponent {
       HeaderType: 'string',
     },
     {
-      field: 'basicSalaryinUSD',
-      header: 'Salary (USD)',
+      field: 'dsaValue',
+      header: 'DSA Value',
       HeaderType: 'int',
     },
     {
-      field: 'totalSalaryCalculatedinSyrianPounds',
-      header: 'Calculated Salary',
+      field: 'month',
+      header: 'month',
       HeaderType: 'int',
     },
     {
-      field: 'slaryMonth',
-      header: 'slaryMonth',
+      field: 'year',
+      header: 'year',
       HeaderType: 'int',
     },
     {
-      field: 'slaryYear',
-      header: 'slaryYear',
-      HeaderType: 'int',
+      field: 'clientName',
+      header: 'clientName',
+      HeaderType: 'string',
+    },
+    {
+      field: 'teamName',
+      header: 'teamName',
+      HeaderType: 'string',
     },
 
   ];
@@ -106,62 +111,8 @@ export class EmSalaryComponent {
           options: [],
         },
         {
-          key: 'sickLeave',
-          label: 'Sick Leave',
-          value: null,
-          dataType: 'int',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'daysOff',
-          label: 'Days Off',
-          value: null,
-          dataType: 'int',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'downPayment',
-          label: 'Down Payment',
-          value: null,
-          dataType: 'int',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'overTimeWages',
-          label: 'Overtime Wages',
-          value: null,
-          dataType: 'int',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'laptopcompensation',
-          label: 'Laptop Compensation',
-          value: null,
-          dataType: 'int',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'mobilecompensation',
-          label: 'Mobile Compensation',
-          value: null,
-          dataType: 'int',
-          required: true,
-          visible: true,
-          options: [],
-        },
-        {
-          key: 'transportioncompensation',
-          label: 'Transportion Compensation',
+          key: 'dsaValue',
+          label: 'DSA Value',
           value: null,
           dataType: 'int',
           required: true,
@@ -170,7 +121,7 @@ export class EmSalaryComponent {
         },
         {
           key: 'month',
-          label: 'month',
+          label: 'Month',
           value: null,
           dataType: 'month',
           required: true,
@@ -179,7 +130,7 @@ export class EmSalaryComponent {
         },
         {
           key: 'year',
-          label: 'year',
+          label: 'Year',
           value: null,
           dataType: 'year',
           required: true,
@@ -191,7 +142,7 @@ export class EmSalaryComponent {
     this.calcDialog = true;
   }
   billFunc: (rowData: any) => void = async (rowData: any) => {
-    this.salaryRow = rowData;
+    this.dsaRow = rowData;
     this.billObjs = {
       template: [
         {
@@ -204,9 +155,9 @@ export class EmSalaryComponent {
           options: [],
         },
         {
-          key: 'salaryId',
-          label: 'Salary',
-          value: rowData.totalSalaryCalculatedinSyrianPounds,
+          key: 'dsaValue',
+          label: 'DSA Value',
+          value: rowData.dsaValue,
           dataType: 'int',
           required: true,
           visible: false,
@@ -285,10 +236,10 @@ export class EmSalaryComponent {
       }
     })
     this.info.captionButton[1].icon = 'pi pi-calculator';
-    this.info.captionButton[1].tooltip = 'Calc Salary for ' + this.month + ' Month';
+    this.info.captionButton[1].tooltip = 'Calc DSA';
     this.info.Buttons.push({
       isShow: true,
-      tooltip: 'Salary Bill',
+      tooltip: 'DSA Bill',
       icon: 'pi pi-receipt',
       key: 'receipt',
       severity: 'secondary',
@@ -307,7 +258,7 @@ export class EmSalaryComponent {
         this.info.getSub$.pipe(
           switchMap((body: any) => {
             if (body) {
-              return this.salarySrv.getAll(body, this.emp.id).pipe(
+              return this.salarySrv.getAllDSA(body, this.emp.id).pipe(
                 switchMap(res => {
                   return of({
                     data: res.data,
@@ -336,8 +287,8 @@ export class EmSalaryComponent {
         );
     })
   }
-  calc(event: Salary) {
-    this.salarySrv.calculate(event).subscribe(res => {
+  calc(event: DSA) {
+    this.salarySrv.addDSA(event).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
       } else {
@@ -350,11 +301,11 @@ export class EmSalaryComponent {
   }
   async generateBill(event: any) {
     this.billDialog = false;
-    this.salaryRow = {
-      ...this.salaryRow,
+    this.dsaRow = {
+      ...this.dsaRow,
       event
     }
-    console.log(this.salaryRow);
+    console.log(this.dsaRow);
     switch (event.template.template) {
       case 0:
         this.zeroBillPreviewDialog = true;
@@ -373,4 +324,5 @@ export class EmSalaryComponent {
         break;
     }
   }
+
 }

@@ -1,0 +1,60 @@
+<div class="a4-container">
+    <div class="tool">
+        <p-toolbar>
+            <ng-template #start>
+                <p-button (onClick)="downloadAsPDF()" icon="pi pi-download" severity="secondary" /> </ng-template>
+        </p-toolbar>
+    </div>
+    <div id="a4-document" class="a4-document">
+        <div class="header">
+            <img src="logo.png" alt="" width="100" height="50">
+            <div class="contact">
+                <div class="contact-con" *ngFor="let item of contacts">
+                    <small class="title">{{item.title}}</small>
+                    <small class="detail">{{item.detail}}</small>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <p>مؤسسة عمر فلوح التجارية</p>
+            <p>دمشق - العدوي</p>
+            <br>
+            <pre>الى المصرف التجاري السوري فرع <b>{{data.event.description.branch}}</b> المحترمين</pre>
+            <br>
+            <br>
+            <pre>يرجى تحويل مبلغ <b>{{data.totalSalaryCalculatedinSyrianPounds}}</b> {{pdfSrv.convertToSyrianPounds(data.totalSalaryCalculatedinSyrianPounds)}}</pre>
+            <br>
+            <pre>من حسابنا لديكم رقم <b>{{data.event.description.ourAccount}}</b></pre>
+            <pre>الى حساب السيد  <b>{{data.arabicName}} بن {{data.fatherNameArabic}}</b></pre>
+            <pre>لدى بنك <b>{{data.bankName}}</b></pre>
+            <pre>رقم <b>{{data.accountNumber}}</b></pre>
+            <pre>وذلك لقاء خدمات استشارية</pre>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <pre style="align-self: center;">ولكم جزيل الشكر</pre>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <pre style="align-self: start;">التاريخ     /       /      </pre>
+            <br>
+            <pre style="align-self: end;">عمر ناظم فلوح</pre>
+        </div>
+        <div class="footer">
+            <img src="logo.png" width="40" height="20" alt="">
+            <small> : Damascus- Syria – P.O. Box: 2121 Tel: +963 11 4420567, Fax: +963 11 4430567 e-mail:
+                gd&#64;ici-sy.com Web: www.ici-sy.com</small>
+        </div>
+    </div>
+</div>

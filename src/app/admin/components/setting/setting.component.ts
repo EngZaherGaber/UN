@@ -16,7 +16,7 @@ import { AdGeneralCompanyAccountComponent } from '../ad-general-company-account/
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
-  styleUrls: ['./setting.component.css'],
+  styleUrls: ['./setting.component.scss'],
   imports: [
     TabsModule,
     AdTemplateComponent,
@@ -35,6 +35,7 @@ import { AdGeneralCompanyAccountComponent } from '../ad-general-company-account/
   standalone: true,
 })
 export class SettingComponent implements OnInit {
+  Title: string = '';
   subTitle: string = '';
   checkInterval: any;
   previousSubTitle: string = '';
@@ -51,14 +52,14 @@ export class SettingComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.fragment.subscribe(x => {
-      this.subTitle = x ?? '';
+      this.Title = x ?? '';
     })
   }
   ngOnInit() {
     this.checkInterval = setInterval(() => {
-      if (this.previousSubTitle !== this.subTitle) {
-        this.previousSubTitle = this.subTitle;
-        this.router.navigate([], { fragment: this.subTitle })
+      if (this.previousSubTitle !== this.Title) {
+        this.previousSubTitle = this.Title;
+        this.router.navigate([], { fragment: this.Title })
       }
     }, 1000); // Check every 100ms
   }

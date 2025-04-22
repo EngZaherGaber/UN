@@ -15,6 +15,7 @@ export interface Employee {
     bankInfo: {
         bankId: number,
         typeOfAcc: string,
-        accountNumber: string
+        accountNumber: string,
+        isDelegated:boolean
     },
 }

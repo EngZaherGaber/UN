@@ -1,0 +1,303 @@
+<div class="a4-container">
+    <div class="tool">
+        <p-toolbar>
+            <ng-template #start>
+                <p-button (onClick)="downloadAsPDF()" icon="pi pi-download" severity="secondary" />
+            </ng-template>
+        </p-toolbar>
+    </div>
+    <div id="a4-document" class="a4-document">
+        <div class="header">
+            <div class="contact">
+                <div class="contact-con">
+                    <small class="title">Date</small>
+                    <small class="detail">......../....../...... التاريخ</small>
+                </div>
+                <div class="contact-con">
+                    <small class="title">Branch</small>
+                    <small class="detail">...................... الفرع</small>
+                </div>
+            </div>
+            <img src="albaraka.png" alt="" width="150" height="60">
+        </div>
+        <div class="content">
+            <div class="type">
+                <b class="title-ar">
+                    <p>طلب اصدار حوالة</p> <br>
+                    <p>الى بنك البركة - سوريا</p><br>
+                    <p class="sml" style="width: 100%;text-align: left;">Syria</p>
+                </b>
+                <div class="types">
+                    <p>&#9633; داخل سورية (Inside Syria)</p>
+                    <p>&#9633; خارج سورية (Outside Syria)</p>
+                    <p>&#9633; تحويل داخلي (Internal Transfer)</p>
+                </div>
+                <b class="title-en">
+                    <p> Transfer Request</p> <br>
+                    <p class="sml">To alBaraka Bank</p><br>
+                </b>
+            </div>
+            <div class="request">
+                <b class="title">
+                    <p class="sml">يرجى تنفيذ التحويل التالي حسب التعليمات المبينة ادناه:</p>
+                    <p class="sml">hereby request you to execute a transfer as per the following details</p>
+                </b>
+                <table border="1" cellspacing="0" cellpadding="8">
+                    <tbody>
+                        <tr>
+                            <td style="width: 25%;">اسم طالب الاصدار</td>
+                            <td>مؤسسة عمر فلوح التجارية</td>
+                            <td>The Order Name</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;">رقم حساب الحوالة</td>
+                            <td>{{data.event.description.ourAccount}}</td>
+                            <td>Remittance account No</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;">رقم حساب العمولات والمصاريف</td>
+                            <td></td>
+                            <td>Commissions & Charges account No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="request">
+                <b class="title">
+                    <p class="sml">بيانات المستفيد Beneficiary</p>
+                    <p class="sml">Details</p>
+                </b>
+                <table border="1" cellspacing="0" cellpadding="8">
+                    <tbody>
+                        <tr>
+                            <td>اسم المستفيد</td>
+                            <td>{{data.arabicName}} بن {{data.fatherNameArabic}}</td>
+                            <td>The Benf Name</td>
+                        </tr>
+                        <tr>
+                            <td>عنوان المستفيد</td>
+                            <td></td>
+                            <td>The Benf Add</td>
+                        </tr>
+                        <tr>
+                            <td>رقم حساب المستفيد / IBAN</td>
+                            <td>{{data.accountNumber}}</td>
+                            <td>The Benf Account No or IBAN</td>
+                        </tr>
+                        <tr>
+                            <td>اسم بنك المستفيد</td>
+                            <td>{{data.bankName}}</td>
+                            <td>Benf Bank's Name</td>
+                        </tr>
+                        <tr>
+                            <td>عنوان بنك المستفيد /الفرع</td>
+                            <td></td>
+                            <td>Benf Bank's Add/ Br</td>
+                        </tr>
+                        <tr>
+                            <td>سويفت بنك المستفيد</td>
+                            <td></td>
+                            <td>Benf Bank's Swift Code</td>
+                        </tr>
+                        <tr>
+                            <td>سبب التحويل</td>
+                            <td>{{data.event.description.reason}}</td>
+                            <td>The Transfer Reason</td>
+                        </tr>
+                        <tr>
+                            <td>الطرف الوسيط (إن وجد)</td>
+                            <td></td>
+                            <td>Intermediary Party (If any)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="request">
+                <b class="title">
+                    <p class="sml">تفاصيل المبلغ</p>
+                    <p class="sml">Amount Details</p>
+                </b>
+                <table border="1" cellspacing="0" cellpadding="8">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0;width: 50%;">
+                                <table border="1" cellspacing="0" cellpadding="8" style="border: none;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 25%;" class="sml"></td>
+                                            <td style="width: 25%;background-color: white;" class="sml">المبلغ / Amount
+                                            </td>
+                                            <td style="width: 15%;background-color: white;" class="sml">العملة / Curr
+                                            </td>
+                                            <td style="width: 30%;" class="sml"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 25%;" class="sml">مبلغ الحوالة</td>
+                                            <td style="width: 25%;background-color: white;" class="sml">
+                                                {{data.totalSalaryCalculatedinSyrianPounds}}</td>
+                                            <td style="width: 20%;background-color: white;" class="sml"></td>
+                                            <td style="width: 30%;" class="sml">Transfer Abount</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 25%;" class="sml">سعر الصرف</td>
+                                            <td style="width: 25%;background-color: white;" class="sml"></td>
+                                            <td style="width: 20%;background-color: white;" class="sml"></td>
+                                            <td style="width: 30%;" class="sml">Exchange Rate</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 25%;" class="sml">القيمة المعادلة</td>
+                                            <td style="width: 25%;background-color: white;" class="sml"></td>
+                                            <td style="width: 20%;background-color: white;" class="sml"></td>
+                                            <td style="width: 30%;" class="sml">Counter-Value</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 25%;" class="sml">اجمالي العمولات والمصاريف</td>
+                                            <td style="width: 25%;background-color: white;" class="sml"></td>
+                                            <td style="width: 20%;background-color: white;" class="sml"></td>
+                                            <td style="width: 30%;" class="sml">Comm. & Charge</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 25%;" class="sml">اجمالي المبلغ</td>
+                                            <td style="width: 25%;background-color: white;" class="sml"></td>
+                                            <td style="width: 20%;background-color: white;" class="sml"></td>
+                                            <td style="width: 30%;" class="sml">Total Amount</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td style="padding: 0;width: 50%;">
+                                <table border="1" cellspacing="0" cellpadding="8" style="border: none;">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="title">
+                                                    <p>العمولات والمصاريف</p>
+                                                    <p>Commissions & Charge</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%;" class="sml">عمولة الحوالة</td>
+                                            <td style="width: 20%;" class="sml"></td>
+                                            <td style="width: 40%;" class="sml">Transfer Com</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%;" class="sml">أجور السويفت</td>
+                                            <td style="width: 20%;" class="sml"></td>
+                                            <td style="width: 40%;" class="sml">Swift Chg</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%;" class="sml">اجور البريد</td>
+                                            <td style="width: 20%;" class="sml"></td>
+                                            <td style="width: 40%;" class="sml">Courier Charges</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%;" class="sml">عمولات أخرى</td>
+                                            <td style="width: 20%;" class="sml"></td>
+                                            <td style="width: 40%;" class="sml">Other Chags</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 40%;" class="sml">اجمالي العمولات والمصاريف</td>
+                                            <td style="width: 20%;" class="sml"></td>
+                                            <td style="width: 40%;" class="sml">Total of Comm. & Charge</td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="sml" style="direction: rtl;text-align: right;">مبلغ
+                                الحوالة كتابة Amount(in word) </td>
+                            <td style="background-color: white;">
+                                <pre
+                                    style="font-weight: bold;"> &#9633;  الخاصة ببنك البركة سورية على حسابنا, وغير ذلك المستفيد        1-SHA</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: white;" rowspan="2"></td>
+                            <td style="background-color: white;">
+                                <pre
+                                    style="font-weight: bold;"> &#9633;  كافة المصاريف والعمولات على حسابنا        2-OUR</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: white;">
+                                <pre
+                                    style="font-weight: bold;"> &#9633;  كافة المصاريف والعمولات على حساب المستفيد        3-BEN</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="direction: ltr;">
+                                <img style="width: 100%;" src="Capture (2).jpg" alt="">
+                            </td>
+                            <td style="font-size: 7px !important;">
+                                <img style="width: 100%;" src="Capture (1).jpg" alt="">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color: white;">
+                                <div style="display: flex;;width: 100%;">
+                                    <p style="width: 50%;text-align: right;">اسم المتعامل</p>
+                                    <p style="width: 50%;text-align: right;">التوقيع :</p>
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="text-align: center;width: 100%;font-weight: bold;">لاستخدام البنك</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding: 0;">
+                                <table style="border: none;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="background-color: white;width: 33%;">
+                                                <div
+                                                    style="display: flex;justify-content: space-between;width: 100%;text-align: right;">
+                                                    <pre style="width: 20%;">&#9633;</pre>
+                                                    <p style="width: 80%;">تم تدقيق التوقيع ووجد مطابقاً</p>
+                                                </div>
+                                            </td>
+                                            <td style="background-color: white;width: 33%;">
+                                                <div
+                                                    style="display: flex;justify-content: space-between;width: 100%;text-align: right;">
+                                                    <pre style="width: 20%;">&#9633;</pre>
+                                                    <p style="width: 80%;">تم التأكد من شخصية المتعامل</p>
+                                                </div>
+                                            </td>
+                                            <td style="background-color: white;width: 33%;">
+                                                <div
+                                                    style="display: flex;justify-content: space-between;width: 100%;text-align: right;">
+                                                    <pre style="width: 20%;">&#9633;</pre>
+                                                    <p style="width: 80%;">رقم العملية</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color: white;">
+                                <br>
+                                <pre>اسم الموظف :............................................ اسم المسؤول:....................................... <br> <br> <br> توقيع الموظف :.............................................. توقيع المسؤول:....................................
+                                </pre>
+                                <br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="footer">
+            <small>Page 1 of 1</small>
+            <small style="text-align: right; width: 100%;">BSB-S1.30:05</small>
+        </div>
+    </div>
+</div>

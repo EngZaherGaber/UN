@@ -31,6 +31,15 @@ export class AdGeneralLaptopRentComponent {
     this.resetObjs = {
       general: [
         {
+          key: 'laptopType',
+          label: 'Laptop Type',
+          value: null,
+          dataType: 'list',
+          required: true,
+          visible: true,
+          options: this.laptopTypes,
+        },
+        {
           key: 'year',
           label: 'Year',
           value: null,
@@ -57,15 +66,7 @@ export class AdGeneralLaptopRentComponent {
           visible: true,
           options: [],
         },
-        {
-          key: 'laptopType',
-          label: 'Laptop Type',
-          value: null,
-          dataType: 'list',
-          required: true,
-          visible: true,
-          options: this.laptopTypes,
-        },
+
       ],
     };
     this.addDialog = true;
@@ -164,5 +165,5 @@ export class AdGeneralLaptopRentComponent {
     this.addDialog = false;
     this.info.getSub$.next(true);
   }
-  
+
 }

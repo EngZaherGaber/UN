@@ -3,16 +3,18 @@ import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
 import { of, switchMap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastService } from '../../../../general/services/toast.service';
 import { DyTableService } from '../../../../general/services/dy-table.service';
 import { EmployeeService } from '../../../services/employee.service';
 import { InfoTable } from '../../../../general/interfaces/info-table';
-import { Employee } from '../../../../general/interfaces/employee';
-import { ConfirmService } from '../../../../general/services/confirm.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ad-general-employee',
-  imports: [AdTemplateComponent, DynamicTableComponent],
+  imports: [
+    AdTemplateComponent,
+    DynamicTableComponent,
+    CommonModule
+  ],
   templateUrl: './ad-general-employee.component.html',
   styleUrl: './ad-general-employee.component.scss',
 })
@@ -79,6 +81,11 @@ export class AdGeneralEmployeeComponent {
       header: 'Account Number',
       HeaderType: 'string',
     },
+    {
+      field: 'isDelegated',
+      header: 'With Delegation',
+      HeaderType: 'bool',
+    },
   ];
   changeColor(rowData: any) {
     if (!rowData.active) {
@@ -106,6 +113,9 @@ export class AdGeneralEmployeeComponent {
   }
   contractFunc: (rowData: any) => void = (rowData) => {
     this.router.navigate(['admin/employee/contract', rowData.refNo, rowData.empName])
+  }
+  dsaFunc: (rowData: any) => void = async (rowData: any) => {
+    this.router.navigate(['admin/employee/dsa', rowData.refNo, rowData.empName])
   }
   constructor(
     tblSrv: DyTableService,
@@ -149,6 +159,19 @@ export class AdGeneralEmployeeComponent {
         this.contractFunc(rowData);
       },
     });
+    this.info.Buttons.push({
+      isShow: false,
+      tooltip: 'Employee DSA',
+      icon: 'pi pi-car',
+      key: 'DSA',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.dsaFunc(rowData);
+      },
+      showCommand: (body: any) => {
+        return body.active
+      }
+    });
   }
   ngOnInit(): void {
     this.info.get$ =
@@ -183,4 +206,5 @@ export class AdGeneralEmployeeComponent {
         })
       );
   }
+  
 }

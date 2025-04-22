@@ -79,6 +79,16 @@ export class EmInsuranceComponent {
             required: true,
           },
           {
+            key: 'insuranceCardDeliveredDate',
+            label: 'Delivered insurance Card Date',
+            value: res.data.insuranceCardDeliveredDate,
+            dataType: 'datetime',
+            options: [],
+            visible: true,
+            command: (value, element, form) => { },
+            required: true,
+          },
+          {
             key: 'startLifeDate',
             label: 'Start Life Date',
             value: res.data.startLifeDate,

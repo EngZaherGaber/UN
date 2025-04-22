@@ -58,7 +58,8 @@ tr {
     padding: 0;
   }
 }
-::ng-deep .p-toolbar-start {
+::ng-deep .p-toolbar-start,
+::ng-deep .p-toolbar-end {
   gap: 10px;
 }
 ::ng-deep .p-paginator {
