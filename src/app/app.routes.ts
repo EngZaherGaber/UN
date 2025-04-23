@@ -23,6 +23,7 @@ import { EmSalaryComponent } from './admin/components/employee/em-salary/em-sala
 import { EmContractComponent } from './admin/components/employee/em-contract/em-contract.component';
 import { InvoiceComponent } from './admin/components/invoice/invoice.component';
 import { EmDSAComponent } from './admin/components/employee/em-dsa/em-dsa.component';
+import { BillGenerateTemplateComponent } from './general/components/bill-generate-template/bill-generate-template.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,6 +41,7 @@ export const routes: Routes = [
           { path: 'display/:id', component: EmDisplayComponent },
           { path: 'insurance/:id/:name', component: EmInsuranceComponent },
           { path: 'salary/:id/:name', component: EmSalaryComponent },
+          { path: 'bill/:id/:name/:salaryId', component: BillGenerateTemplateComponent },
           { path: 'dsa/:id/:name', component: EmDSAComponent },
           { path: 'contract/:id/:name', component: EmContractComponent }
         ]

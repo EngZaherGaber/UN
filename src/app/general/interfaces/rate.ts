@@ -3,5 +3,6 @@ export interface Rate {
     yearNum: number,
     monthNum: number,
     exchangeRate: number,
+    clientId:number,
     createdAt: Date
 }

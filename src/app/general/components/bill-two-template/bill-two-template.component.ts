@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { PdfService } from '../../services/pdf.service';
+import { Bill } from '../../interfaces/bill';
 
 @Component({
   selector: 'bill-two-template',
@@ -10,7 +11,7 @@ import { PdfService } from '../../services/pdf.service';
   styleUrl: './bill-two-template.component.scss'
 })
 export class BillTwoTemplateComponent {
-  @Input() data: any;
+  @Input() data?: Bill;
   constructor(public pdfSrv: PdfService) { }
   downloadAsPDF() {
     this.pdfSrv.downloadAsPDF();

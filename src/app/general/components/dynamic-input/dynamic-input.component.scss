@@ -9,3 +9,6 @@
   content: " *";
   color: red;
 }
+::ng-deep .p-checkbox.p-disabled .p-checkbox-box{
+  background-color: #04457f !important;
+}

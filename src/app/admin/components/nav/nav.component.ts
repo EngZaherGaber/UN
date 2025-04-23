@@ -26,7 +26,7 @@ export class NavComponent {
           },
           {
             label: 'COO',
-            icon: 'pi pi-briefcase', // More suitable for COO (Chief Operating Officer)
+            icon: 'pi pi-briefcase', 
             route: ['/admin/coo'],
           },
           {
@@ -44,49 +44,61 @@ export class NavComponent {
             label: 'Rate',
             route: ['/admin/setting'],
             fragment: 'Rate',
-            icon: 'pi pi-dollar', // For financial rates
+            icon: 'pi pi-dollar', 
           },
           {
             label: 'Type of contract',
             route: ['/admin/setting'],
             fragment: 'Type of contract',
-            icon: 'pi pi-file', // Represents documents/contracts
+            icon: 'pi pi-file', 
           },
           {
             label: 'City',
             route: ['/admin/setting'],
             fragment: 'City',
-            icon: 'pi pi-map-marker', // For locations
+            icon: 'pi pi-map-marker', 
           },
           {
             label: 'Bank',
             route: ['/admin/setting'],
             fragment: 'Bank',
-            icon: 'pi pi-credit-card', // Already correct for bank
+            icon: 'pi pi-credit-card', 
           },
           {
             label: 'Company Account',
             route: ['/admin/setting'],
             fragment: 'Company Account',
-            icon: 'pi pi-user', // Already correct for bank
+            icon: 'pi pi-user', 
           },
           {
             label: 'Client',
             route: ['/admin/setting'],
             fragment: 'Client',
-            icon: 'pi pi-id-card', // For client identification
+            icon: 'pi pi-id-card', 
           },
           {
             label: 'Team',
             route: ['/admin/setting'],
             fragment: 'Team',
-            icon: 'pi pi-users', // For groups of people
+            icon: 'pi pi-users', 
           },
           {
             label: 'Laptop',
             route: ['/admin/setting'],
             fragment: 'Laptop',
-            icon: 'pi pi-desktop', // For computer equipment
+            icon: 'pi pi-desktop', 
+          },
+          {
+            label: 'Compensation',
+            route: ['/admin/setting'],
+            fragment: 'Compensation',
+            icon: 'pi pi-money-bill', 
+          },
+          {
+            label: 'Leave Days',
+            route: ['/admin/setting'],
+            fragment: 'Leave Days',
+            icon: 'pi pi-calendar-times', 
           },
         ]
       },

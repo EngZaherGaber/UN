@@ -8,15 +8,18 @@ import { RateService } from '../../services/rate.service';
 import { DynamicTableComponent } from '../../../general/components/dynamic-table/dynamic-table.component';
 import { DynmaicFormComponent } from '../../../general/components/dynmaic-form/dynmaic-form.component';
 import { DialogModule } from 'primeng/dialog';
+import { ClientService } from '../../services/client.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ad-general-rate',
-  imports: [DynamicTableComponent, DynmaicFormComponent, DialogModule],
+  imports: [DynamicTableComponent, DynmaicFormComponent, DialogModule, CommonModule],
   templateUrl: './ad-general-rate.component.html',
   styleUrl: './ad-general-rate.component.scss'
 })
 export class AdGeneralRateComponent {
   info: InfoTable;
+  clients: { id: number, name: string }[] = [];
   resetObjs: { [key: string]: InputDynamic[] } = {};
   addDialog: boolean = false;
   addFunc: () => void = () => {
@@ -41,6 +44,15 @@ export class AdGeneralRateComponent {
           options: [],
         },
         {
+          key: 'clientId',
+          label: 'Client Name',
+          value: null,
+          dataType: 'list',
+          required: true,
+          visible: true,
+          options: this.clients,
+        },
+        {
           key: 'exchangeRate',
           label: 'Exchange Rate',
           value: null,
@@ -57,8 +69,17 @@ export class AdGeneralRateComponent {
   constructor(
     tblSrv: DyTableService,
     private msgSrv: ToastService,
-    private rateSrv: RateService
+    private rateSrv: RateService,
+    private clientSrv: ClientService
   ) {
+    clientSrv.getAll().subscribe(x => {
+      this.clients = x.data.map(z => {
+        return {
+          id: z.clientId,
+          name: z.clientName
+        }
+      })
+    })
     this.info = tblSrv.getStandardInfo(undefined, undefined, undefined, this.addFunc);
   }
 
@@ -92,6 +113,12 @@ export class AdGeneralRateComponent {
                       header: 'createdAt',
                       HeaderType: 'DateTimeO',
                     },
+                    {
+                      field: 'clientName',
+                      header: 'clientName',
+                      HeaderType: 'string',
+                    },
+
                   ],
                   loading: false,
                   count: res.count
@@ -122,6 +149,11 @@ export class AdGeneralRateComponent {
                       header: 'createdAt',
                       HeaderType: 'DateTimeO',
                     },
+                    {
+                      field: 'clientName',
+                      header: 'clientName',
+                      HeaderType: 'string',
+                    },
                   ],
                 });
               }),
@@ -151,6 +183,11 @@ export class AdGeneralRateComponent {
                   field: 'createdAt',
                   header: 'createdAt',
                   HeaderType: 'DateTimeO',
+                },
+                {
+                  field: 'clientName',
+                  header: 'clientName',
+                  HeaderType: 'string',
                 },
               ],
             });

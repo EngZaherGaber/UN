@@ -38,7 +38,7 @@
                 <div style="display: flex;justify-content: space-evenly;width: 45%;align-items: baseline;">
                     <p class="larg">Branch: </p>
                     <p class="larg" style="border-bottom: 2px dotted black;width: 60%;text-align: center;">
-                        {{data.event.description.branch}}</p>
+                        {{data?.branch}}</p>
                     <p class="larg">: الفرع</p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="brdr">
                     <div
                         style="border: 1px solid;width: 200px;height: 40px;display: flex;align-items: center;justify-content: center;text-align: center;">
-                        {{data.totalSalaryCalculatedinSyrianPounds}}</div>
+                        {{data?.price}}</div>
 
                 </div>
                 <p class="larg">: المبلغ المراد تحويله</p>
@@ -68,7 +68,7 @@
                 <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
                     <p>ِAmount in Word: </p>
                     <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;text-align: center;">
-                        {{pdfSrv.convertToSyrianPounds(data.totalSalaryCalculatedinSyrianPounds)}}</p>
+                        {{pdfSrv.convertToSyrianPounds(data ? data.price : 0)}}</p>
                     <p>:تفقيط المبلغ</p>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
                     <p>Details of Payment: </p>
                     <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">
-                        {{data.event.description.reason}}</p>
+                        {{data?.reason}}</p>
                     <p>:الغرض من التحويل</p>
                 </div>
             </div>
@@ -121,21 +121,21 @@
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.event.description.ourAccount,0,6)}}
+                                        {{getfrag(data ? data.ourAccount : '000000000',0,6)}}
                                     </b>
                                 </div>
                             </td>
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.event.description.ourAccount,6,9)}}
+                                        {{getfrag(data ? data.ourAccount : '000000000',6,9)}}
                                     </b>
                                 </div>
                             </td>
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.event.description.ourAccount,9)}}
+                                        {{getfrag(data ? data.ourAccount : '000000000',9)}}
                                     </b>
                                 </div>
                             </td>
@@ -147,7 +147,7 @@
                                 </div>
                             </td>
                             <td style="padding-inline: 5px;">
-                                {{getBranch(data.event.description.ourAccount)}}
+                                {{getBranch(data ? data.ourAccount : '000000000')}}
                             </td>
 
                         </tr>
@@ -174,7 +174,8 @@
             <div class="order">
                 <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
                     <p>Beneficiary's Name: </p>
-                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;">{{data.arabicName}} بن {{data.fatherNameArabic}}</p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 70%;">{{data?.employeeName}}
+                    </p>
                     <p>:اسم المستفيد</p>
                 </div>
             </div>
@@ -195,7 +196,7 @@
             <div class="order">
                 <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
                     <p>Beneficiary's Account No.: </p>
-                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">{{data.accountNumber}}
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">{{data?.employeeAccount}}
                     </p>
                     <p>:رقم حساب المستفيد</p>
                 </div>
@@ -203,7 +204,7 @@
             <div class="order">
                 <div style="display: flex;justify-content: space-between;width: 100%;align-items: baseline;">
                     <p>Beneficiary's Bank: </p>
-                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">{{data.bankName}}</p>
+                    <p style="border-bottom: 2px dotted black;text-align: center;;width: 60%;">{{data?.bankName}}</p>
                     <p>:بنك المستفيد الدافع</p>
                 </div>
             </div>

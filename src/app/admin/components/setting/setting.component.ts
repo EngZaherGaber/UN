@@ -13,6 +13,9 @@ import { AdTeamGeneralComponent } from '../team/ad-team-general/ad-team-general.
 import { AdGeneralLaptopTypeComponent } from '../ad-general-laptop-type/ad-general-laptop-type.component';
 import { AdGeneralLaptopRentComponent } from '../ad-general-laptop-rent/ad-general-laptop-rent.component';
 import { AdGeneralCompanyAccountComponent } from '../ad-general-company-account/ad-general-company-account.component';
+import { AdGeneralTransportComponent } from '../ad-general-transport/ad-general-transport.component';
+import { AdGeneralMobileComponent } from '../ad-general-mobile/ad-general-mobile.component';
+import { AdGeneralLeaveComponent } from '../ad-general-leave/ad-general-leave.component';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
@@ -30,7 +33,10 @@ import { AdGeneralCompanyAccountComponent } from '../ad-general-company-account/
     AdTeamGeneralComponent,
     AdGeneralLaptopTypeComponent,
     AdGeneralLaptopRentComponent,
-    AdGeneralCompanyAccountComponent
+    AdGeneralCompanyAccountComponent,
+    AdGeneralTransportComponent,
+    AdGeneralMobileComponent,
+    AdGeneralLeaveComponent
   ],
   standalone: true,
 })
@@ -48,6 +54,8 @@ export class SettingComponent implements OnInit {
     'Client',
     'Team',
     'Laptop',
+    'Compensation',
+    'Leave Days'
   ];
 
   constructor(private route: ActivatedRoute, private router: Router) {

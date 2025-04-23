@@ -19,16 +19,16 @@
             <p>مؤسسة عمر فلوح التجارية</p>
             <p>دمشق - العدوي</p>
             <br>
-            <pre>الى المصرف التجاري السوري فرع <b>{{data.event.description.branch}}</b> المحترمين</pre>
+            <pre>الى المصرف التجاري السوري فرع <b>{{data?.branch}}</b> المحترمين</pre>
             <br>
             <br>
-            <pre>يرجى تحويل مبلغ <b>{{data.totalSalaryCalculatedinSyrianPounds}}</b> {{pdfSrv.convertToSyrianPounds(data.totalSalaryCalculatedinSyrianPounds)}}</pre>
+            <pre>يرجى تحويل مبلغ <b>{{data?.price}}</b> {{pdfSrv.convertToSyrianPounds(data ? data.price : 0 )}}</pre>
             <br>
-            <pre>من حسابنا لديكم رقم <b>{{data.event.description.ourAccount}}</b></pre>
-            <pre>الى حساب السيد  <b>{{data.arabicName}} بن {{data.fatherNameArabic}}</b></pre>
-            <pre>لدى بنك <b>{{data.bankName}}</b></pre>
-            <pre>رقم <b>{{data.accountNumber}}</b></pre>
-            <pre>وذلك لقاء خدمات استشارية</pre>
+            <pre>من حسابنا لديكم رقم <b>{{data?.ourAccount}}</b></pre>
+            <pre>الى حساب السيد  <b>{{data?.employeeName}}</b></pre>
+            <pre>لدى بنك <b>{{data?.bankName}}</b></pre>
+            <pre>رقم <b>{{data?.employeeAccount}}</b></pre>
+            <pre>وذلك لقاء {{data?.reason}}</pre>
             <br>
             <br>
             <br>

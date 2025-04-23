@@ -43,7 +43,7 @@ export class DynmaicFormComponent {
   @Input() submitLabel: string = '';
   @Input() isShow: boolean = false;
   @Input() withBackBtn: boolean = true;
-  @Input() objs: { [key: string]: InputDynamic[] } = {};
+  @Input() objs?: { [key: string]: InputDynamic[] } = {};
   @Input() withIdSteps: string[] = [];
   @Input() recursionSteps: string[] = [];
   @Input() disableAtt: { [key: string]: string[] } = {};
@@ -62,7 +62,7 @@ export class DynmaicFormComponent {
   } = {};
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onActiveIndexChange: EventEmitter<any> = new EventEmitter<any>();
-  form: FormGroup = new FormGroup({});
+  public form: FormGroup = new FormGroup({});
   stepsList: MenuItem[] = [];
   keys: string[] = [];
   activeIndex: number = 0;
@@ -73,45 +73,29 @@ export class DynmaicFormComponent {
   ) { }
 
   ngOnInit(): void {
-    this.stepsList = this.DySrv.createStepsFromObjs(this.objs);
-    this.keys = Object.keys(this.objs);
-    this.keys.forEach((key) => {
-      this.objs[key] = this.DySrv.addCommand(
-        this.triggers,
-        this.objs[key],
-        key
-      );
-    });
-    const button = document.getElementById('fetchButton');
-    if (button) {
-      fromEvent(button, 'click')
-        .pipe(
-          switchMap(() =>
-            this.submit.pipe(takeUntil(fromEvent(button, 'click')))
-          )
-        )
-        .subscribe((data) => {
-          this.submit.pipe(takeUntil(fromEvent(button, 'click')));
-          // Handle the data here
-        });
-    }
-    this.createForm();
+    this.reLoad()
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.stepsList = this.DySrv.createStepsFromObjs(this.objs);
-    this.keys = Object.keys(this.objs);
-    this.keys.forEach((key) => {
-      this.objs[key] = this.DySrv.addCommand(
-        this.triggers,
-        this.objs[key],
-        key
-      );
-    });
-    this.createForm();
-    this.isShow ? this.form.disable() : '';
+    this.reLoad
   }
+  reLoad() {
+    if (this.objs) {
 
+      this.stepsList = this.DySrv.createStepsFromObjs(this.objs);
+      this.keys = Object.keys(this.objs);
+      this.keys.forEach((key) => {
+        (this.objs as any)[key] = this.DySrv.addCommand(
+          this.triggers,
+          (this.objs as any)[key],
+          key
+        );
+      });
+      this.createForm();
+      this.isShow ? this.form.disable() : '';
+    }
+
+  }
   listenAgain() {
     this.keys.forEach((key) => {
       if (
@@ -119,7 +103,7 @@ export class DynmaicFormComponent {
         !this.disableSteps.includes(key) &&
         !this.recursionSteps.includes(key)
       ) {
-        this.objs[key].forEach((element: InputDynamic) => {
+        (this.objs as any)[key].forEach((element: InputDynamic) => {
           if (element.value !== null) {
             this.DySrv.firstTime = true;
             if (element.dataType.toLowerCase() === 'list') {
@@ -148,10 +132,12 @@ export class DynmaicFormComponent {
         !this.disableSteps.includes(key) &&
         !this.recursionSteps.includes(key)
       ) {
-        this.objs[key].forEach((element: InputDynamic) => {
-          (this.form.controls[key] as FormGroup).controls[
+        (this.objs as any)[key].forEach((element: InputDynamic) => {
+          const control = (this.form.controls[key] as FormGroup).controls[
             element.key
-          ].valueChanges.subscribe((x) => {
+          ];
+          control.valueChanges.subscribe((x) => {
+            element.value = x;
             if (element.command) {
               element.command(x, element, this.form, this.objs, this.DySrv);
             }
@@ -160,12 +146,14 @@ export class DynmaicFormComponent {
       }
     });
   }
+  resetForm() {
 
+    this.form = new FormGroup({});
+  }
   createForm() {
-    // this.form = new FormGroup({});
     this.keys.forEach((key) => {
       if (this.recursionSteps.includes(key)) {
-        const con = this.DySrv.createFormFromAttForAddForArrays(this.objs[key]);
+        const con = this.DySrv.createFormFromAttForAddForArrays((this.objs as any)[key]);
         this.form.addControl(key, con);
         this.DySrv.disableInputRecursion(
           this.disableAtt,
@@ -175,7 +163,7 @@ export class DynmaicFormComponent {
         );
       } else if (this.withIdSteps.includes(key)) {
         const dynmaic = new FormArray<any>([]);
-        this.objs[key].forEach((obj) => {
+        (this.objs as any)[key].forEach((obj: InputDynamic[]) => {
           const group = this.DySrv.createFormFromAttForAddForDynamic(obj);
           if (group) {
             dynmaic.push(group);
@@ -186,7 +174,7 @@ export class DynmaicFormComponent {
       } else {
         this.form.addControl(
           key,
-          this.DySrv.createFormFromAttForAdd(this.objs[key])
+          this.DySrv.createFormFromAttForAdd((this.objs as any)[key])
         );
         this.DySrv.disableInput(this.disableAtt, key, this.form);
       }
@@ -240,7 +228,7 @@ export class DynmaicFormComponent {
       ) {
         if (this.recursionSteps.includes(key)) {
           const con = this.DySrv.createFormFromAttForAddForArrays(
-            this.objs[key]
+            (this.objs as any)[key]
           );
           this.form.addControl(key, con);
           this.DySrv.disableInputRecursion(

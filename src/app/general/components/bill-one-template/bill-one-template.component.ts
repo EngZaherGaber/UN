@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PdfService } from '../../services/pdf.service';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
+import { Bill } from '../../interfaces/bill';
 
 @Component({
   selector: 'bill-one-template',
@@ -10,9 +11,12 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './bill-one-template.component.scss'
 })
 export class BillOneTemplateComponent {
-  @Input() data: any;
+  @Input() data?: Bill;
   constructor(public pdfSrv: PdfService) { }
   downloadAsPDF() {
     this.pdfSrv.downloadAsPDF();
+  }
+  getBranch(str: string) {
+    return str.split('/')[1];
   }
 }

@@ -148,7 +148,7 @@
                                     }"></i>
                     <div *ngIf="col.HeaderType === 'DateTime' ">
                         <small *ngIf="rowData[col.field] !== null">
-                            {{ rowData[col.field] | date: 'yy-mm-dd'}}
+                            {{ rowData[col.field] | date: 'dd-MM-yyyy'}}
                         </small>
                         <small *ngIf="rowData[col.field] === null">
                             {{ rowData[col.field] }}
@@ -156,7 +156,7 @@
                     </div>
                     <div *ngIf="col.HeaderType === 'DateTimeO' ">
                         <small *ngIf="rowData[col.field] !== null">
-                            {{ rowData[col.field] | date: 'yy-mm-dd HH:mm'}}
+                            {{ rowData[col.field] | date: 'dd-MM-yyyy HH:mm'}}
                         </small>
                         <small *ngIf="rowData[col.field] === null">
                             {{ rowData[col.field] }}

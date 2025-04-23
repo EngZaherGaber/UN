@@ -1,4 +1,4 @@
-<dynmaic-form (submit)="submit($event)" [preRoute]="'admin/bank'" [objs]="objs" style="width: 100%;"
+<dynmaic-form *ngIf="objs"(submit)="submit($event)" [preRoute]="'admin/bank'" [objs]="objs" style="width: 100%;"
     [scrollHeight]="'100%'" [disableSaveButton]="file ? false : true" [withBackBtn]="false"
     (onActiveIndexChange)="activeIndexChange($event)" [showSteps]="true">
     <div *ngIf="showUploader" class="card flex flex-col gap-6 items-center justify-center">

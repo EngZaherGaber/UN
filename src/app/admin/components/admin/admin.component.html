@@ -25,6 +25,6 @@
 </div>
 <p-dialog header="Reset Password" [appendTo]="'body'" [modal]="true" [(visible)]="showChangePasswordDialog"
     [style]="{ width: '25rem' }">
-    <dynmaic-form (submit)="submit($event)" [direction]="'column'" [display]="'flex'" [withBackBtn]="false"
+    <dynmaic-form *ngIf="resetObjs"(submit)="submit($event)" [direction]="'column'" [display]="'flex'" [withBackBtn]="false"
         [justOneStep]="true" [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
 </p-dialog>

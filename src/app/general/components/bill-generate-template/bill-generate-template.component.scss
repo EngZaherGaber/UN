@@ -1,0 +1,13 @@
+#con2 {
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+}
+::ng-deep   .p-tabs {
+    .p-tabpanels {
+      padding: 0;
+      .a4-container {
+        margin: 0;
+      }
+    }
+}

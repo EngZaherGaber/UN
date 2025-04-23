@@ -27,6 +27,9 @@
       <p-tabpanel value="Team">
         <ad-team-general *ngIf="Title === 'Team'"></ad-team-general>
       </p-tabpanel>
+      <p-tabpanel value="Leave Days">
+        <ad-general-leave *ngIf="Title === 'Leave Days'"></ad-general-leave>
+      </p-tabpanel>
       <p-tabpanel value="Laptop">
         <p-tabs *ngIf="Title === 'Laptop'" [(value)]="subTitle">
           <p-tablist>
@@ -41,6 +44,21 @@
           </p-tabpanel>
         </p-tabs>
       </p-tabpanel>
+      <p-tabpanel value="Compensation">
+        <p-tabs *ngIf="Title === 'Compensation'" [(value)]="subTitle">
+          <p-tablist>
+            <p-tab [value]="'Transport'">Transport</p-tab>
+            <p-tab [value]="'Mobile'">Mobile</p-tab>
+          </p-tablist>
+          <p-tabpanel value="Transport">
+            <ad-general-transport *ngIf="subTitle === 'Transport'"></ad-general-transport>
+          </p-tabpanel>
+          <p-tabpanel value="Mobile">
+            <ad-general-mobile *ngIf="subTitle === 'Mobile'"></ad-general-mobile>
+          </p-tabpanel>
+        </p-tabs>
+      </p-tabpanel>
+      
     </p-tabs>
   </div>
 </ad-template>

@@ -5,6 +5,7 @@ import { jsPDF } from 'jspdf';
 import { PdfService } from '../../services/pdf.service';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
+import { Bill } from '../../interfaces/bill';
 @Component({
   selector: 'bill-zero-template',
   imports: [CommonModule, ToolbarModule, ButtonModule],
@@ -18,7 +19,7 @@ export class BillZeroTemplateComponent {
     { title: 'Mob: ', detail: '+963-94-4326650' },
     { title: 'P.O.Box: ', detail: '2121' },
   ]
-  @Input() data: any;
+  @Input() data?: Bill;
   constructor(public pdfSrv: PdfService) { }
   downloadAsPDF() {
     this.pdfSrv.downloadAsPDF();

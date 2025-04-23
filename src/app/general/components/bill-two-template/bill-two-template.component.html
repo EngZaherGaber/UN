@@ -38,21 +38,21 @@
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.event.description.ourAccount,0,6)}}
+                                        {{getfrag(data ? data.ourAccount : '000000000' ,0,6)}}
                                     </b>
                                 </div>
                             </td>
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.event.description.ourAccount,6,9)}}
+                                        {{getfrag(data ? data.ourAccount : '000000000',6,9)}}
                                     </b>
                                 </div>
                             </td>
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.event.description.ourAccount,9)}}
+                                        {{getfrag(data ? data.ourAccount : '000000000',9)}}
                                     </b>
                                 </div>
                             </td>
@@ -63,7 +63,7 @@
                                     </b>
                                 </div>
                             </td>
-                            <td style="padding-inline: 10px;">{{getBranch(data.event.description.ourAccount)}}</td>
+                            <td style="padding-inline: 10px;">{{getBranch(data ? data.ourAccount : '000000000')}}</td>
                             <td style="width: 15%;">
                                 <b>حساب رقم</b>
                             </td>
@@ -84,7 +84,7 @@
                 <div class="brdr">
                     <div
                         style="border: 1px solid;width: 200px;height: 40px;display: flex;align-items: center;justify-content: center;">
-                        {{data.totalSalaryCalculatedinSyrianPounds}}</div>
+                        {{data?.price}}</div>
                     <div
                         style="border: 1px solid;width: 50px;height: 40px;display: flex;align-items: center;justify-content: center">
                         00</div>
@@ -97,7 +97,7 @@
                 <div style="width: 100%;display: flex;justify-content: space-between;">
                     <p>Only :</p>
                     <p style="border-bottom: 2px dotted black;width: 80%;text-align: center;padding-bottom: 5px;">
-                        {{pdfSrv.convertToSyrianPounds(data.totalSalaryCalculatedinSyrianPounds)}}</p>
+                        {{pdfSrv.convertToSyrianPounds(data ? data.price : 0)}}</p>
                     <p>: فقط </p>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                                         <b class="larg">إلى / المستفيد</b>
                                     </div>
                                     <div style="width: 100%;display: flex;justify-content: center;padding-top: 5px;">
-                                        <b>{{data.arabicName}} بن {{data.fatherNameArabic}}
+                                        <b>{{data?.employeeName}}
                                         </b>
                                     </div>
                                 </div>
@@ -127,21 +127,21 @@
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.accountNumber,0,6)}}
+                                        {{getfrag(data ? data.employeeAccount : '000000000',0,6)}}
                                     </b>
                                 </div>
                             </td>
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.accountNumber,6,9)}}
+                                        {{getfrag(data ? data.employeeAccount : '000000000',6,9)}}
                                     </b>
                                 </div>
                             </td>
                             <td>
                                 <div style="display: flex;justify-content: center;">
                                     <b>
-                                        {{getfrag(data.accountNumber,9)}}
+                                        {{getfrag(data ? data.employeeAccount : '000000000',9)}}
                                     </b>
                                 </div>
                             </td>
@@ -152,7 +152,8 @@
                                     </b>
                                 </div>
                             </td>
-                            <td style="padding-inline: 10px;">{{getBranch(data.accountNumber)}}</td>
+                            <td style="padding-inline: 10px;">{{getBranch(data ? data.employeeAccount : '000000000')}}
+                            </td>
                             <td style="width: 15%;">
                                 <b>حساب رقم</b>
                             </td>
@@ -167,7 +168,7 @@
                 <div style="width: 100%;display: flex;justify-content: space-between;">
                     <p>Details :</p>
                     <p style="border-bottom: 2px dotted black;width: 80%;text-align: center;padding-bottom: 5px;">
-                        {{data.event.description.reason}}
+                        {{data?.reason}}
                     </p>
                     <p>: تفاصيل </p>
                 </div>

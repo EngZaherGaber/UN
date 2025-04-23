@@ -1,0 +1,31 @@
+<ad-template [title]="'Generate Bill'" [subTitle]="'Table'">
+    <div id="con2" con2>
+        <dynmaic-form style="width: 100%;" #df *ngIf="fillObject()" (submit)="generateBill($event)"
+            [disableAtt]="disableAtt" [withBackBtn]="true"
+            [preRoute]="'admin/employee/salary/' + emp.id + '/' + emp.name" [showSteps]="true" [justOneStep]="false"
+            [objs]="billObjs">
+        </dynmaic-form>
+
+        <p-tabs style="width: 100%;" *ngIf="showBills" value="0">
+            <p-tablist>
+                @for (tab of templateListSelected; track tab) {
+                <p-tab [value]="tab ?? 0">{{ tab }}</p-tab>
+                }
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="التجاري">
+                    <bill-zero-template *ngIf="bills" [data]="bills['التجاري']"></bill-zero-template>
+                </p-tabpanel>
+                <p-tabpanel value="البركة">
+                    <bill-one-template *ngIf="bills" [data]="bills['البركة']"></bill-one-template>
+                </p-tabpanel>
+                <p-tabpanel value="الاهلي (داخلي)">
+                    <bill-two-template *ngIf="bills" [data]="bills['الاهلي (داخلي)']"></bill-two-template>
+                </p-tabpanel>
+                <p-tabpanel value="الاهلي (خارجي)">
+                    <bill-three-template *ngIf="bills" [data]="bills['الاهلي (خارجي)']"></bill-three-template>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    </div>
+</ad-template>

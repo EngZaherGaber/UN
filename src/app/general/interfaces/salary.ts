@@ -1,8 +1,24 @@
 export interface Salary {
-    employeeId: number,
+    cooNumber: string,
+    poNumber: string,
     sickLeave: number,
     daysOff: number,
+    transportation: number,
+    mobile: number,
     downPayment: number,
     overTimeWages: number,
-    dsa: number
+    employeeName: string,
+    teamName: string,
+    clientName: string,
+    basicSalaryinUSD: number,
+    totalSalaryCalculatedinSyrianPounds: number,
+    bonuses: number,
+    netSalary: number,
+    deductions: number,
+    laptop: number,
+    timeSheet: Date,
+    daysOn: number,
+    dsa: number,
+    slaryMonth: number,
+    slaryYear: number
 }

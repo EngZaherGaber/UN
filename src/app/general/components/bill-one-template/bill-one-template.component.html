@@ -15,7 +15,7 @@
                 </div>
                 <div class="contact-con">
                     <small class="title">Branch</small>
-                    <small class="detail">...................... الفرع</small>
+                    <small class="detail" style="display: flex;width: 100%;"><b style="border-bottom: 2px dotted black;width: 80%;text-align: center;">{{data?.branch}}</b> الفرع</small>
                 </div>
             </div>
             <img src="albaraka.png" alt="" width="150" height="60">
@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <td style="width: 25%;">رقم حساب الحوالة</td>
-                            <td>{{data.event.description.ourAccount}}</td>
+                            <td>{{data?.ourAccount}}</td>
                             <td>Remittance account No</td>
                         </tr>
                         <tr>
@@ -71,7 +71,7 @@
                     <tbody>
                         <tr>
                             <td>اسم المستفيد</td>
-                            <td>{{data.arabicName}} بن {{data.fatherNameArabic}}</td>
+                            <td>{{data?.employeeName}}</td>
                             <td>The Benf Name</td>
                         </tr>
                         <tr>
@@ -81,17 +81,17 @@
                         </tr>
                         <tr>
                             <td>رقم حساب المستفيد / IBAN</td>
-                            <td>{{data.accountNumber}}</td>
+                            <td>{{data?.employeeAccount}}</td>
                             <td>The Benf Account No or IBAN</td>
                         </tr>
                         <tr>
                             <td>اسم بنك المستفيد</td>
-                            <td>{{data.bankName}}</td>
+                            <td>{{data?.bankName}}</td>
                             <td>Benf Bank's Name</td>
                         </tr>
                         <tr>
                             <td>عنوان بنك المستفيد /الفرع</td>
-                            <td></td>
+                            <td>{{getBranch(data ? data.ourAccount : '000000000')}}</td>
                             <td>Benf Bank's Add/ Br</td>
                         </tr>
                         <tr>
@@ -101,7 +101,7 @@
                         </tr>
                         <tr>
                             <td>سبب التحويل</td>
-                            <td>{{data.event.description.reason}}</td>
+                            <td>{{data?.reason}}</td>
                             <td>The Transfer Reason</td>
                         </tr>
                         <tr>
@@ -134,7 +134,7 @@
                                         <tr>
                                             <td style="width: 25%;" class="sml">مبلغ الحوالة</td>
                                             <td style="width: 25%;background-color: white;" class="sml">
-                                                {{data.totalSalaryCalculatedinSyrianPounds}}</td>
+                                                {{data?.price}}</td>
                                             <td style="width: 20%;background-color: white;" class="sml"></td>
                                             <td style="width: 30%;" class="sml">Transfer Abount</td>
                                         </tr>
@@ -216,7 +216,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="background-color: white;" rowspan="2"></td>
+                            <td style="background-color: white;" rowspan="2">{{pdfSrv.convertToSyrianPounds(data ?
+                                data.price : 0)}}</td>
                             <td style="background-color: white;">
                                 <pre
                                     style="font-weight: bold;"> &#9633;  كافة المصاريف والعمولات على حسابنا        2-OUR</pre>
