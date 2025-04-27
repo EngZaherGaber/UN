@@ -7,6 +7,6 @@
 </ad-template>
 <p-dialog header="Reset Password" [appendTo]="'body'" [modal]="true" [(visible)]="showResetDialog"
     [style]="{ width: '25rem' }">
-    <dynmaic-form *ngIf="objs"(submit)="submit($event)" [direction]="'column'" [withBackBtn]="false" [justOneStep]="true"
+    <dynmaic-form (submit)="submit($event)" [direction]="'column'" [withBackBtn]="false" [justOneStep]="true"
         [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
 </p-dialog>

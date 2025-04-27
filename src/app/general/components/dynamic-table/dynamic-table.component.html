@@ -182,7 +182,7 @@
                             (click)="downloadJSON(rowData[col.field])"></button>
                     </div>
                     <div *ngIf="col.HeaderType === 'img'" style="margin: 5px;">
-                        <img *ngIf="rowData[col.field]" [src]="rowData[col.field]" width="200" height="100">
+                        <img [src]="getSafeUrl('http://192.168.1.100/AttachFiles/LogosBank/SVC132_logo.png')">
                     </div>
                     <div *ngIf="col.HeaderType === 'tag'">
                         <p-tag [value]="rowData[col.field]" [severity]="getSeverity(rowData)" />

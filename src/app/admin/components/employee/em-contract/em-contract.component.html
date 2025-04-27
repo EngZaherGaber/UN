@@ -10,6 +10,11 @@
     <dynmaic-form *ngIf="addDialog" (submit)="add($event)" [display]="'flex'" [withBackBtn]="false" [justOneStep]="true"
         [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
 </p-dialog>
+<p-dialog [header]="'Cancel Contract of ' + emp.name + ' employee'" [appendTo]="'body'" [modal]="true"
+    [(visible)]="cancelDialog" [style]="{ width: '35vw' }">
+    <dynmaic-form *ngIf="cancelDialog" (submit)="cancel($event)" [display]="'flex'" [withBackBtn]="false"
+        [justOneStep]="true" [objs]="cancelObjs" style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
+</p-dialog>
 <p-dialog header="Edit Contract" [appendTo]="'body'" [modal]="true" [(visible)]="editDialog"
     [style]="{ width: '25rem' }">
     <dynmaic-form *ngIf="editDialog" [disableAtt]="disableAtt" [returnIfDisable]="returnIfDisable"

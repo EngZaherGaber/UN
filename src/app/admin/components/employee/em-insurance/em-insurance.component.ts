@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EmInsuranceComponent {
   @ViewChild('df') formParent?: DynmaicFormComponent;
-  objs?: { [key: string]: InputDynamic[] };
+  objs: { [key: string]: InputDynamic[] } = {};
   emp: { id: number, name: string } = { id: 0, name: '' };
   firstTime: boolean = true;
   returnIfDisable: { [key: string]: string[] } = {
@@ -75,7 +75,9 @@ export class EmInsuranceComponent {
             dataType: 'bool',
             options: [],
             visible: true,
-            command: (value, element, form) => { },
+            command: (value, element, form) => { 
+              this.deliveredInsuranceCardCommand(value, element, form, this.objs)
+            },
             required: true,
           },
           {
@@ -125,6 +127,7 @@ export class EmInsuranceComponent {
     };
     body.startLifeDate = this.attSrv.getStringDate(body.startLifeDate)
     body.endLifeDate = this.attSrv.getStringDate(body.endLifeDate)
+    body.insuranceCardDeliveredDate = this.attSrv.getStringDate(body.insuranceCardDeliveredDate)
     this.insuranceSrv.edit(body, this.emp.id).subscribe((res: APIResponse<any>) => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
@@ -143,6 +146,13 @@ export class EmInsuranceComponent {
       form?.get('general.endLifeDate')?.disable();
       form?.get('general.startLifeDate')?.disable();
 
+    }
+  }
+  deliveredInsuranceCardCommand(value: any, element?: InputDynamic, form?: FormGroup, objs?: { [key: string]: InputDynamic[] }) {
+    if (value === true) {
+      form?.get('general.insuranceCardDeliveredDate')?.enable();
+    } else if (value === false) {
+      form?.get('general.insuranceCardDeliveredDate')?.disable();
     }
   }
 }

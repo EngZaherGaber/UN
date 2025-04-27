@@ -191,7 +191,7 @@ export class EmDSAComponent {
         {
           key: 'reason',
           label: 'Reason',
-          value: 'راتب شهر ' + this.pdfSrv.months[new Date().getMonth()],
+          value: 'راتب شهر ' + this.pdfSrv.englishMonths[new Date().getMonth()],
           dataType: 'string',
           required: true,
           visible: true,

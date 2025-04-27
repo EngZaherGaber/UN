@@ -1,6 +1,6 @@
 <ad-template [title]="'Insurance of ' + emp.name" [subTitle]="'Table'">
     <div id="con2" con2>
-        <dynmaic-form *ngIf="objs" #df  [justOneStep]="true" [preRoute]="'admin/employee'"
+        <dynmaic-form #df  [justOneStep]="true" [preRoute]="'admin/employee'"
             (submit)="submit($event)" [objs]="objs" style="width: 100%;" [scrollHeight]="'100%'"
             [returnIfDisable]="returnIfDisable"></dynmaic-form>
     </div>

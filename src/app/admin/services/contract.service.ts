@@ -17,8 +17,8 @@ export class ContractService {
   getById(id: number) {
     return this.http.get<APIResponse<Contract>>(this.url + '/' + id);
   }
-  cancel(id: number) {
-    return this.http.get<APIResponse<Contract>>(this.url + '/CancelContractAsync/' + id);
+  cancel(body: any) {
+    return this.http.post<APIResponse<Contract>>(this.url + '/CancelContractAsync', body);
   }
   delete(id: number) {
     return this.http.delete<APIResponse<any>>(this.url + '/' + id);

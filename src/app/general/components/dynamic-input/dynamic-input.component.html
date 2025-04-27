@@ -103,14 +103,16 @@
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
-            <p-datepicker [minDate]="now" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'yy')"
+            <p-datepicker [minDate]="object.startValidation && object.startValidation === true ? now : null"
+                [disabled]="FEcontrol.disabled" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'yy')"
                 appendTo="body" view="year" dateFormat="yy"></p-datepicker>
         </ng-template>
         <ng-template ngSwitchCase="month">
             <label [ngClass]="{ required: object.required }" [for]="object.label">{{
                 object.label
                 }}</label>
-            <p-datepicker [minDate]="now" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'mm')"
+            <p-datepicker [minDate]="object.startValidation && object.startValidation === true ? now : null"
+                [disabled]="FEcontrol.disabled" [(ngModel)]="autoCompleteValue" (onSelect)="selectYM($event,'mm')"
                 appendTo="body" view="month" dateFormat="mm"></p-datepicker>
         </ng-template>
     </p-floatlabel>

@@ -11,6 +11,7 @@ export interface InputDynamic {
   Max?: number;
   required?: boolean;
   options: any[];
+  startValidation?: boolean;
   command?: (
     event?: any,
     element?: InputDynamic,

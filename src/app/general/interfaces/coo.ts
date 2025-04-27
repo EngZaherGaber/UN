@@ -4,7 +4,7 @@ export interface COO {
     cooDate: Date,
     totalValue: number,
     clientId: number,
-    currencyId: number,
+    currencyTypeId: number,
     employeeCoos: { employeeName: string, arabicName: string }[],
     lifeInsurances: { startDate: string, endDate: string }[],
     poNumber: string,

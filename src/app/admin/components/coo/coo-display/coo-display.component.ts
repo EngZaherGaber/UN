@@ -79,7 +79,7 @@ export class CooDisplayComponent {
             {
               key: 'currencyId',
               label: 'Currency',
-              value: res.data.currencyId,
+              value: res.data.currencyTypeId,
               dataType: 'list',
               options: this.currencies.map((currency) => {
                 return { id: currency.id, name: currency.type }

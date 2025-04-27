@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Table } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -21,12 +21,16 @@ import { DyButton } from '../../interfaces/dy-button';
 import { UnSpinnerComponent } from '../un-spinner/un-spinner.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import * as XLSX from 'xlsx';
+import { HttpClient } from '@angular/common/http';
+import { NgOptimizedImage } from '@angular/common'
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'dynamic-table',
   imports: [
     TableModule,
     ToggleSwitchModule,
+    NgOptimizedImage,
     TooltipModule,
     CommonModule,
     ButtonModule,
@@ -86,11 +90,11 @@ export class DynamicTableComponent {
   carsoulPage: number = 1;
   columns: string[] = [];
   selectedColumns: string[] = [];
-  constructor() { }
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void { }
   ngAfterContentInit(): void {
-    this.load.subscribe((body) => {
+    this.load.subscribe(async (body) => {
       if (this.columnsEvent && this.columnsEvent.length > 0) {
         this.columnsEvent.forEach((col) => {
           if (!col.visible) {
@@ -136,6 +140,17 @@ export class DynamicTableComponent {
             return z;
           });
         });
+      // (body.columns as any[])
+      //   .filter((x) => x.HeaderType === 'img')
+      //   .forEach((x) => {
+      //     body.data = (body.data as any[]).map((z) => {
+      //       //   z[x.field] = z[x.field] ? this.getImage(z[x.field]) : '';
+      //       //   return z;
+      //       if (z[x.field]) {
+
+
+
+      //   });
       this.columns = (body.columns as any[]).map(x => x.header);
       this.selectedColumns = this.columns;
       this.totalRecords = this.lazyLoading ? body.count : body.data.length;
@@ -153,6 +168,8 @@ export class DynamicTableComponent {
       this.onLazy.emit(event);
     }
   }
+
+
   getFullDate(date: string) {
     const originalDate: Date = new Date(date);
     const day = String(originalDate.getDate()).padStart(2, '0');
@@ -187,7 +204,7 @@ export class DynamicTableComponent {
     let arr = this.table?.filteredValue ?? this.table?.value;
     if (arr && arr.length > 0) {
       arr = arr.map((x) => {
-        let z: any= {};
+        let z: any = {};
         this.body.columns.forEach((col: any) => {
           if (this.selectedColumns.includes(col.header))
             z[col.header] = x[col.field];
@@ -294,6 +311,9 @@ export class DynamicTableComponent {
   }
   getCorrectDate(date: Date) {
     return date;
+  }
+  getSafeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

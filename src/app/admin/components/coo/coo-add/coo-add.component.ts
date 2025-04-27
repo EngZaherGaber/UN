@@ -17,7 +17,7 @@ import { CurrencyService } from '../../../services/currency.service';
   styleUrl: './coo-add.component.scss'
 })
 export class CooAddComponent {
-  objs?: { [key: string]: InputDynamic[] } = {};
+  objs: { [key: string]: InputDynamic[] } = {};
   constructor(
     private cooSrv: CooService,
     private msgSrv: ToastService,

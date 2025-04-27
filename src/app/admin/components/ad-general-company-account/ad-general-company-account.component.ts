@@ -244,23 +244,23 @@ export class AdGeneralCompanyAccountComponent {
     this.companyAccountSrv.add(event).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.addDialog = false;
+        this.info.getSub$.next(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
 
     })
-    this.addDialog = false;
-    this.info.getSub$.next(true);
   }
   edit(event: any) {
     this.companyAccountSrv.edit(event, this.editCompanyAccountId).subscribe(res => {
       if (res.success) {
         this.msgSrv.showSuccess('Success!', res.message);
+        this.editDialog = false;
+        this.info.getSub$.next(true);
       } else {
         this.msgSrv.showError('Error!', res.message);
       }
     })
-    this.editDialog = false;
-    this.info.getSub$.next(true);
   }
 }

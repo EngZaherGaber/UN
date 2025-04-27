@@ -32,6 +32,10 @@ export class generalInterceptor implements HttpInterceptor {
               msg = msg ?? 'Your API not found';
               this.msgSrv.showError(msg, '404!');
               break;
+            case 405:
+              msg = msg ?? 'Method Not Allowed';
+              this.msgSrv.showError(msg, '405!');
+              break;
             case 400:
               msg = error.error.message ?? 'Bad Request!';
               this.msgSrv.showError(msg, '400!');

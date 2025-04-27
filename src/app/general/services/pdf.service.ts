@@ -42,6 +42,20 @@ export class PdfService {
     'تشرين الثاني',
     'كانون الاول',
   ]
+  englishMonths = [
+    'January',    // كانون الثاني
+    'February',   // شباط
+    'March',      // اذار
+    'April',      // نيسان
+    'May',        // ايار
+    'June',       // حزيران
+    'July',       // تموز
+    'August',     // اب
+    'September',  // ايلول
+    'October',    // تشرين الاول
+    'November',   // تشرين الثاني
+    'December'    // كانون الاول
+  ]
   isLoading = false;
 
   constructor() {
@@ -68,7 +82,7 @@ export class PdfService {
   }
 
 
-  
+
 
   convertToSyrianPounds(amount: number): string {
     if (amount === 0) return 'صفر ليرة سورية';

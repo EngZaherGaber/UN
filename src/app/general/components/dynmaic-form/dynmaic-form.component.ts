@@ -43,7 +43,7 @@ export class DynmaicFormComponent {
   @Input() submitLabel: string = '';
   @Input() isShow: boolean = false;
   @Input() withBackBtn: boolean = true;
-  @Input() objs?: { [key: string]: InputDynamic[] } = {};
+  @Input() objs: { [key: string]: InputDynamic[] } = {};
   @Input() withIdSteps: string[] = [];
   @Input() recursionSteps: string[] = [];
   @Input() disableAtt: { [key: string]: string[] } = {};
@@ -53,7 +53,6 @@ export class DynmaicFormComponent {
   @Input() disableSaveButton: boolean = false;
   @Input() justOneStep: boolean = false;
   @Input() showSteps: boolean = false;
-
   @Input() triggers: {
     [key: string]: {
       key: string;
@@ -77,11 +76,10 @@ export class DynmaicFormComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.reLoad
+    this.reLoad();
   }
   reLoad() {
     if (this.objs) {
-
       this.stepsList = this.DySrv.createStepsFromObjs(this.objs);
       this.keys = Object.keys(this.objs);
       this.keys.forEach((key) => {
@@ -124,7 +122,6 @@ export class DynmaicFormComponent {
       }
     });
   }
-
   listenToChange() {
     this.keys.forEach((key) => {
       if (

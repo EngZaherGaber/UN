@@ -220,7 +220,7 @@ export class BillGenerateTemplateComponent {
                       {
                         key: 'reason',
                         label: 'Reason',
-                        value: 'راتب شهر ' + this.pdfSrv.months[this.salaryRow ? this.salaryRow.slaryMonth : 0],
+                        value: 'راتب شهر ' + this.pdfSrv.englishMonths[this.salaryRow ? this.salaryRow.slaryMonth : 0],
                         dataType: 'string',
                         required: true,
                         visible: true,

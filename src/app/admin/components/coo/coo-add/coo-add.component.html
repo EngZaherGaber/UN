@@ -1,6 +1,6 @@
 <ad-template [title]="'COO'" [subTitle]="'Add'">
     <div id="con2" con2>
-        <dynmaic-form *ngIf="objs" (submit)="submit($event)" [preRoute]="'admin/coo'" [justOneStep]="true" [objs]="objs"
+        <dynmaic-form (submit)="submit($event)" [preRoute]="'admin/coo'" [justOneStep]="true" [objs]="objs"
             style="width: 100%;" [scrollHeight]="'100%'"></dynmaic-form>
     </div>
 </ad-template>

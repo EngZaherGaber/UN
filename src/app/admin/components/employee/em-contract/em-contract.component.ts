@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ContractService } from '../../../services/contract.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, of, catchError, forkJoin, switchScan } from 'rxjs';
+import { switchMap, of, catchError, forkJoin } from 'rxjs';
 import { InfoTable } from '../../../../general/interfaces/info-table';
 import { ConfirmService } from '../../../../general/services/confirm.service';
 import { DyTableService } from '../../../../general/services/dy-table.service';
@@ -142,6 +142,7 @@ export class EmContractComponent {
   addDialog: boolean = false;
   displayDialog: boolean = false;
   editDialog: boolean = false;
+  cancelDialog: boolean = false;
   lists: {
     teams: { id: number, name: string }[],
     cities: { id: number, name: string }[],
@@ -155,6 +156,30 @@ export class EmContractComponent {
       typesOfContracts: [],
       laptopTypes: [],
     };
+  cancelObjs: { [key: string]: InputDynamic[] } = {
+    general: [
+      {
+        key: 'contractEndDate',
+        label: 'Contract End Date',
+        value: null,
+        startValidation: true,
+        dataType: 'DateTime',
+        required: true,
+        visible: true,
+        options: [],
+      },
+      {
+        key: 'employeeId',
+        label: 'Employee',
+        value: this.emp.id,
+        startValidation: true,
+        dataType: 'string',
+        required: true,
+        visible: false,
+        options: [],
+      },
+    ]
+  };
 
   addFunc: () => void = () => {
     this.resetObjs = this.getGeneralObj(this.emp.id, undefined)
@@ -173,14 +198,6 @@ export class EmContractComponent {
       this.resetObjs = this.getGeneralObj(this.emp.id, res.data)
       this.displayDialog = true;
     })
-  }
-  cancelFunc: (rowData: Contract) => void = (rowData: Contract) => {
-    this.confirm.deleteConfirm((obj) => {
-      this.contractSrv.cancel(obj).subscribe(res => {
-        this.msgSrv.showSuccess('Success!', 'Contract Canceled');
-        this.info.getSub$.next({})
-      });
-    }, rowData.id, 'Are You Need to Cancel This Contract?')
   }
   getSeverity(rowData: any) {
     switch (rowData.status) {
@@ -207,7 +224,7 @@ export class EmContractComponent {
     typeOfContractSrv: TypeOfContractService,
     laptopTypeSrv: LaptopTypeService
   ) {
-    this.info = tblSrv.getStandardInfo(this.cancelFunc, this.editFunc, this.displayFunc, this.addFunc);
+    this.info = tblSrv.getStandardInfo(() => { this.cancelDialog = true }, this.editFunc, this.displayFunc, this.addFunc);
     this.info.captionButton.unshift({
       isShow: true,
       tooltip: 'Back',
@@ -301,6 +318,12 @@ export class EmContractComponent {
     })
   }
 
+  cancel(event: any) {
+    this.contractSrv.cancel(event).subscribe(res => {
+      this.msgSrv.showSuccess('Success!', 'Contract Canceled');
+      this.info.getSub$.next({})
+    });
+  }
   add(event: any) {
     this.contractSrv.add(event).subscribe(res => {
       if (res.success) {
@@ -328,7 +351,7 @@ export class EmContractComponent {
   getGeneralObj(
     employeeId: number,
     contract?: Contract,
-  ) {
+  ): { [key: string]: InputDynamic[] } {
     return {
       general: [
         {
@@ -398,6 +421,7 @@ export class EmContractComponent {
           key: 'contractStartDate',
           label: 'Contract Start Date',
           value: contract?.contractStartDate,
+          startValidation: true,
           dataType: 'DateTime',
           required: true,
           visible: true,
@@ -407,6 +431,7 @@ export class EmContractComponent {
           key: 'contractEndDate',
           label: 'Contract End Date',
           value: contract?.contractEndDate,
+          startValidation: true,
           dataType: 'DateTime',
           required: true,
           visible: true,
