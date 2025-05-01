@@ -6,6 +6,6 @@
 </ad-template>
 <p-dialog [header]="'Calc Salary for ' + emp.name" [appendTo]="'body'" [modal]="true" [(visible)]="calcDialog"
     [style]="{ width: '25rem' }">
-    <dynmaic-form *ngIf="calcDialog" [disableAtt]="disableAtt"  (submit)="calc($event)" [withBackBtn]="false" [justOneStep]="true"
+    <dynmaic-form *ngIf="calcDialog" #df [disableAtt]="disableAtt"  (submit)="calc($event)" [withBackBtn]="false" [justOneStep]="true"
         [objs]="resetObjs"></dynmaic-form>
 </p-dialog>

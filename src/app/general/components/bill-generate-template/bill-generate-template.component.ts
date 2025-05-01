@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
 import { Employee } from '../../interfaces/employee';
 import { Bill } from '../../interfaces/bill';
 import { BillZeroTemplateComponent } from '../bill-zero-template/bill-zero-template.component';
-import { StepsModule } from 'primeng/steps';
 import { MenuItem } from 'primeng/api';
 import { BillOneTemplateComponent } from '../bill-one-template/bill-one-template.component';
 import { BillTwoTemplateComponent } from '../bill-two-template/bill-two-template.component';
@@ -42,9 +41,6 @@ import { Bank } from '../../interfaces/bank';
 export class BillGenerateTemplateComponent {
   @ViewChild('df') formParent?: DynmaicFormComponent;
   @Input() emp: { id: number, name: string } = { id: 0, name: '' };
-  disableAtt: { [key: string]: string[] } = {
-    employee: ['employeeName', 'salaryId', 'delegate']
-  };
   salaryId: number = 0;
   companyAccounts: CopmanyAccount[] = [];
   banks: Bank[] = [];
@@ -126,6 +122,114 @@ export class BillGenerateTemplateComponent {
             label: 'Is Delegate',
             value: this.employee.bankInfo.isDelegated,
             dataType: 'bool',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'basicSalaryinUSD',
+            label: 'Salary (USD)',
+            value: this.salaryRow?.basicSalaryinUSD,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'mobile',
+            label: 'mobile',
+            value: this.salaryRow?.mobile,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'transportation',
+            label: 'transportation',
+            value: this.salaryRow?.transportation,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'sickLeave',
+            label: 'sickLeave',
+            value: this.salaryRow?.sickLeave,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'daysOff',
+            label: 'daysOff',
+            value: this.salaryRow?.daysOff,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'downPayment',
+            label: 'downPayment',
+            value: this.salaryRow?.downPayment,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'overTimeWages',
+            label: 'overTimeWages',
+            value: this.salaryRow?.overTimeWages,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'totalSalaryCalculatedinSyrianPounds',
+            label: 'Calculated Salary (SYP)',
+            value: this.salaryRow?.totalSalaryCalculatedinSyrianPounds,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'bonuses',
+            label: 'bonuses',
+            value: this.salaryRow?.bonuses,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'netSalary',
+            label: 'netSalary',
+            value: this.salaryRow?.netSalary,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'laptop',
+            label: 'laptop',
+            value: this.salaryRow?.laptop,
+            dataType: 'int',
+            required: true,
+            visible: true,
+            options: [],
+          },
+          {
+            key: 'deductions',
+            label: 'deductions',
+            value: this.salaryRow?.deductions,
+            dataType: 'int',
             required: true,
             visible: true,
             options: [],

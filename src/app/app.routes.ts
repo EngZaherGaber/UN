@@ -24,6 +24,8 @@ import { EmContractComponent } from './admin/components/employee/em-contract/em-
 import { InvoiceComponent } from './admin/components/invoice/invoice.component';
 import { EmDSAComponent } from './admin/components/employee/em-dsa/em-dsa.component';
 import { BillGenerateTemplateComponent } from './general/components/bill-generate-template/bill-generate-template.component';
+import { EmFilesComponent } from './admin/components/employee/em-files/em-files.component';
+import { CooFilesComponent } from './admin/components/coo/coo-files/coo-files.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,7 +45,8 @@ export const routes: Routes = [
           { path: 'salary/:id/:name', component: EmSalaryComponent },
           { path: 'bill/:id/:name/:salaryId', component: BillGenerateTemplateComponent },
           { path: 'dsa/:id/:name', component: EmDSAComponent },
-          { path: 'contract/:id/:name', component: EmContractComponent }
+          { path: 'contract/:id/:name', component: EmContractComponent },
+          { path: 'file/:id/:name', component: EmFilesComponent }
         ]
       },
       {
@@ -52,6 +55,7 @@ export const routes: Routes = [
           { path: 'add', component: CooAddComponent },
           { path: 'edit/:id', component: CooEditComponent },
           { path: 'display/:id', component: CooDisplayComponent },
+          { path: 'file/:id', component: CooFilesComponent },
         ]
       },
       {

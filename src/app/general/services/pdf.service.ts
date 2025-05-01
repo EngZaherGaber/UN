@@ -80,10 +80,6 @@ export class PdfService {
       pdf.save('document.pdf');
     });
   }
-
-
-
-
   convertToSyrianPounds(amount: number): string {
     if (amount === 0) return 'صفر ليرة سورية';
     return `${this.convertNumber(amount)} ليرة سورية `;
@@ -131,5 +127,68 @@ export class PdfService {
     if (amount >= 3 && amount <= 10) return this.scales[scaleIndex];
     return this.scales[scaleIndex];
   }
+  convertToPounds(amount: number): string {
+    if (amount === 0) return 'zero SYP';
+    return `${this.convertNumberEng(amount)} SYP`;
+  }
 
+  convertNumberEng(num: number): string {
+    if (num === 1) return 'one';
+    return this.toWordsEng(num);
+  }
+
+  toWordsEng(num: number): string {
+    if (num === 0) return 'zero';
+
+    const units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+    const teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+    const scales = ['', 'thousand', 'million', 'billion', 'trillion'];
+
+    let result = '';
+
+    // Process scales in reverse order (billions, millions, thousands, etc.)
+    for (let i = scales.length - 1; i >= 0; i--) {
+      const scaleValue = Math.pow(1000, i);
+      if (num >= scaleValue) {
+        const scaleAmount = Math.floor(num / scaleValue);
+        num %= scaleValue;
+        if (scaleAmount > 0) {
+          result += this.convertLessThanThousandEng(scaleAmount, units, tens, teens) + ' ' + scales[i] + ' ';
+        }
+      }
+    }
+
+    // Convert remaining amount (less than 1000)
+    if (num > 0) {
+      result += this.convertLessThanThousandEng(num, units, tens, teens);
+    }
+
+    return result.trim().replace(/\s+/g, ' ');
+  }
+
+  private convertLessThanThousandEng(num: number, units: string[], tens: string[], teens: string[]): string {
+    let result = '';
+
+    // Hundreds
+    if (num >= 100) {
+      result += units[Math.floor(num / 100)] + ' hundred ';
+      num %= 100;
+    }
+
+    // Tens and units
+    if (num >= 20) {
+      result += tens[Math.floor(num / 10)];
+      num %= 10;
+      if (num > 0) {
+        result += '-' + units[num];
+      }
+    } else if (num >= 10) {
+      result += teens[num - 10];
+    } else if (num > 0) {
+      result += units[num];
+    }
+
+    return result.trim();
+  }
 }

@@ -1,7 +1,7 @@
 <!-- <div> -->
 <p-table [value]="body.data" [paginator]="true" [rowHover]="true" [rows]="5" [rowsPerPageOptions]="[5,10,25,50,100]"
-    [scrollable]="true" [alwaysShowPaginator]="dt.value.length > 0" [exportFilename]="tableName" [lazy]="lazyLoading"
-    [size]="'small'" stripedRows (onLazyLoad)="loadCarsLazy($event)" [scrollHeight]="scrollHeight"
+    [scrollable]="true" [alwaysShowPaginator]="dt.value ? dt.value.length > 0 : false" [exportFilename]="tableName"
+    [lazy]="lazyLoading" [size]="'small'" stripedRows (onLazyLoad)="loadCarsLazy($event)" [scrollHeight]="scrollHeight"
     (onRowExpand)="RowExpand.emit($event)" #dt sortMode="multiple" [paginatorDropdownAppendTo]="'body'"
     [columns]="body.columns" [dataKey]="dataKey" columnResizeMode="expand" [filterDelay]="0"
     [totalRecords]="totalRecords" [showLoader]="false" [loading]="body.loading" [rowHover]="true" [responsive]="true"
@@ -28,8 +28,8 @@
             <ng-template #end>
                 <p-multiselect [options]="columns" [(ngModel)]="selectedColumns" placeholder="Select Columns"
                     styleClass="w-full md:w-80" />
-                <p-button *ngIf="dt.value.length > 0" pTooltip="XLS" label="Export" severity="success"
-                    icon="pi pi-file-excel" (onClick)="exportExcel()" />
+                <p-button *ngIf="(dt.value ? dt.value.length > 0 : false)" pTooltip="XLS" label="Export"
+                    severity="success" icon="pi pi-file-excel" (onClick)="exportExcel()" />
             </ng-template>
         </p-toolbar>
     </ng-template>
@@ -72,12 +72,12 @@
                                 [placeholder]="col.header"></p-columnFilter>
                         </div>
                         <div *ngSwitchCase="'DateTime'">
-                            <p-columnFilter type="date" [field]="col.field" [placeholder]="col.header"
-                                appendTo="body"></p-columnFilter>
+                            <p-columnFilter dateFormat="yy-mm-dd" type="date" [field]="col.field"
+                                [placeholder]="col.header" appendTo="body"></p-columnFilter>
                         </div>
                         <div *ngSwitchCase="'DateTimeO'">
-                            <p-columnFilter type="date" [field]="col.field" [placeholder]="col.header"
-                                appendTo="body"></p-columnFilter>
+                            <p-columnFilter dateFormat="yy-mm-dd" type="date" [field]="col.field"
+                                [placeholder]="col.header" appendTo="body"></p-columnFilter>
                         </div>
                         <div *ngSwitchCase="'img'">
 
@@ -106,13 +106,13 @@
             </ng-container>
         </tr>
     </ng-template>
-    <ng-template pTemplate="loadingbody" let-columns="columns">
+    <ng-template #loadingbody let-columns="columns">
         <div class="spin-con">
             <un-spinner></un-spinner>
         </div>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns" let-index let-expanded="expanded">
-        <tr *ngIf="dt.value.length > 0" [ngStyle]="changeColor(rowData)">
+        <tr *ngIf="(dt.value ? dt.value.length > 0 : false)" [ngStyle]="changeColor(rowData)">
             <td pFrozenColumn style="max-width: 250px !important;">
                 <button type="button" pButton pRipple [pRowToggler]="rowData" *ngIf="expandedTable"
                     [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
@@ -182,7 +182,7 @@
                             (click)="downloadJSON(rowData[col.field])"></button>
                     </div>
                     <div *ngIf="col.HeaderType === 'img'" style="margin: 5px;">
-                        <img [src]="getSafeUrl('http://192.168.1.100/AttachFiles/LogosBank/SVC132_logo.png')">
+                        <img *ngIf="rowData[col.field]" [src]="rowData[col.field]">
                     </div>
                     <div *ngIf="col.HeaderType === 'tag'">
                         <p-tag [value]="rowData[col.field]" [severity]="getSeverity(rowData)" />
@@ -195,9 +195,10 @@
         <ng-container *ngTemplateOutlet="rowExpansionContent; context: { item: rowData }">
         </ng-container>
     </ng-template>
-    <ng-template pTemplate="emptymessage">
+    <ng-template emptymessage>
         <tr>
-            <th colspan="5">No Items found.</th>
+            <td *ngIf="dt.value" colspan="5">No Items found.</td>
+            <td *ngIf="!dt.value" colspan="5">Something Wrong!.</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">

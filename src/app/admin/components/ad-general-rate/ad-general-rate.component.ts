@@ -22,13 +22,19 @@ export class AdGeneralRateComponent {
   clients: { id: number, name: string }[] = [];
   resetObjs: { [key: string]: InputDynamic[] } = {};
   addDialog: boolean = false;
+  disableAtt: { [key: string]: string[] } = {
+    general: ['yearNum', 'monthNum']
+  };
+  returnIfDiable: { [key: string]: string[] } = {
+    general: ['yearNum', 'monthNum']
+  };
   addFunc: () => void = () => {
     this.resetObjs = {
       general: [
         {
           key: 'yearNum',
           label: 'Year',
-          value: null,
+          value: new Date(),
           dataType: 'year',
           required: true,
           visible: true,
@@ -37,7 +43,7 @@ export class AdGeneralRateComponent {
         {
           key: 'monthNum',
           label: 'Month',
-          value: null,
+          value: new Date(),
           dataType: 'month',
           required: true,
           visible: true,

@@ -18,6 +18,7 @@ import { CityService } from '../../../services/city.service';
 import { TypeOfContractService } from '../../../services/type-of-contract.service';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { LaptopTypeService } from '../../../services/laptop-type.service';
+import { DynamicAttributeService } from '../../../../general/services/dynamic-attribute.service';
 
 @Component({
   selector: 'app-em-contract',
@@ -139,6 +140,8 @@ export class EmContractComponent {
     general: ['cooId']
   };
   editContractId: number = 0;
+  selectedRow: Contract | null = null;
+
   addDialog: boolean = false;
   displayDialog: boolean = false;
   editDialog: boolean = false;
@@ -166,16 +169,6 @@ export class EmContractComponent {
         dataType: 'DateTime',
         required: true,
         visible: true,
-        options: [],
-      },
-      {
-        key: 'employeeId',
-        label: 'Employee',
-        value: this.emp.id,
-        startValidation: true,
-        dataType: 'string',
-        required: true,
-        visible: false,
         options: [],
       },
     ]
@@ -218,13 +211,14 @@ export class EmContractComponent {
     private contractSrv: ContractService,
     private confirm: ConfirmService,
     private route: ActivatedRoute,
+    private attSrv: DynamicAttributeService,
     teamSrv: TeamService,
     cooSrv: CooService,
     citySrv: CityService,
     typeOfContractSrv: TypeOfContractService,
     laptopTypeSrv: LaptopTypeService
   ) {
-    this.info = tblSrv.getStandardInfo(() => { this.cancelDialog = true }, this.editFunc, this.displayFunc, this.addFunc);
+    this.info = tblSrv.getStandardInfo((rowData: Contract) => { this.cancelDialog = true; this.selectedRow = rowData }, this.editFunc, this.displayFunc, this.addFunc);
     this.info.captionButton.unshift({
       isShow: true,
       tooltip: 'Back',
@@ -319,7 +313,9 @@ export class EmContractComponent {
   }
 
   cancel(event: any) {
-    this.contractSrv.cancel(event).subscribe(res => {
+    event.contractEndDate = this.attSrv.getStringDate(event.contractEndDate)
+    this.contractSrv.cancel(event, this.selectedRow && this.selectedRow.id ? this.selectedRow.id : 0).subscribe(res => {
+      this.cancelDialog = false;
       this.msgSrv.showSuccess('Success!', 'Contract Canceled');
       this.info.getSub$.next({})
     });
@@ -478,7 +474,7 @@ export class EmContractComponent {
           label: 'Supervisor',
           value: contract?.superVisor,
           dataType: 'string',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },
@@ -487,7 +483,7 @@ export class EmContractComponent {
           label: 'Area Manager',
           value: contract?.areaManager,
           dataType: 'string',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },
@@ -496,7 +492,7 @@ export class EmContractComponent {
           label: 'Project Name',
           value: contract?.projectName,
           dataType: 'string',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },

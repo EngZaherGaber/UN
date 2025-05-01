@@ -72,12 +72,15 @@ $small-mobile: 576px;
   li,
   th,
   td,
+  .p-inputtext,
   td > div,
   td > div > div,
   label,
   input,
-  a,
-  ::ng-deep .p-tooltip {
+  a {
     @include responsive-font-sizes(0.625rem, 0.85rem, 0.975rem, 1rem);
+  }
+  .helper {
+    @include responsive-font-sizes(0.625rem, 0.625rem, 0.75rem, 0.85rem);
   }
 }

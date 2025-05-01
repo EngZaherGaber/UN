@@ -47,6 +47,16 @@ export class AdGeneralEmployeeComponent {
       HeaderType: 'string',
     },
     {
+      field: 'cooId',
+      header: 'cooNumber',
+      HeaderType: 'string',
+    },
+    {
+      field: 'poNumber',
+      header: 'poNumber',
+      HeaderType: 'string',
+    },
+    {
       field: 'idNo',
       header: 'idNo',
       HeaderType: 'string',
@@ -117,6 +127,10 @@ export class AdGeneralEmployeeComponent {
   dsaFunc: (rowData: any) => void = async (rowData: any) => {
     this.router.navigate(['admin/employee/dsa', rowData.refNo, rowData.empName])
   }
+  fileFunc: (rowData: any) => void = async (rowData: any) => {
+    this.router.navigate(['admin/employee/file', rowData.refNo, rowData.empName])
+  }
+
   constructor(
     tblSrv: DyTableService,
     private router: Router,
@@ -124,13 +138,33 @@ export class AdGeneralEmployeeComponent {
   ) {
     this.info = tblSrv.getStandardInfo(undefined, this.editFunc, this.displayFunc, this.addFunc);
     this.info.Buttons.push({
-      isShow: false,
-      tooltip: 'Employee Insurance',
-      icon: 'pi pi-heart',
+      isShow: true,
+      tooltip: 'Employee Contract',
+      icon: 'pi pi-book',
       key: 'Delete',
       severity: 'secondary',
       command: (rowData) => {
-        this.insuranceFunc(rowData);
+        this.contractFunc(rowData);
+      },
+    });
+    this.info.Buttons.push({
+      isShow: true,
+      tooltip: 'Employee Files',
+      icon: 'pi pi-paperclip',
+      key: 'attach',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.fileFunc(rowData);
+      },
+    });
+    this.info.Buttons.push({
+      isShow: false,
+      tooltip: 'Employee DSA',
+      icon: 'pi pi-car',
+      key: 'DSA',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.dsaFunc(rowData);
       },
       showCommand: (body: any) => {
         return body.active
@@ -150,23 +184,13 @@ export class AdGeneralEmployeeComponent {
       }
     });
     this.info.Buttons.push({
-      isShow: true,
-      tooltip: 'Employee Contract',
-      icon: 'pi pi-book',
+      isShow: false,
+      tooltip: 'Employee Insurance',
+      icon: 'pi pi-heart',
       key: 'Delete',
       severity: 'secondary',
       command: (rowData) => {
-        this.contractFunc(rowData);
-      },
-    });
-    this.info.Buttons.push({
-      isShow: false,
-      tooltip: 'Employee DSA',
-      icon: 'pi pi-car',
-      key: 'DSA',
-      severity: 'secondary',
-      command: (rowData) => {
-        this.dsaFunc(rowData);
+        this.insuranceFunc(rowData);
       },
       showCommand: (body: any) => {
         return body.active
@@ -206,5 +230,5 @@ export class AdGeneralEmployeeComponent {
         })
       );
   }
-  
+
 }

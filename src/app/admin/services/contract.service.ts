@@ -17,8 +17,11 @@ export class ContractService {
   getById(id: number) {
     return this.http.get<APIResponse<Contract>>(this.url + '/' + id);
   }
-  cancel(body: any) {
-    return this.http.post<APIResponse<Contract>>(this.url + '/CancelContractAsync', body);
+  getActiveContractByEmployeeId(id: number) {
+    return this.http.get<APIResponse<Contract>>(this.url + '/GetActiveContractByEmployeeId/' + id);
+  }
+  cancel(body: any, id: number) {
+    return this.http.post<APIResponse<Contract>>(this.url + '/CancelContractAsync/' + id, body);
   }
   delete(id: number) {
     return this.http.delete<APIResponse<any>>(this.url + '/' + id);
@@ -28,5 +31,8 @@ export class ContractService {
   }
   edit(body: Contract, id: number) {
     return this.http.put<APIResponse<any>>(this.url + '/' + id, body);
+  }
+  getAllPoNumber() {
+    return this.http.get<APIResponse<{ poNumber: string }[]>>(this.url + '/GetAllPoNumber');
   }
 }

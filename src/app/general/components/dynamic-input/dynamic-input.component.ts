@@ -52,7 +52,6 @@ export class DynamicInputComponent {
   now: Date = new Date();
   constructor() { }
   ngOnInit(): void {
-
     if (this.FEcontrol.value === null && this.FEcontrol.value !== 0) {
       if (this.object.dataType.toLowerCase() === 'autocomplete') {
         this.items;
@@ -71,7 +70,13 @@ export class DynamicInputComponent {
       } else if (this.object.dataType.toLowerCase() === 'datetime') {
         this.FEcontrol.setValue(new Date());
       } else if (this.object.dataType.toLowerCase() === 'year' || this.object.dataType.toLowerCase() === 'month') {
-        this.FEcontrol.setValue(null)
+        if (this.object.dataType.toLowerCase() === 'year') {
+          this.autoCompleteValue = (new Date());
+          // this.FEcontrol.setValue(this.autoCompleteValue);
+        } else {
+          // this.FEcontrol.setValue(this.autoCompleteValue);
+          this.autoCompleteValue = (new Date());
+        }
       }
     } else {
       if (this.object.dataType.toLowerCase() === 'list') {
@@ -86,6 +91,16 @@ export class DynamicInputComponent {
       } else if (this.object.dataType.toLowerCase() === 'datetime') {
         const va = new Date(this.FEcontrol.value);
         this.FEcontrol.setValue(va);
+      } else if (this.object.dataType.toLowerCase() === 'year' || this.object.dataType.toLowerCase() === 'month') {
+        const type = this.object.dataType.toLowerCase() === 'year' ? 'yy' : 'mm';
+        if (this.object.dataType.toLowerCase() === 'year') {
+          this.autoCompleteValue = (new Date());
+        } else {
+          this.autoCompleteValue = (new Date());
+        }
+        const yy = this.autoCompleteValue.getFullYear();
+        const mm = this.autoCompleteValue.getMonth() + 1;
+        this.FEcontrol.setValue(type === 'mm' ? mm : yy);
       }
     }
     this.object = this.repeairLabel(this.object);

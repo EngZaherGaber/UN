@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, RouterLink } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { MyPreset } from '../../public/mytheme';
@@ -11,8 +11,7 @@ import { AdTemplateComponent } from './admin/components/ad-template/ad-template.
 import { DynmaicFormComponent } from './general/components/dynmaic-form/dynmaic-form.component';
 import { DynamicTableComponent } from './general/components/dynamic-table/dynamic-table.component';
 import { UnSpinnerComponent } from './general/components/un-spinner/un-spinner.component';
-import { Base } from 'primeng/base';
-import { Theme } from '@primeng/themes';
+
 export const appConfig: ApplicationConfig = {
 
   providers: [
@@ -27,6 +26,14 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     MessageService,
+    // {
+    //   provide: PrimeNGConfig,
+    //   useFactory: () => {
+    //     const config = new PrimeNGConfig();
+    //     config.dateFormat = 'yy-mm-dd';
+    //     return config;
+    //   }
+    // },
     ConfirmationService,
     provideHttpClient(),
     provideAnimations(),

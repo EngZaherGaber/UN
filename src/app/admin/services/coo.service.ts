@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -31,5 +31,32 @@ export class CooService {
   }
   edit(body: COO, id: number) {
     return this.http.put<APIResponse<any>>(this.url + '/' + id, body);
+  }
+
+  // Files
+  upload(id: number, files: File | null) {
+    const formData = new FormData();
+    if (files) {
+      formData.append('files', files);
+    }
+    return this.http.post<APIResponse<any>>(this.url + '/upload/' + id, formData);
+  }
+  getFiles(id: number) {
+    return this.http.get<APIResponse<any>>(this.url + '/files/' + id);
+  }
+  downloadFiles(id: number, fileName: string) {
+    return this.http.get(this.url + '/download/' + id + '/' + fileName, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      responseType: 'blob'
+    },
+    );
+  }
+  deleteFile(id: number, fileName: string) {
+    return this.http.delete<APIResponse<any>>(this.url + '/delete/' + id + '/' + fileName);
+  }
+  deleteAllFiles(id: number) {
+    return this.http.delete<APIResponse<any>>(this.url + '/deleteAll/' + id);
   }
 }

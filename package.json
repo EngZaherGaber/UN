@@ -31,6 +31,7 @@
     "primeng": "^19.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx-js-style": "^1.2.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -53,7 +54,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "pdfjs-dist": "^5.1.91",
     "typescript": "~5.7.2",
-    "xlsx": "^0.18.5",
     "xlsx-style": "^0.8.13"
   }
 }

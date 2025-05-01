@@ -10,6 +10,8 @@ import { ToastService } from '../../../../general/services/toast.service';
 import { DynamicAttributeService } from '../../../../general/services/dynamic-attribute.service';
 import { FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Contract } from '../../../../general/interfaces/contract';
+import { ContractService } from '../../../services/contract.service';
 
 @Component({
   selector: 'app-em-insurance',
@@ -26,11 +28,16 @@ export class EmInsuranceComponent {
     general: [
       'endLifeDate',
       'startLifeDate',
+      'insuranceCardDeliveredDate'
     ],
   };
-
+  disableAtt: { [key: string]: string[] } = {
+    general: ['insuranceLife', 'insuranceMedical']
+  };
+  contract?: Contract;
   constructor(
     private insuranceSrv: InsuranceService,
+    private contractSrv: ContractService,
     private attSrv: DynamicAttributeService,
     private msgSrv: ToastService,
     private route: ActivatedRoute,
@@ -40,6 +47,10 @@ export class EmInsuranceComponent {
       switchMap(param => {
         this.emp.id = +param['id'];
         this.emp.name = param['name'];
+        return contractSrv.getActiveContractByEmployeeId(this.emp.id);
+      }),
+      switchMap(res => {
+        this.contract = res.data;
         return insuranceSrv.getById(this.emp.id);
       })
     ).subscribe(res => {
@@ -48,12 +59,12 @@ export class EmInsuranceComponent {
           {
             key: 'insuranceLife',
             label: 'Insurance Life',
-            value: res.data.insuranceLife,
+            value: this.contract?.insuranceLife,
             dataType: 'bool',
             options: [],
+            desc: 'Get From Contract',
             visible: true,
             command: (value, element, form) => {
-
               this.insuranceLifeCommand(value, element, form, this.objs)
             },
             required: true,
@@ -61,8 +72,9 @@ export class EmInsuranceComponent {
           {
             key: 'insuranceMedical',
             label: 'Insurance Medical',
-            value: res.data.insuranceMedical,
+            value: this.contract?.insuranceMedical,
             dataType: 'bool',
+            desc: 'Get From Contract',
             options: [],
             visible: true,
             command: (value, element, form) => { },
@@ -75,7 +87,7 @@ export class EmInsuranceComponent {
             dataType: 'bool',
             options: [],
             visible: true,
-            command: (value, element, form) => { 
+            command: (value, element, form) => {
               this.deliveredInsuranceCardCommand(value, element, form, this.objs)
             },
             required: true,
@@ -83,7 +95,7 @@ export class EmInsuranceComponent {
           {
             key: 'insuranceCardDeliveredDate',
             label: 'Delivered insurance Card Date',
-            value: res.data.insuranceCardDeliveredDate,
+            value: res.data.insuranceCardDeliveredDate !== null ? res.data.insuranceCardDeliveredDate : new Date(),
             dataType: 'datetime',
             options: [],
             visible: true,
@@ -115,7 +127,7 @@ export class EmInsuranceComponent {
     })
   }
   ngAfterViewChecked() {
-    if (this.objs && this.firstTime) {
+    if (this.isCorrectObjs() && this.firstTime) {
       this.firstTime = false;
       this.formParent?.listenAgain();
     }
@@ -138,6 +150,10 @@ export class EmInsuranceComponent {
     })
   }
 
+  isCorrectObjs() {
+    return Object.keys(this.objs).length > 0;
+  }
+
   insuranceLifeCommand(value: any, element?: InputDynamic, form?: FormGroup, objs?: { [key: string]: InputDynamic[] }) {
     if (value === true) {
       form?.get('general.startLifeDate')?.enable();
@@ -149,10 +165,11 @@ export class EmInsuranceComponent {
     }
   }
   deliveredInsuranceCardCommand(value: any, element?: InputDynamic, form?: FormGroup, objs?: { [key: string]: InputDynamic[] }) {
+    const control = form?.get('general.insuranceCardDeliveredDate');
     if (value === true) {
-      form?.get('general.insuranceCardDeliveredDate')?.enable();
+      control?.enable();
     } else if (value === false) {
-      form?.get('general.insuranceCardDeliveredDate')?.disable();
+      control?.disable();
     }
   }
 }

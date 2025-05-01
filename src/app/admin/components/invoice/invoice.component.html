@@ -1,1 +1,15 @@
-<p-button (onClick)="generate()" label="x"></p-button>
+<ad-template [title]="'Invoice'" [subTitle]="'Generate'">
+    <div id="con2" con2>
+        <invoice-template *ngIf="invoice" [invoice]="invoice"></invoice-template>
+        <div *ngIf="!invoice">
+            <dynmaic-form *ngIf="objs" [submitLabel]="'Get Invoice'" (submit)="generate($event)" [withBackBtn]="false"
+                [justOneStep]="true" [objs]="objs"></dynmaic-form>
+            <dynamic-table *ngIf="selectedPO" [tableName]="'Employee'" [lazyLoading]="false" [load]="info.get$"
+                [buttons]="info.Buttons" [captionButton]="info.captionButton">
+                <ng-template #rowExpansionContent let-item="item">
+                    {{item | json}}
+                </ng-template>
+            </dynamic-table>
+        </div>
+    </div>
+</ad-template>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { DynamicTableComponent } from '../../../../general/components/dynamic-table/dynamic-table.component';
 import { InfoTable } from '../../../../general/interfaces/info-table';
 import { DyTableService } from '../../../../general/services/dy-table.service';
@@ -30,6 +30,7 @@ import { Contract } from '../../../../general/interfaces/contract';
   styleUrl: './em-salary.component.scss'
 })
 export class EmSalaryComponent {
+  @ViewChild('df') formParent?: DynmaicFormComponent;
   @Input() emp: { id: number, name: string } = { id: 0, name: '' };
   info: InfoTable;
   resetObjs: { [key: string]: InputDynamic[] } = {};
@@ -76,6 +77,7 @@ export class EmSalaryComponent {
     },
 
   ];
+  firstTime: boolean = true;
   calcDialog: boolean = false;
   contracts: Contract[] = [];
   disableAtt: { [key: string]: string[] } = {
@@ -84,6 +86,7 @@ export class EmSalaryComponent {
       'contractId'
     ],
   };
+
   calcFunc: () => void = () => {
     this.resetObjs = {
       general: [
@@ -99,43 +102,47 @@ export class EmSalaryComponent {
         {
           key: 'sickLeave',
           label: 'Sick Leave',
+          desc:'Days',
           value: null,
           dataType: 'int',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },
         {
           key: 'daysOff',
           label: 'Days Off',
+          desc: 'Days',
           value: null,
           dataType: 'int',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },
         {
           key: 'downPayment',
           label: 'Down Payment',
+          desc: 'Price',
           value: null,
           dataType: 'int',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },
         {
           key: 'overTimeWages',
           label: 'Overtime Wages',
+          desc: 'Price',
           value: null,
           dataType: 'int',
-          required: true,
+          required: false,
           visible: true,
           options: [],
         },
         {
           key: 'month',
           label: 'month',
-          value: null,
+          value: new Date(),
           dataType: 'month',
           required: true,
           visible: true,
@@ -152,7 +159,7 @@ export class EmSalaryComponent {
         {
           key: 'year',
           label: 'year',
-          value: null,
+          value: new Date(),
           dataType: 'year',
           required: true,
           visible: true,
@@ -188,6 +195,7 @@ export class EmSalaryComponent {
   billFunc: (rowData: any) => void = async (rowData: any) => {
     this.router.navigate(['/admin/employee/bill', this.emp.id, this.emp.name, rowData.salaryId])
   }
+
   constructor(
     tblSrv: DyTableService,
     private msgSrv: ToastService,
@@ -267,6 +275,17 @@ export class EmSalaryComponent {
       this.contracts = res.data;
     })
   }
+  ngAfterViewChecked() {
+    if (this.isCorrectObjs() && this.firstTime) {
+      this.firstTime = false;
+      this.formParent?.listenAgain();
+    }
+  }
+
+  isCorrectObjs() {
+    return Object.keys(this.resetObjs).length > 0;
+  }
+
   calc(event: SalaryCreate) {
     this.salarySrv.calculate(event).subscribe(res => {
       if (res.success) {

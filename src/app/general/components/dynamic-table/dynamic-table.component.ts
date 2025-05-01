@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Table } from 'primeng/table';
+import { SkeletonModule } from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { TooltipModule } from 'primeng/tooltip';
@@ -20,10 +21,11 @@ import { FormsModule } from '@angular/forms';
 import { DyButton } from '../../interfaces/dy-button';
 import { UnSpinnerComponent } from '../un-spinner/un-spinner.component';
 import { MultiSelectModule } from 'primeng/multiselect';
-import * as XLSX from 'xlsx';
 import { HttpClient } from '@angular/common/http';
 import { NgOptimizedImage } from '@angular/common'
 import { DomSanitizer } from '@angular/platform-browser';
+import { Calendar } from 'primeng/calendar';
+import * as XLSX from 'xlsx-js-style';
 
 @Component({
   selector: 'dynamic-table',
@@ -31,12 +33,14 @@ import { DomSanitizer } from '@angular/platform-browser';
     TableModule,
     ToggleSwitchModule,
     NgOptimizedImage,
+    SkeletonModule,
     TooltipModule,
     CommonModule,
     ButtonModule,
     FormsModule,
     UnSpinnerComponent,
     ToolbarModule,
+    Calendar,
     TagModule,
     MultiSelectModule
   ],
@@ -92,9 +96,11 @@ export class DynamicTableComponent {
   selectedColumns: string[] = [];
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    Calendar.prototype.dateFormat = 'dd-mm-yy';
+  }
   ngAfterContentInit(): void {
-    this.load.subscribe(async (body) => {
+    this.load.subscribe((body) => {
       if (this.columnsEvent && this.columnsEvent.length > 0) {
         this.columnsEvent.forEach((col) => {
           if (!col.visible) {
@@ -106,51 +112,44 @@ export class DynamicTableComponent {
         });
       }
       this.repeairHeader(body.columns);
-      body.data =
-        body.data.length > 0
-          ? (body.data as any[]).map((row) => {
-            row.buttons = this.buttons.map((button) => ({ ...button }));
-            (body.columns as any[])
-              .filter(
-                (col) =>
-                  col.HeaderType.toLowerCase() === 'datetime' ||
-                  col.HeaderType.toLowerCase() === 'datetimeo'
-              )
-              .forEach((col) => {
-                if (row[col.field]) {
-                  const date = new Date(row[col.field]);
-                  row[col.field] = date;
-                } else {
-                  row[col.field] = null;
-                }
-              });
-            return row;
-          })
-          : body.data;
-      if (this.sortColumn) {
-        body.data = body.data.sort((a: any, b: any) =>
-          a[this.sortColumn]?.localeCompare(b[this.sortColumn])
-        );
-      }
-      (body.columns as any[])
-        .filter((x) => x.HeaderType === 'json')
-        .forEach((x) => {
-          body.data = (body.data as any[]).map((z) => {
-            z[x.field] = z[x.field] ? JSON.parse(z[x.field]) : {};
-            return z;
+      if (body.data) {
+        console.log(JSON.stringify(body.data))
+        body.data =
+          body.data.length > 0
+            ? (body.data as any[]).map((row) => {
+              row.buttons = this.buttons.map((button) => ({ ...button }));
+              (body.columns as any[])
+                .filter(
+                  (col) =>
+                    col.HeaderType.toLowerCase() === 'datetime' ||
+                    col.HeaderType.toLowerCase() === 'datetimeo'
+                )
+                .forEach((col) => {
+                  if (row[col.field]) {
+                    const date = new Date(row[col.field]);
+                    row[col.field] = date;
+                  } else {
+                    row[col.field] = null;
+                  }
+                });
+              return row;
+            })
+            : body.data;
+        if (this.sortColumn) {
+          body.data = body.data.sort((a: any, b: any) =>
+            a[this.sortColumn]?.localeCompare(b[this.sortColumn])
+          );
+        }
+        (body.columns as any[])
+          .filter((x) => x.HeaderType === 'json')
+          .forEach((x) => {
+            body.data = (body.data as any[]).map((z) => {
+              z[x.field] = z[x.field] ? JSON.parse(z[x.field]) : {};
+              return z;
+            });
           });
-        });
-      // (body.columns as any[])
-      //   .filter((x) => x.HeaderType === 'img')
-      //   .forEach((x) => {
-      //     body.data = (body.data as any[]).map((z) => {
-      //       //   z[x.field] = z[x.field] ? this.getImage(z[x.field]) : '';
-      //       //   return z;
-      //       if (z[x.field]) {
+      }
 
-
-
-      //   });
       this.columns = (body.columns as any[]).map(x => x.header);
       this.selectedColumns = this.columns;
       this.totalRecords = this.lazyLoading ? body.count : body.data.length;

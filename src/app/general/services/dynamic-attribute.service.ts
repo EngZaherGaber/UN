@@ -42,6 +42,7 @@ export class DynamicAttributeService {
       }
       let control = new FormControl(value);
       obj.required ? control.addValidators(Validators.required) : '';
+      obj.value = value;
       group.addControl(obj.key, control);
     });
     return group;

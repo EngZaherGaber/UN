@@ -9,6 +9,16 @@
   content: " *";
   color: red;
 }
-::ng-deep .p-checkbox.p-disabled .p-checkbox-box{
-  background-color: #04457f !important;
+::ng-deep .p-checkbox.p-disabled .p-checkbox-box {
+  background-color: #919191 !important;
+}
+.helper {
+  position: absolute;
+  color: #919191;
+}
+::ng-deep .p-virtualscroller {
+  min-height: 100px !important;
+  .p-autocomplete-option {
+    height: 30px !important;
+  }
 }

@@ -1,0 +1,17 @@
+<ad-template [title]="'Files of ' + emp.name" [subTitle]="'Table'">
+    <div id="con2" con2>
+        <dynamic-table [tableName]="'Salary'" (onLazy)="info.getSub$.next($event)" [lazyLoading]="true"
+            [load]="info.get$" [buttons]="info.Buttons" [captionButton]="info.captionButton"></dynamic-table>
+    </div>
+</ad-template>
+<p-dialog [header]="'Add File for ' + emp.name" [appendTo]="'body'" [modal]="true" [(visible)]="attachDialog"
+    [style]="{ width: '25rem' }">
+    <dynmaic-form (submit)="attach($event)" [objs]="resetObjs" style="width: 100%;" [scrollHeight]="'100%'"
+        [disableSaveButton]="file ? false : true" [withBackBtn]="false" [justOneStep]="true">
+        <div class="card flex flex-col gap-6 items-center justify-center">
+            <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" name="demo[]" accept=".png"
+                maxFileSize="1000000" (onSelect)="onBasicUploadAuto($event)" [multiple]="false" [auto]="true" />
+            <small>{{file?.name}}</small>
+        </div>
+    </dynmaic-form>
+</p-dialog>

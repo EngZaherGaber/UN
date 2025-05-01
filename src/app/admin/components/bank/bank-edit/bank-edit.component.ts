@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DynmaicFormComponent } from '../../../../general/components/dynmaic-form/dynmaic-form.component';
 import { InputDynamic } from '../../../../general/interfaces/input-dynamic';
 import { APIResponse } from '../../../../general/interfaces/response';
 import { ToastService } from '../../../../general/services/toast.service';
-import { AdTemplateComponent } from '../../ad-template/ad-template.component';
 import { BankService } from '../../../services/bank.service';
 import { switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -28,11 +27,8 @@ export class BankEditComponent {
   constructor(
     private bnkSrv: BankService,
     private msgSrv: ToastService,
-    private router: Router,
     private route: ActivatedRoute
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this.route.params.pipe(

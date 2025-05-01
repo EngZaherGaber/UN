@@ -1,0 +1,131 @@
+.a4-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto;
+
+  .a4-document {
+    width: 210mm;
+    height: 297mm;
+    min-width: 210mm;
+    min-height: 297mm;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 5mm 14mm;
+    box-sizing: border-box;
+    position: relative;
+    margin-block: 10px;
+    font-family: "Arial", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    * {
+      text-align: left;
+    }
+
+    small {
+      font-size: 13px;
+      font-weight: bold;
+      color: rgb(37, 66, 100);
+      display: block;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid black;
+      height: 90px;
+      .contact {
+        display: flex;
+        width: 150px;
+        height: 60px;
+        flex-direction: column;
+        gap: 5px;
+        .contact-con {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          gap: 10px;
+
+          .detail {
+            width: 70%;
+          }
+        }
+      }
+    }
+    .content {
+      height: calc(100% - 110px);
+      display: flex;
+      flex-direction: column;
+      .flx-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 100%;
+        width: 100%;
+      }
+      table {
+        border: 1px solid black;
+        width: 100%;
+        font-size: 14px !important;
+        td,
+        th {
+          padding: 4px;
+        }
+        &.one td:first-child {
+          width: 70%;
+        }
+        &.two {
+          td:first-child {
+            width: 10%;
+          }
+          //   td:nth-child(2) {
+          //     width: 55%;
+          //   }
+          td:nth-child(3) {
+            width: 20%;
+            small {
+              text-align: right;
+            }
+          }
+          th small,
+          td small {
+            text-align: center;
+          }
+        }
+        &.three {
+          td:first-child {
+            width: 40%;
+          }
+        }
+      }
+    }
+    .footer {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      border-top: 2px solid black;
+      padding-top: 10px;
+      height: 50px;
+      small {
+        white-space: pre;
+      }
+    }
+  }
+  .tool {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0px 1px 5px 0px;
+  }
+}

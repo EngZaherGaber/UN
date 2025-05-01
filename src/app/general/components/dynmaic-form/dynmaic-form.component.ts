@@ -1,10 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -198,7 +200,24 @@ export class DynmaicFormComponent {
       this.activeIndex--;
     }
   }
-
+  handleEnterKey() {
+    if (this.activeIndex < this.stepsList.length - 1 || (this.activeIndex === 0 && this.stepsList.length > 1)) {
+      // If Next button is available and not disabled, trigger it
+      if (!this.form.controls[this.keys[this.activeIndex]].invalid) {
+        this.activeIndex = this.activeIndex + 1;
+        this.onActiveIndexChange.emit(this.activeIndex);
+      }
+    }
+    else if (this.activeIndex === this.stepsList.length - 1 && this.isShow) {
+      this.exit();
+    }
+    else {
+      // If Save button is available and not disabled, trigger it
+      if (!this.form.controls[this.keys[this.activeIndex]].invalid && !this.disableSaveButton) {
+        this.submitFunc();
+      }
+    }
+  }
   submitFunc() {
     this.DySrv.returnIfDisable(
       this.returnIfDisable,

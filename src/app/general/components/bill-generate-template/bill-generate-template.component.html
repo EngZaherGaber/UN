@@ -1,7 +1,7 @@
 <ad-template [title]="'Generate Bill'" [subTitle]="'Table'">
     <div id="con2" con2>
         <dynmaic-form style="width: 100%;" #df *ngIf="fillObject()" (submit)="generateBill($event)"
-            [disableAtt]="disableAtt" [withBackBtn]="true"
+            [disableSteps]="['employee']" [withBackBtn]="true"
             [preRoute]="'admin/employee/salary/' + emp.id + '/' + emp.name" [showSteps]="true" [justOneStep]="false"
             [objs]="billObjs">
         </dynmaic-form>

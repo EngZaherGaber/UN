@@ -1,7 +1,8 @@
 <p-steps step *ngIf="showSteps" [(activeIndex)]="activeIndex" [model]="stepsList" [readonly]="true"></p-steps>
 <p-card card>
     <ng-template pTemplate="content">
-        <p-scrollPanel [style]="{width: '100%', height: scrollHeight}" styleClass="custombar2">
+        <p-scrollPanel [style]="{width: '100%', height: scrollHeight}" styleClass="custombar2"
+            (keydown.enter)="handleEnterKey()">
             <div style="display: flex;flex-direction: column;">
                 <div>
                     <ng-content></ng-content>
@@ -13,10 +14,11 @@
                         <div class="animation-fade"
                             [style]="{'display':'flex','flex-direction':'row','align-items':'center','flex-wrap':'wrap','justify-content':'flex-start'}">
                             <div *ngFor="let obj of objs[key]; let k = index" class="z-field"
-                                [style.display]="obj.visible ? 'block' : 'none'" style="min-width: 30%;padding-top: 5px;">
+                                [style.display]="obj.visible ? 'block' : 'none'"
+                                style="min-width: 30%;padding-top: 5px;">
                                 <div *ngIf="obj.visible">
                                     <div
-                                        style="display: flex; justify-content: space-between; gap: -11px;margin-bottom: 20px !important;">
+                                        style="display: flex;max-width: 33%; justify-content: space-between; gap: -11px;margin-bottom: 20px !important;">
                                         <dynamic-input [style]="'width: 100%;'"
                                             *ngIf="form.controls[key] && form.get([key,obj.key])"
                                             [FEcontrol]="isFormGroup(form.get([key,obj.key]) ?? undefined)"
@@ -38,12 +40,13 @@
                     *ngIf="(!withBackBtn && activeIndex !== 0) || withBackBtn"></button>
             </div>
             <div class="right-buttons">
-                <button *ngIf="activeIndex < stepsList.length - 1 || (activeIndex === 0 && stepsList.length > 1)"
-                    pButton label="Next" icon="pi pi-angle-right" [disabled]="form.controls[keys[activeIndex]].invalid"
+                <button #nextBtn
+                    *ngIf="activeIndex < stepsList.length - 1 || (activeIndex === 0 && stepsList.length > 1)" pButton
+                    label="Next" icon="pi pi-angle-right" [disabled]="form.controls[keys[activeIndex]].invalid"
                     (click)="activeIndex = activeIndex + 1;onActiveIndexChange.emit(activeIndex);"></button>
                 <button *ngIf="activeIndex === stepsList.length - 1 && isShow" pButton label="Exit"
                     icon="pi pi-angle-right" (click)="exit()"></button>
-                <button id="saveBtn"
+                <button id="saveBtn" #saveBtn
                     *ngIf="(activeIndex === stepsList.length - 1 && (justOneStep || activeIndex !== 0)) && !isShow"
                     pButton pRipple [label]="submitLabel ? submitLabel : 'Save'" icon="pi pi-check"
                     [disabled]="form.controls[keys[activeIndex]].invalid || disableSaveButton" class="p-button-success"

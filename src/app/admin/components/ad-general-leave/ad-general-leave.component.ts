@@ -56,7 +56,7 @@ export class AdGeneralLeaveComponent {
           key: 'unMonthLeave1',
           label: 'Leave Count',
           value: null,
-          dataType: 'int',
+          dataType: 'float',
           required: true,
           visible: true,
           options: [],

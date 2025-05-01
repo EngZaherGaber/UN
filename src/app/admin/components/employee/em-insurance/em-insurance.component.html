@@ -1,7 +1,7 @@
 <ad-template [title]="'Insurance of ' + emp.name" [subTitle]="'Table'">
     <div id="con2" con2>
-        <dynmaic-form #df  [justOneStep]="true" [preRoute]="'admin/employee'"
-            (submit)="submit($event)" [objs]="objs" style="width: 100%;" [scrollHeight]="'100%'"
-            [returnIfDisable]="returnIfDisable"></dynmaic-form>
+        <dynmaic-form *ngIf="isCorrectObjs()" #df [justOneStep]="true" [preRoute]="'admin/employee'" (submit)="submit($event)" [objs]="objs"
+            style="width: 100%;" [scrollHeight]="'100%'" [returnIfDisable]="returnIfDisable"
+            [disableAtt]="disableAtt"></dynmaic-form>
     </div>
 </ad-template>

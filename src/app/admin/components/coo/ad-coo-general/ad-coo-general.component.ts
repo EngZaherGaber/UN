@@ -35,7 +35,9 @@ export class AdCooGeneralComponent {
   displayFunc: (rowData: COO) => void = (rowData) => {
     this.router.navigate(['admin/coo/display/' + rowData.cooId])
   }
-
+  fileFunc: (rowData: COO) => void = async (rowData: COO) => {
+    this.router.navigate(['admin/coo/file', rowData.cooId])
+  }
   constructor(
     private msgSrv: ToastService,
     private tblSrv: DyTableService,
@@ -44,6 +46,16 @@ export class AdCooGeneralComponent {
     private confirm: ConfirmService
   ) {
     this.info = tblSrv.getStandardInfo(this.deleteFunc, this.editFunc, this.displayFunc, this.addFunc)
+    this.info.Buttons.push({
+      isShow: true,
+      tooltip: 'Employee Files',
+      icon: 'pi pi-paperclip',
+      key: 'attach',
+      severity: 'secondary',
+      command: (rowData) => {
+        this.fileFunc(rowData);
+      },
+    });
   }
   ngOnInit(): void {
     this.info.get$ =
